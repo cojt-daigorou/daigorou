@@ -1,0 +1,4 @@
+*.~dat
+*.o
+DebugL/
+.gitignore~
