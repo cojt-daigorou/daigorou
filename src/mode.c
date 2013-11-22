@@ -38,7 +38,7 @@ void GotoMode( enum GameMode mode ) {
 
 		case MODE_GAME :
 			g_Score = 0;
-			g_Time = 100;
+			g_Time = 9999;
 			g_OffsetX = 0;
 			g_OffsetY = 0;
 			g_PlayerX = 0;

@@ -3,3 +3,5 @@
 DebugL/
 .gitignore~
 *.md~
+*.swp
+*.c~
