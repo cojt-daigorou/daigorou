@@ -386,6 +386,12 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
 			g_OffsetX = nx;
 		};
 	};
+  if ((g_PlayerX - g_OffsetX) < 256) {
+    g_OffsetX = g_PlayerX - 256;
+    if (g_OffsetX < 0 ) {
+      g_OffsetX = 0;
+    }
+  }
 
 	if( (g_PlayerY - g_OffsetY) < 128 ) {
 		g_OffsetY = g_PlayerY - 128;
