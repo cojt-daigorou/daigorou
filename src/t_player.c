@@ -126,6 +126,10 @@ const static s16 JumpPattern[] = {
 	50, 30, 22, 19, 15, 13, 10, 8 , 7 , 6 , 5 , 4 , 2 , 2 , 1, 1, 0, 0,
 };
 
+static s32 CalcPlayerSpeed() {
+  return (PadLvl()&PAD_B) ? PLAYER_RUN_SPEED : PLAYER_WALK_SPEED;
+}
+
 
 	//　地面にいる場合
 		//　一番下でなく、足場が無くなった場合は下降モードへ。
@@ -165,11 +169,11 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
 			else if( PadLvl()&PAD_RIGHT || PadLvl()&PAD_LEFT ) {
 				if( PadLvl()&PAD_RIGHT ) {
 					pTask->Data.player.direction = 0;
-					MovePlayer( pTask , PLAYER_RUN_SPEED , 0 , 1 );
+					MovePlayer( pTask , CalcPlayerSpeed() , 0 , 1 );
 				}
 				else {
 					pTask->Data.player.direction = 1;
-					MovePlayer( pTask , -PLAYER_RUN_SPEED , 0 , 1 );
+					MovePlayer( pTask , -CalcPlayerSpeed() , 0 , 1 );
 				};
 
 				if( pTask->Data.player.mode == PLAYER_MODE_WAIT ) {		//　止まってたら走り始める
@@ -226,11 +230,11 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
 		case PLAYER_MODE_JUMPSTART :
 			if( PadLvl()&PAD_RIGHT ) {
 				pTask->Data.player.direction = 0;
-				MovePlayer( pTask , PLAYER_RUN_SPEED , 0 , 1 );
+				MovePlayer( pTask , CalcPlayerSpeed() , 0 , 1 );
 			};
 			if( PadLvl()&PAD_LEFT ) {
 				pTask->Data.player.direction = 1;
-				MovePlayer( pTask , -PLAYER_RUN_SPEED , 0 , 1 );
+				MovePlayer( pTask , -CalcPlayerSpeed() , 0 , 1 );
 			};
 
 			if( PadLvl()&PAD_A ) {		//　ボタンが押されている場合
@@ -251,11 +255,11 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
 		case PLAYER_MODE_JUMP :
 			if( PadLvl()&PAD_RIGHT ) {
 				pTask->Data.player.direction = 0;
-				MovePlayer( pTask , PLAYER_RUN_SPEED , 0 , 1 );
+				MovePlayer( pTask , CalcPlayerSpeed() , 0 , 1 );
 			};
 			if( PadLvl()&PAD_LEFT ) {
 				pTask->Data.player.direction = 1;
-				MovePlayer( pTask , -PLAYER_RUN_SPEED , 0 , 1 );
+				MovePlayer( pTask , -CalcPlayerSpeed() , 0 , 1 );
 			};
 
 			if( PadLvl()&PAD_A ) {		//　ボタンが押されている場合
@@ -279,11 +283,11 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
 		case PLAYER_MODE_FALL :
 			if( PadLvl()&PAD_RIGHT ) {
 				pTask->Data.player.direction = 0;
-				MovePlayer( pTask , PLAYER_RUN_SPEED , 0 , 1 );
+				MovePlayer( pTask , CalcPlayerSpeed() , 0 , 1 );
 			};
 			if( PadLvl()&PAD_LEFT ) {
 				pTask->Data.player.direction = 1;
-				MovePlayer( pTask , -PLAYER_RUN_SPEED , 0 , 1 );
+				MovePlayer( pTask , -CalcPlayerSpeed() , 0 , 1 );
 			};
 
 			if( MovePlayer( pTask , 0 , 8 , 1 ) ) {
@@ -309,11 +313,11 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
 		case PLAYER_MODE_JUMPEND :
 			if( PadLvl()&PAD_RIGHT ) {
 				pTask->Data.player.direction = 0;
-				MovePlayer( pTask , PLAYER_RUN_SPEED , 0 , 1 );
+				MovePlayer( pTask , CalcPlayerSpeed() , 0 , 1 );
 			};
 			if( PadLvl()&PAD_LEFT ) {
 				pTask->Data.player.direction = 1;
-				MovePlayer( pTask , -PLAYER_RUN_SPEED , 0 , 1 );
+				MovePlayer( pTask , -CalcPlayerSpeed() , 0 , 1 );
 			};
 
 			pTask->Data.player.count++;

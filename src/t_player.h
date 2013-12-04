@@ -11,7 +11,8 @@
 #define PLAYER_MODE_FALL		(7)
 #define PLAYER_MODE_ATTACK		(8)
 
-#define PLAYER_RUN_SPEED		(8)
+#define PLAYER_WALK_SPEED		(8)
+#define PLAYER_RUN_SPEED		(16)
 
 #define GROUND_LINE				(548)
 
