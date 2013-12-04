@@ -153,11 +153,11 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
 				pTask->Data.player.mode = PLAYER_MODE_FALL;
 				pTask->Data.player.count = 0;
 			}
-			else if( PadTrg()&PAD_A ) {
+			else if( PadTrg()&PAD_X ) {
 				pTask->Data.player.mode = PLAYER_MODE_ATTACK;
 				pTask->Data.player.count = 0;
 			}
-			else if( PadTrg()&PAD_B ) {		//　ボタンが押された場合はジャンプモードへ。
+			else if( PadTrg()&PAD_A ) {		//　ボタンが押された場合はジャンプモードへ。
 				pTask->Data.player.mode = PLAYER_MODE_JUMPSTART;
 				pTask->Data.player.count = 0;
 				ageSndMgrPlayOneshot( AS_SND_JUMP , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
@@ -233,7 +233,7 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
 				MovePlayer( pTask , -PLAYER_RUN_SPEED , 0 , 1 );
 			};
 
-			if( PadLvl()&PAD_B ) {		//　ボタンが押されている場合
+			if( PadLvl()&PAD_A ) {		//　ボタンが押されている場合
 				pTask->Data.player.count++;
 
 				if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode ] ].Frames ) {
@@ -258,7 +258,7 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
 				MovePlayer( pTask , -PLAYER_RUN_SPEED , 0 , 1 );
 			};
 
-			if( PadLvl()&PAD_B ) {		//　ボタンが押されている場合
+			if( PadLvl()&PAD_A ) {		//　ボタンが押されている場合
 				MovePlayer( pTask , 0 , -JumpPattern[ pTask->Data.player.jump_count ] , 1 );
 				pTask->Data.player.jump_count++;
 
