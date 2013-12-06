@@ -57,6 +57,15 @@ struct SPos fpos[] = {
 
 struct SPos epos[] = {
 	{ 820  , 674 , ENEMY_TYPE_FROG  , 300 },
+	{ 820+100*2  , 674 , ENEMY_TYPE_FROG  , 300 },
+	{ 820+200*2  , 674 , ENEMY_TYPE_FROG  , 300 },
+	{ 820+300*2  , 674 , ENEMY_TYPE_FROG  , 300 },
+	{ 820+400*2  , 674 , ENEMY_TYPE_FROG  , 300 },
+	{ 820+500*2  , 674 , ENEMY_TYPE_FROG  , 300 },
+	{ 820+600*2  , 674 , ENEMY_TYPE_FROG  , 300 },
+	{ 820+700*2  , 674 , ENEMY_TYPE_FROG  , 300 },
+	{ 820+800*2  , 674 , ENEMY_TYPE_FROG  , 300 },
+	{ 820+900*2  , 674 , ENEMY_TYPE_FROG  , 300 },
 	{ 1800 , 416 , ENEMY_TYPE_SNAKE , 300 },
 };
 
