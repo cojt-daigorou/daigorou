@@ -15,6 +15,17 @@
 /******************************************************************/
 static s32 CalcObject( struct TaskData* pTask , u32 Flag ) {
 
+  switch( pTask->Data.object.motion ) {
+    case ObjectMotion_None:
+      break;
+    case ObjectMotion_Horizon:
+      pTask->Data.object.pre_x = pTask->x;
+      pTask->x = pTask->Data.object.center_x + 100 * sinf(0.1 * (pTask->Data.object.count++));
+      break;
+    case ObjectMotion_Vertical:
+      break;
+  }
+
 	return( 0 );
 }
 
@@ -46,7 +57,7 @@ static s32 HitObject( struct TaskData* pTask , const struct RECT* pRect ) {
 	return( IsHitRect( pRect , &rect ) );
 }
 
-void InitTaskObject( struct TaskData* pTask , s32 x , s32 y , u16 image , u16 is_hit ) {
+void InitTaskObject( struct TaskData* pTask , s32 x , s32 y , u16 image , u16 is_hit, enum ObjectMotion motion ) {
 	memset( pTask , 0 , sizeof( *pTask ) );
 
 	pTask->type = TASK_STATIC;
@@ -60,4 +71,8 @@ void InitTaskObject( struct TaskData* pTask , s32 x , s32 y , u16 image , u16 is
 	};
 	pTask->Data.object.image = image;
 	pTask->Data.object.is_hit = is_hit;
+  pTask->Data.object.motion = motion;
+  pTask->Data.object.count = 0;
+  pTask->Data.object.center_x = x;
+  pTask->Data.object.pre_x = x;
 }

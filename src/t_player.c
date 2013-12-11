@@ -69,6 +69,7 @@ static int MovePlayer( struct TaskData* pTask , int dx , int dy , int move_flag 
 
 		if( pWTask->Hit != NULL ) {
 			if( pWTask->Hit( pWTask , &crect ) ) {
+        g_PlayerX += (pWTask->x - pWTask->Data.object.pre_x);
 				isHit = 1;
 				break;
 			};
@@ -147,6 +148,7 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
 	switch( pTask->Data.player.mode ) {
 				//Å@ínñ Ç…Ç¢ÇÈèÍçá
 		case PLAYER_MODE_WAIT :
+      MovePlayer( pTask, 0, 0, 0 );
 		case PLAYER_MODE_RUNSTART :
 		case PLAYER_MODE_RUN :
 		case PLAYER_MODE_RUNEND :

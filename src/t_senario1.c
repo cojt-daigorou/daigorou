@@ -163,7 +163,7 @@ void InitTaskSenario1( struct TaskData* pTask ) {
 			disp_level = DISP_LEVEL_BG_FRONT;
 		};
 		pWTask = AllocTask();
-		InitTaskObject( pWTask , wpos[i].x , wpos[i].y , wpos[i].image , is_hit );
+		InitTaskObject( pWTask , wpos[i].x , wpos[i].y , wpos[i].image , is_hit, ObjectMotion_Horizon );
 
 		AddlLink( pWTask , disp_level );
 	};
