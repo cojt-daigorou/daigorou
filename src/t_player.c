@@ -69,7 +69,28 @@ static int MovePlayer( struct TaskData* pTask , int dx , int dy , int move_flag 
 
 		if( pWTask->Hit != NULL ) {
 			if( pWTask->Hit( pWTask , &crect ) ) {
+
+        // ‰¡‚©‚çÕ“Ë‚µ‚½‚ç—Ž‚Æ‚·
+        if ( pTask->Data.player.mode == PLAYER_MODE_FALL) {
+          if (g_PlayerY + 0.8*h > pWTask->y ) {
+            int tw = ageRM[ pWTask->Data.object.image ].Width;
+            if ( (g_PlayerX + w/2) < (pWTask->x + tw/2) ) {
+              // left
+              g_PlayerX = pWTask->x - w;
+            } else {
+              // right
+              g_PlayerX = pWTask->x + tw;
+            }
+            g_PlayerX += (pWTask->x - pWTask->Data.object.pre_x);
+            g_PlayerY = y;
+            return 0;
+          } else {
+            //g_PlayerY = pWTask->y - h;
+          }
+        }
+
         g_PlayerX += (pWTask->x - pWTask->Data.object.pre_x);
+
 				isHit = 1;
 				break;
 			};

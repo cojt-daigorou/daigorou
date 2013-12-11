@@ -20,7 +20,7 @@ static s32 CalcObject( struct TaskData* pTask , u32 Flag ) {
       break;
     case ObjectMotion_Horizon:
       pTask->Data.object.pre_x = pTask->x;
-      pTask->x = pTask->Data.object.center_x + 100 * sinf(0.1 * (pTask->Data.object.count++));
+      pTask->x = pTask->Data.object.center_x + 100 * sinf(0.05 * (pTask->Data.object.count++));
       break;
     case ObjectMotion_Vertical:
       break;
