@@ -148,16 +148,19 @@ extern "C" {
 /***************************************************************/
 /*                     RM3 Member Symbol                       */
 /***************************************************************/
-#define AG_RP_KOMACHI_CLEAR	(0)
-#define AG_RP_KOMACHI_JUMP	(1)
-#define AG_RP_KOMACHI_JUMPEND	(2)
-#define AG_RP_KOMACHI_JUMPSTART	(3)
-#define AG_RP_KOMACHI_LOSE	(4)
-#define AG_RP_KOMACHI_ONIGIRI	(5)
-#define AG_RP_KOMACHI_RUN	(6)
-#define AG_RP_KOMACHI_RUNEND	(7)
-#define AG_RP_KOMACHI_RUNSTART	(8)
-#define AG_RP_KOMACHI_WAIT	(9)
+#define AG_RP_DAIGOROU_CLEAR	(0)
+#define AG_RP_DAIGOROU_LOSE	(1)
+#define AG_RP_DAIGOROU_ONIGIRI	(2)
+#define AG_RP_DAIGOROU_JUMP	(3)
+#define AG_RP_DAIGOROU_JUMPEND	(4)
+#define AG_RP_DAIGOROU_JUMPSTART	(5)
+#define AG_RP_DAIGOROU_RUN	(6)
+#define AG_RP_DAIGOROU_RUNEND	(7)
+#define AG_RP_DAIGOROU_RUNSTART	(8)
+#define AG_RP_DAIGOROU_WAIT	(9)
+#define AG_RP_DAIGOROU_WALK	(10)
+#define AG_RP_DAIGOROU_WALKEND	(11)
+#define AG_RP_DAIGOROU_WALKSTART	(12)
 
 /***************************************************************/
 /*                       Vram Group Symbol                     */
@@ -189,7 +192,7 @@ extern "C" {
 /*                          Data Member                        */
 /***************************************************************/
 extern const AGERomMember ageRM[117];
-extern const AGERM3Member ageRM3[10];
+extern const AGERM3Member ageRM3[13];
 extern const u32 ageReserve[1];
 extern const u32 ageUser[1];
 extern const s16 ageVGCnt;
