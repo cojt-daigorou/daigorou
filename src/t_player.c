@@ -134,22 +134,27 @@ static int GetFood( struct TaskData* pTask ) {
 
 const static u16 MotionMap[] = {
 	AG_RP_DAIGOROU_WAIT,
-	AG_RP_DAIGOROU_RUNSTART,
-	AG_RP_DAIGOROU_RUN,
-	AG_RP_DAIGOROU_RUNEND,
+	AG_RP_DAIGOROU_WALKSTART,
+	AG_RP_DAIGOROU_WALK,
+	AG_RP_DAIGOROU_WALKEND,
 	AG_RP_DAIGOROU_JUMPSTART,
 	AG_RP_DAIGOROU_JUMP,
 	AG_RP_DAIGOROU_JUMPEND,
 	AG_RP_DAIGOROU_JUMP,
 	AG_RP_DAIGOROU_ONIGIRI,
+	AG_RP_DAIGOROU_RUNSTART,
+	AG_RP_DAIGOROU_RUN,
+	AG_RP_DAIGOROU_RUNEND,
 };
 
 const static s16 JumpPattern[] = {
 	50, 30, 22, 19, 15, 13, 10, 8 , 7 , 6 , 5 , 4 , 2 , 2 , 1, 1, 0, 0,
 };
 
+static int isRun = 0;
+
 static s32 CalcPlayerSpeed() {
-  return (PadLvl()&PAD_B) ? PLAYER_RUN_SPEED : PLAYER_WALK_SPEED;
+  return isRun ? PLAYER_RUN_SPEED : PLAYER_WALK_SPEED;
 }
 
 
@@ -170,9 +175,10 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
 				//　地面にいる場合
 		case PLAYER_MODE_WAIT :
       MovePlayer( pTask, 0, 0, 0 );
-		case PLAYER_MODE_RUNSTART :
-		case PLAYER_MODE_RUN :
-		case PLAYER_MODE_RUNEND :
+		case PLAYER_MODE_WALKSTART :
+		case PLAYER_MODE_WALK :
+		case PLAYER_MODE_WALKEND :
+      isRun = (PadLvl()&PAD_B) == PAD_B;
 			if( g_PlayerY < GROUND_LINE && !MovePlayer( pTask , 0 , 10 , 0 ) ) {
 					//　一番下でなく、足場が無くなった場合は下降モードへ。
 				g_PlayerY += BBox[ PLAYER_MODE_WAIT ].y1 - BBox[ PLAYER_MODE_FALL ].y1;
@@ -200,21 +206,21 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
 				};
 
 				if( pTask->Data.player.mode == PLAYER_MODE_WAIT ) {		//　止まってたら走り始める
-					pTask->Data.player.mode = PLAYER_MODE_RUNSTART;
+					pTask->Data.player.mode = PLAYER_MODE_WALKSTART;
 					pTask->Data.player.count = 0;
 				}
-				else if( pTask->Data.player.mode == PLAYER_MODE_RUNEND ) {		//　止まりかけだったなら走る
-					pTask->Data.player.mode = PLAYER_MODE_RUN;
+				else if( pTask->Data.player.mode == PLAYER_MODE_WALKEND ) {		//　止まりかけだったなら走る
+					pTask->Data.player.mode = PLAYER_MODE_WALK;
 					pTask->Data.player.count = 0;
 				}
 				else {
 					pTask->Data.player.count++;
 
-					if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode ] ].Frames ) {
+					if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode + isRun*8 ] ].Frames ) {
 						pTask->Data.player.count = 0;
 
-						if( pTask->Data.player.mode == PLAYER_MODE_RUNSTART ) {		//　走り始めが終わったら走りモードへ。
-							pTask->Data.player.mode = PLAYER_MODE_RUN;
+						if( pTask->Data.player.mode == PLAYER_MODE_WALKSTART ) {		//　走り始めが終わったら走りモードへ。
+							pTask->Data.player.mode = PLAYER_MODE_WALK;
 						};
 					};
 				};
@@ -227,22 +233,22 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
 				};
 			}
 			else {		//　キー入力なし
-				if( pTask->Data.player.mode == PLAYER_MODE_RUNSTART ) {		//　走り始めは停止へ。
+				if( pTask->Data.player.mode == PLAYER_MODE_WALKSTART ) {		//　走り始めは停止へ。
 					pTask->Data.player.mode = PLAYER_MODE_WAIT;
 					pTask->Data.player.count = 0;
 				}
-				else if( pTask->Data.player.mode == PLAYER_MODE_RUN ) {		//　走ってたら走り終わりへ。
-					pTask->Data.player.mode = PLAYER_MODE_RUNEND;
+				else if( pTask->Data.player.mode == PLAYER_MODE_WALK ) {		//　走ってたら走り終わりへ。
+					pTask->Data.player.mode = PLAYER_MODE_WALKEND;
 					pTask->Data.player.count = 0;
 
 				}
 				else {		//　止まってるか走り終わり
 					pTask->Data.player.count++;
 
-					if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode ] ].Frames ) {
+					if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode + isRun*8 ] ].Frames ) {
 						pTask->Data.player.count = 0;
 
-						if( pTask->Data.player.mode == PLAYER_MODE_RUNEND ) {
+						if( pTask->Data.player.mode == PLAYER_MODE_WALKEND ) {
 							pTask->Data.player.mode = PLAYER_MODE_WAIT;
 						};
 					};
@@ -438,6 +444,7 @@ static s32 DrawPlayer( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
 	int pat;
 	u8 flip;
 	int x, y;
+  int isRun2 = isRun;
 
 	agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 2 , 1 );
 
@@ -450,7 +457,10 @@ static s32 DrawPlayer( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
 		flip = 1;
 	};
 
-	ageTransferAAC_RM3( pDBuf, MotionMap[ pTask->Data.player.mode ] , 0, &w, &h , pat );
+  if (pTask->Data.player.mode < PLAYER_MODE_WALKSTART || pTask->Data.player.mode > PLAYER_MODE_WALKEND) {
+    isRun2 = 0;
+  }
+	ageTransferAAC_RM3( pDBuf, MotionMap[ pTask->Data.player.mode + isRun2*8 ] , 0, &w, &h , pat );
 
 	x = g_PlayerX - g_OffsetX;
 	y = g_PlayerY - g_OffsetY;
