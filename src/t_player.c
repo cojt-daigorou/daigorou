@@ -175,7 +175,6 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
 				//@’n–Ê‚É‚¢‚éê‡
 		case PLAYER_MODE_WAIT :
       MovePlayer( pTask, 0, 0, 0 );
-      pTask->Data.player.count = 0;
 		case PLAYER_MODE_WALKSTART :
 		case PLAYER_MODE_WALK :
 		case PLAYER_MODE_WALKEND :
