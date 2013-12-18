@@ -172,17 +172,17 @@ const u32 ageRM3Offsets0009[] = {		/* AG_RP_DAIGOROU_WAIT */
 };
 
 const u32 ageRM3Offsets0010[] = {		/* AG_RP_DAIGOROU_WALK */
-	    176280,    176872,    177460,    178024,    178528,    179028,    179576,    180152,
-	    180736,    181316,    181896,    182476,    183048,    183596,    184132,    184620,
-	    185112,    185664,    186236,    186812,    187400,
+	    176280,    176908,    177524,    178116,    178648,    179180,    179760,    180368,
+	    180988,    181600,    182216,    182828,    183436,    184016,    184580,    185096,
+	    185616,    186204,    186808,    187420,    188044,
 };
 
 const u32 ageRM3Offsets0011[] = {		/* AG_RP_DAIGOROU_WALKEND */
-	    188013,    188589,    189017,    189405,    189757,
+	    188693,    189301,    189889,    190413,    190925,
 };
 
 const u32 ageRM3Offsets0012[] = {		/* AG_RP_DAIGOROU_WALKSTART */
-	    190118,    190594,    191054,    191554,    192046,
+	    191454,    191966,    192542,    193162,    193798,
 };
 
 const AGERM3Member ageRM3[] = {
@@ -198,8 +198,8 @@ const AGERM3Member ageRM3[] = {
 	{     174706,  256,  256,   7680,      2, 2, 0, ageRM3Offsets0008, NULL        },		/* AG_RP_DAIGOROU_RUNSTART */
 	{     175763,  256,  256,   7680,      1, 2, 1, ageRM3Offsets0009, NULL        },		/* AG_RP_DAIGOROU_WAIT */
 	{     176260,  256,  256,   7680,     21, 2, 0, ageRM3Offsets0010, NULL        },		/* AG_RP_DAIGOROU_WALK */
-	{     187993,  256,  256,   7680,      5, 2, 1, ageRM3Offsets0011, NULL        },		/* AG_RP_DAIGOROU_WALKEND */
-	{     190098,  256,  256,   7680,      5, 2, 1, ageRM3Offsets0012, NULL        },		/* AG_RP_DAIGOROU_WALKSTART */
+	{     188673,  256,  256,   7680,      5, 2, 0, ageRM3Offsets0011, NULL        },		/* AG_RP_DAIGOROU_WALKEND */
+	{     191434,  256,  256,   7680,      5, 2, 0, ageRM3Offsets0012, NULL        },		/* AG_RP_DAIGOROU_WALKSTART */
 };
 
 /***************************************************************/
