@@ -34,6 +34,7 @@ static int MovePlayer( struct TaskData* pTask , int dx , int dy , int move_flag 
 	int h = ageRM[ AG_CG_WORKSTAND ].Height;
 	int isHit = 0;
 	int x,y;
+	struct RECT csize;
 	struct RECT crect;
 
 	if( g_GameOver ) {
@@ -49,7 +50,7 @@ static int MovePlayer( struct TaskData* pTask , int dx , int dy , int move_flag 
 		x = (g_OffsetX+32);
 	};
 
-	crect = BBox[ pTask->Data.player.mode ];
+	crect = csize = BBox[ pTask->Data.player.mode ];
 	AddRect( &crect , x , y );
 
 	while( pWTask != NULL ) {
@@ -68,38 +69,34 @@ static int MovePlayer( struct TaskData* pTask , int dx , int dy , int move_flag 
 #endif
 
 		if( pWTask->Hit != NULL ) {
-			if( pWTask->Hit( pWTask , &crect ) ) {
+      if( pWTask->Hit( pWTask , &crect ) ) {
+        x += (pWTask->x - pWTask->Data.object.pre_x);
 
         // 横から衝突したら落とす
-        if ( pTask->Data.player.mode == PLAYER_MODE_FALL) {
-          if (g_PlayerY + 0.8*h > pWTask->y ) {
-            int tw = ageRM[ pWTask->Data.object.image ].Width;
-            if ( (g_PlayerX + w/2) < (pWTask->x + tw/2) ) {
-              // left
-              g_PlayerX = pWTask->x - w;
-            } else {
-              // right
-              g_PlayerX = pWTask->x + tw;
-            }
-            g_PlayerX += (pWTask->x - pWTask->Data.object.pre_x);
-            g_PlayerY = y;
-            return 0;
+        if (y + (csize.y1 - 20) > pWTask->y ) {
+          int tw = ageRM[ pWTask->Data.object.image ].Width;
+          if ( (x + w/2) < (pWTask->x + tw/2) ) {
+            // left
+            x = pWTask->x - tw/2 + csize.x0 - 1;
           } else {
-            //g_PlayerY = pWTask->y - h;
+            // right
+            x = pWTask->x + tw/2 + csize.x1;
           }
+          isHit = 1;
+          break;
+        } else {
+          //g_PlayerY = pWTask->y - h;
         }
 
-        g_PlayerX += (pWTask->x - pWTask->Data.object.pre_x);
-
-				isHit = 1;
-				break;
-			};
-		};
+        isHit = 1;
+        break;
+      };
+    };
 
 		pWTask = pWTask->Next;
 	};
 
-	if( move_flag && isHit == 0 ) {
+	if( move_flag) {
 		g_PlayerX = x;
 		g_PlayerY = y;
 	};
@@ -174,12 +171,12 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
 	switch( pTask->Data.player.mode ) {
 				//　地面にいる場合
 		case PLAYER_MODE_WAIT :
-      MovePlayer( pTask, 0, 0, 0 );
+      MovePlayer( pTask, 0, 0, 1 );
 		case PLAYER_MODE_WALKSTART :
 		case PLAYER_MODE_WALK :
 		case PLAYER_MODE_WALKEND :
       isRun = (PadLvl()&PAD_B) == PAD_B;
-			if( g_PlayerY < GROUND_LINE && !MovePlayer( pTask , 0 , 10 , 0 ) ) {
+			if( g_PlayerY < GROUND_LINE && !MovePlayer( pTask , 0 , 10 , 0 )) {
 					//　一番下でなく、足場が無くなった場合は下降モードへ。
 				g_PlayerY += BBox[ PLAYER_MODE_WAIT ].y1 - BBox[ PLAYER_MODE_FALL ].y1;
 
