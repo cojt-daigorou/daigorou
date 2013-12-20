@@ -70,8 +70,11 @@ static int MovePlayer( struct TaskData* pTask , int dx , int dy , int move_flag 
 
 		if( pWTask->Hit != NULL ) {
       if( pWTask->Hit( pWTask , &crect ) ) {
-        x += (pWTask->x - pWTask->Data.object.pre_x);
-
+        switch (pWTask->Data.object.motion) {
+          case ObjectMotion_Horizon:
+            x += (pWTask->x - pWTask->Data.object.pre_x);
+            break;
+        }
         // ‰¡‚©‚çÕ“Ë‚µ‚½‚ç—Ž‚Æ‚·
         if (y + (csize.y1 - 20) > pWTask->y ) {
           int tw = ageRM[ pWTask->Data.object.image ].Width;
@@ -82,10 +85,8 @@ static int MovePlayer( struct TaskData* pTask , int dx , int dy , int move_flag 
             // right
             x = pWTask->x + tw/2 + csize.x1;
           }
-          isHit = 1;
-          break;
         } else {
-          //g_PlayerY = pWTask->y - h;
+          y = pWTask->y - csize.y1;
         }
 
         isHit = 1;

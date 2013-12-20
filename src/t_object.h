@@ -16,8 +16,9 @@ struct ObjectData {
   enum ObjectMotion motion;
   s32 center_x;
   s32 pre_x;
+  float phase;
 };
 
-void InitTaskObject( struct TaskData* pTask , s32 x , s32 y , u16 image , u16 is_hit, enum ObjectMotion motion );
+void InitTaskObject( struct TaskData* pTask , s32 x , s32 y , u16 image , u16 is_hit, enum ObjectMotion motion, float phase );
 
 #endif // __TASK_OBJECT_H__
