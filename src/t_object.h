@@ -16,6 +16,8 @@ struct ObjectData {
   enum ObjectMotion motion;
   s32 center_x;
   s32 pre_x;
+  s32 center_y;
+  s32 pre_y;
   float phase;
 };
 
