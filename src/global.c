@@ -9,3 +9,6 @@ int g_GameOver = 0;
 
 u32 g_Score = 0;
 u32 g_Time = 0;
+u32 g_Life = 1;
+
+struct RECT *g_pPlayerRect = NULL;

@@ -79,6 +79,7 @@ static s32 CalcSenario1( struct TaskData* pTask , u32 Flag ) {
       ageSndMgrRelease( pTask->Data.title.bgm_handle );
       GotoMode( MODE_TITLE );
     };
+    return(0);
   };
 
   if( g_Time > 0 && (pTask->x % 60) == 0 ) {
@@ -95,7 +96,7 @@ static s32 CalcSenario1( struct TaskData* pTask , u32 Flag ) {
       ageSndMgrSetPan( pTask->Data.senario.bgm_handle , 0x8080 );
     };
 
-    if( g_Time == 0 ) {
+    if( g_Time == 0) {
       struct TaskData* pETask;
       int w,h;
 
@@ -118,6 +119,30 @@ static s32 CalcSenario1( struct TaskData* pTask , u32 Flag ) {
       g_GameOver = 1;
       pTask->x = 0;
     };
+  };
+
+  if( g_Life == 0 ) {
+    struct TaskData* pETask;
+    int w,h;
+
+    w = ageRM[ AG_CG_GAMEOVER ].Width;
+    h = ageRM[ AG_CG_GAMEOVER ].Height;
+
+    pETask = AllocTask();
+    InitTaskStatic( pETask , (1024-w)/2 , (768-h)/2 , AG_CG_GAMEOVER , 1 );
+    AddlLink( pETask , DISP_LEVEL_TOP );
+
+    ageSndMgrRelease( pTask->Data.title.bgm_handle );
+
+    pTask->Data.senario.bgm_handle = ageSndMgrAlloc( AS_SND_GAMEOVER , 0 , 1 , AGE_SNDMGR_PANMODE_LR12 , 0 );
+
+    ageSndMgrPlay( pTask->Data.senario.bgm_handle );
+    ageSndMgrSetVolume( pTask->Data.senario.bgm_handle , 0xa0 );
+    ageSndMgrSetPanMode( pTask->Data.senario.bgm_handle , 0 );
+    ageSndMgrSetPan( pTask->Data.senario.bgm_handle , 0x8080 );
+
+    g_GameOver = 1;
+    pTask->x = 0;
   };
 
   //　ソフトリセット

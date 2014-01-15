@@ -12,5 +12,6 @@ struct FrogData {
 };
 
 void InitTaskFrog( struct TaskData* pTask , s32 x , s32 y , u16 Score , u8 Direction );
+static s32 HitFrog( struct TaskData* pTask , const struct RECT* pRect );
 
 #endif // __TASK_FOOD_H__

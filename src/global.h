@@ -11,5 +11,8 @@ extern int g_GameOver;
 
 extern u32 g_Score;
 extern u32 g_Time;
+extern u32 g_Life;
+
+extern struct RECT* g_pPlayerRect;
 
 #endif // __GLOBAL_H__

@@ -8,6 +8,7 @@
 #include "export.h"
 #include "global.h"
 #include "t_frog.h"
+#include "rect.h"
 
 static void AddScore( u32 n ) {
   g_Score += n;
@@ -99,7 +100,12 @@ static s32 CalcFrog( struct TaskData* pTask , u32 Flag ) {
       pBTask = pBTask->Next;
     }
   }
-  
+
+  // Ž©‹@‚Æ‚Ì”»’è
+  if ( (pTask->x - g_PlayerX) * (pTask->x - g_PlayerX) + (pTask->y - g_PlayerY - 100) * (pTask->y - g_PlayerY - 100 ) < 80*80) {
+  //if ( g_pPlayerRect != NULL && HitFrog(pTask, g_pPlayerRect) ) {
+    g_Life = 0;
+  }
 
 	return( 0 );
 }
@@ -134,6 +140,21 @@ static s32 DrawFrog( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
 			agDrawSPRITE_UV( pDBuf, (pTask->x - g_OffsetX - w/2)<<2 , (pTask->y - h)<<2 , 0x1000 , 0 , (pTask->x - g_OffsetX + w/2)<<2, (pTask->y)<<2 , 0 , 0x1000 );
 		};
 	};
+}
+
+static s32 HitFrog( struct TaskData* pTask , const struct RECT* pRect ) {
+  int w,h;
+  struct RECT rect;
+
+  w = 60;
+  h = 60;
+
+  rect.x0 = pTask->x - w/2;
+  rect.y0 = pTask->y;
+  rect.x1 = pTask->x + w/2;
+  rect.y1 = pTask->y + h;
+
+  return( IsHitRect( pRect , &rect ) );
 }
 
 void InitTaskFrog( struct TaskData* pTask , s32 x , s32 y , u16 Score , u8 Direction ) {

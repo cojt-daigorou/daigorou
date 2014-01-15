@@ -37,10 +37,6 @@ static int MovePlayer( struct TaskData* pTask , int dx , int dy , int move_flag 
   struct RECT csize;
   struct RECT crect;
 
-  if( g_GameOver ) {
-    return( 0 );
-  }
-
   pWTask = GetDispLink( DISP_LEVEL_OBJECT );
 
   x = g_PlayerX + dx;
@@ -175,6 +171,11 @@ static s32 CalcPlayerSpeed() {
 
 static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
   struct TaskData* pWTask;
+  struct RECT rect;
+
+  rect = BBox[ pTask->Data.player.mode ];
+  AddRect( &rect , g_PlayerX , g_PlayerY );
+  g_pPlayerRect = &rect;
 
   switch( pTask->Data.player.mode ) {
     //@’n–Ê‚É‚¢‚éê‡
@@ -402,25 +403,6 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
             AddlLink( pBTask , DISP_LEVEL_PBULLET );
           }
         };
-
-        /*while( pFTask != NULL ) {
-          if( pFTask->type == TASK_ENEMY ) {
-            if( (pFTask->x - x)*(pFTask->x - x) + (pFTask->y - y)*(pFTask->y - y) < 50*50 ) {
-              struct TaskData* pATask;
-
-              pATask = AllocTask();
-              InitTaskAttack( pATask , pFTask->x , pFTask->y );
-              AddlLink( pATask , DISP_LEVEL_ENEMY );
-
-              pFTask->visible = 0;
-              pFTask->flag = TASK_FLAG_DESTROY;
-
-              AddScore( pFTask->Data.frog.score );
-            };
-          };
-
-          pFTask = pFTask->Next;
-        };*/
       };
 
       if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode ] ].Frames ) {
