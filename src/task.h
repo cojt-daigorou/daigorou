@@ -13,6 +13,7 @@
 #include "t_object.h"
 #include "t_attack.h"
 #include "t_snake.h"
+#include "t_pbullet.h" /*<s0115>*/
 
 #define TASK_MAX			(512)
 #define DISP_LEVEL_MAX		(16)
@@ -42,6 +43,8 @@ enum TaskType {
 
 	TASK_SENARIO,
 	TASK_OPENING,
+
+	TASK_PBULLET,	/*<s0115>*/
 };
 
 
@@ -77,6 +80,7 @@ struct TaskData {
 		struct ObjectData object;
 		struct AttackData attack;
 		struct SnakeData snake;
+		struct PBulletData pbullet;/*<s0115>*/
 	} Data;
 };
 

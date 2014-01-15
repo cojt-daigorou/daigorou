@@ -264,7 +264,7 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
 				MovePlayer( pTask , -CalcPlayerSpeed() , 0 , 1 );
 			};
 
-			if( PadLvl()&PAD_A ) {		//　ボタンが押されている場合
+			/*if( PadLvl()&PAD_A ) {*/		//　ボタンが押されている場合 <s01151244>Aを離しても停止しないように
 				pTask->Data.player.count++;
 
 				if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode ] ].Frames ) {
@@ -272,11 +272,11 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
 					pTask->Data.player.mode = PLAYER_MODE_JUMP;
 					pTask->Data.player.jump_count = 0;
 				};
-			}
+			/*}
 			else {		//　ボタンが離された（ジャンプ直前なので停止へ移行）
 				pTask->Data.player.mode = PLAYER_MODE_WAIT;
 				pTask->Data.player.count = 0;
-			};
+			};</s01151244>*/
 			break;
 
 		case PLAYER_MODE_JUMP :
@@ -289,7 +289,7 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
 				MovePlayer( pTask , -CalcPlayerSpeed() , 0 , 1 );
 			};
 
-			if( PadLvl()&PAD_A ) {		//　ボタンが押されている場合
+			if( PadLvl()&PAD_A ||(pTask->Data.player.jump_count<10)) {		/*<s01151244>ボタンが押されている場合orジャンプカウントが10になるまで*/
 				MovePlayer( pTask , 0 , -JumpPattern[ pTask->Data.player.jump_count ] , 1 );
 				pTask->Data.player.jump_count++;
 
@@ -357,6 +357,24 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
 			break;
 
 		case PLAYER_MODE_ATTACK :
+
+			/*<s01151238>攻撃中の左右移動*/
+			if( PadLvl()&PAD_RIGHT ) {
+				pTask->Data.player.direction = 0;
+				MovePlayer( pTask , CalcPlayerSpeed() , 0 , 1 );
+			};
+			if( PadLvl()&PAD_LEFT ) {
+				pTask->Data.player.direction = 1;
+				MovePlayer( pTask , -CalcPlayerSpeed() , 0 , 1 );
+			};
+			/*</s0115>*バグあり*/
+			 {
+							struct TaskData* pBTask;
+
+							pBTask = AllocTask();
+							InitTaskPBullet( pBTask , pTask->x , pTask->y,1,10,0,0,0 );
+							AddlLink( pBTask , DISP_LEVEL_ENEMY );
+						};
 			pTask->Data.player.count++;
 
 			if( pTask->Data.player.count > 10 ) {
