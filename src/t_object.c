@@ -23,57 +23,61 @@ static s32 CalcObject( struct TaskData* pTask , u32 Flag ) {
       pTask->x = pTask->Data.object.center_x + 100 * sinf(pTask->Data.object.phase + 0.05 * (pTask->Data.object.count++));
       break;
     case ObjectMotion_Vertical:
+      pTask->Data.object.pre_y = pTask->y;
+      pTask->y = pTask->Data.object.center_y + 100 * sinf(pTask->Data.object.phase + 0.03 * (pTask->Data.object.count++));
       break;
   }
 
-	return( 0 );
+  return( 0 );
 }
 
 static s32 DrawObject( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
-	int w,h;
+  int w,h;
 
-	if( (pTask->x + 100) > g_OffsetX && (pTask->x - 100) < (g_OffsetX + 1024) ) {
-		agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 2 , 1 );
-		ageTransferAAC( pDBuf, pTask->Data.object.image, 0, &w, &h );
+  if( (pTask->x + 100) > g_OffsetX && (pTask->x - 100) < (g_OffsetX + 1024) ) {
+    agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 2 , 1 );
+    ageTransferAAC( pDBuf, pTask->Data.object.image, 0, &w, &h );
 
-		agDrawSPRITE( pDBuf, 1,
-				(pTask->x - w/2 - g_OffsetX)<<2 , (pTask->y - g_OffsetY)<<2 ,
-				(pTask->x + w/2 - g_OffsetX)<<2, (pTask->y - g_OffsetY + h)<<2 );
-	};
+    agDrawSPRITE( pDBuf, 1,
+        (pTask->x - w/2 - g_OffsetX)<<2 , (pTask->y - g_OffsetY)<<2 ,
+        (pTask->x + w/2 - g_OffsetX)<<2, (pTask->y - g_OffsetY + h)<<2 );
+  };
 }
 
 static s32 HitObject( struct TaskData* pTask , const struct RECT* pRect ) {
-	int w,h;
-	struct RECT rect;
+  int w,h;
+  struct RECT rect;
 
-	w = ageRM[ pTask->Data.object.image ].Width;
-	h = ageRM[ pTask->Data.object.image ].Height;
+  w = ageRM[ pTask->Data.object.image ].Width;
+  h = ageRM[ pTask->Data.object.image ].Height;
 
-	rect.x0 = pTask->x - w/2;
-	rect.y0 = pTask->y;
-	rect.x1 = pTask->x + w/2;
-	rect.y1 = pTask->y + h;
+  rect.x0 = pTask->x - w/2;
+  rect.y0 = pTask->y;
+  rect.x1 = pTask->x + w/2;
+  rect.y1 = pTask->y + h;
 
-	return( IsHitRect( pRect , &rect ) );
+  return( IsHitRect( pRect , &rect ) );
 }
 
 void InitTaskObject( struct TaskData* pTask , s32 x , s32 y , u16 image , u16 is_hit, enum ObjectMotion motion, float phase ) {
-	memset( pTask , 0 , sizeof( *pTask ) );
+  memset( pTask , 0 , sizeof( *pTask ) );
 
-	pTask->type = TASK_STATIC;
-	pTask->visible = 1;
-	pTask->x = x;
-	pTask->y = y;
-	pTask->Calc = CalcObject;
-	pTask->Draw = DrawObject;
-	if( is_hit != 0 ) {
-		pTask->Hit = HitObject;
-	};
-	pTask->Data.object.image = image;
-	pTask->Data.object.is_hit = is_hit;
+  pTask->type = TASK_STATIC;
+  pTask->visible = 1;
+  pTask->x = x;
+  pTask->y = y;
+  pTask->Calc = CalcObject;
+  pTask->Draw = DrawObject;
+  if( is_hit != 0 ) {
+    pTask->Hit = HitObject;
+  };
+  pTask->Data.object.image = image;
+  pTask->Data.object.is_hit = is_hit;
   pTask->Data.object.motion = motion;
   pTask->Data.object.count = 0;
   pTask->Data.object.center_x = x;
   pTask->Data.object.pre_x = x;
+  pTask->Data.object.center_y = y;
+  pTask->Data.object.pre_y = y;
   pTask->Data.object.phase = phase;
 }
