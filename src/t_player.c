@@ -17,15 +17,19 @@ static void AddScore( u32 n ) {
 /*                                player                          */
 /******************************************************************/
 struct RECT BBox[] = {
-  { -50 , -88 , 50 , 116 },
-  { -50 , -88 , 50 , 116 },
-  { -50 , -88 , 50 , 116 },
-  { -50 , -88 , 50 , 116 },
-  { -50 , -88 , 50 , 116 },
-  { -50 , -128 , 50 , 50 },
-  { -50 , -88 , 50 , 116 },
-  { -50 , -128 , 50 , 50 },
-  { -50 , -88 , 50 , 116 },
+  { -50 , -88 , 50 , 116 },// PLAYER_MODE_WAIT		  (0)
+  { -50 , -88 , 50 , 116 },// PLAYER_MODE_WALKSTART	(1)
+  { -50 , -88 , 50 , 116 },// PLAYER_MODE_WALK			(2)
+  { -50 , -88 , 50 , 116 },// PLAYER_MODE_WALKEND		(3)
+  { -50 , -88 , 50 , 116 },// PLAYER_MODE_JUMPSTART	(4)
+  { -50 , -128 , 50 , 50 },// PLAYER_MODE_JUMP		  (5)
+  { -50 , -88 , 50 , 116 },// PLAYER_MODE_JUMPEND		(6)
+  { -50 , -128 , 50 , 50 },// PLAYER_MODE_FALL		  (7)
+  { -50 , -88 , 50 , 116 },// PLAYER_MODE_ATTACK		(8)
+  { -50 , -88 , 50 , 116 },// PLAYER_MODE_RUNSTART	(1+8)
+  { -50 , -88 , 50 , 116 },// PLAYER_MODE_RUN			  (2+8)
+  { -50 , -88 , 50 , 116 },// PLAYER_MODE_RUNEND		(3+8)
+  { -50 , -88 , 50 , 116 },// PLAYER_MODE_GAMEOVER  (12)
 };
 
 static int MovePlayer( struct TaskData* pTask , int dx , int dy , int move_flag ) {
@@ -418,6 +422,10 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
       break;
 
     case PLAYER_MODE_GAMEOVER :
+
+      if( !MovePlayer( pTask , 0 , 15 , 1 ) && g_PlayerY >= GROUND_LINE ) {
+        g_PlayerY = GROUND_LINE;
+      }
 
       if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode ] ].Frames - 1 ) {
         // 最大フレームに達したらカウントを止める
