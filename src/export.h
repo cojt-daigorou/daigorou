@@ -22,7 +22,7 @@ extern "C" {
 #define AGE_ZMD	(1)
 #define AGE_AAC_ADDR	(13631488)
 #define AGE_AAC_SIZE	(13631488)
-#define AGE_SOUND_ROM_OFFSET	(0x40000)
+#define AGE_SOUND_ROM_OFFSET	(0x80000)
 
 /***************************************************************/
 /*                    Rom Member Symbol                        */
@@ -161,6 +161,9 @@ extern "C" {
 #define AG_RP_DAIGOROU_WALK	(10)
 #define AG_RP_DAIGOROU_WALKEND	(11)
 #define AG_RP_DAIGOROU_WALKSTART	(12)
+#define AG_RP_DAIGOROU_RT	(13)
+#define AG_RP_EFF_RT	(14)
+#define AG_RP_DAIGOROU_GAMEOVER	(15)
 
 /***************************************************************/
 /*                       Vram Group Symbol                     */
@@ -192,7 +195,7 @@ extern "C" {
 /*                          Data Member                        */
 /***************************************************************/
 extern const AGERomMember ageRM[117];
-extern const AGERM3Member ageRM3[13];
+extern const AGERM3Member ageRM3[16];
 extern const u32 ageReserve[1];
 extern const u32 ageUser[1];
 extern const s16 ageVGCnt;
