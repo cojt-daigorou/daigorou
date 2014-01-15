@@ -180,6 +180,7 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
 
   if (g_GameOver && pTask->Data.player.mode != PLAYER_MODE_GAMEOVER) {
     pTask->Data.player.mode = PLAYER_MODE_GAMEOVER;
+    pTask->Data.player.count = 0;
   }
 
   switch( pTask->Data.player.mode ) {
@@ -417,7 +418,6 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
       break;
 
     case PLAYER_MODE_GAMEOVER :
-
 
       if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode ] ].Frames - 1 ) {
         // 最大フレームに達したらカウントを止める
