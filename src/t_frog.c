@@ -9,6 +9,10 @@
 #include "global.h"
 #include "t_frog.h"
 
+static void AddScore( u32 n ) {
+  g_Score += n;
+}
+
 /******************************************************************/
 /*                              ‚©‚¦‚é                            */
 /******************************************************************/
@@ -66,6 +70,36 @@ static s32 CalcFrog( struct TaskData* pTask , u32 Flag ) {
 			};
 			break;
 	};
+
+
+  // ©‹@‚Ì’e‚Ì”»’è
+  {
+    struct TaskData* pBTask;
+    pBTask = GetDispLink( DISP_LEVEL_PBULLET );
+    while ( pBTask != NULL ) {
+      if (pBTask->type == TASK_PBULLET) {
+        if ( (pTask->x - pBTask->x) * (pTask->x - pBTask->x) + (pTask->y - pBTask->y) * (pTask->y - pBTask->y) < 50*50) {
+          struct TaskData* pATask;
+
+          pATask = AllocTask();
+          InitTaskAttack( pATask , pTask->x , pTask->y );
+          AddlLink( pATask , DISP_LEVEL_ENEMY );
+
+          pTask->visible = 0;
+          pTask->flag = TASK_FLAG_DESTROY;
+
+          AddScore( pTask->Data.frog.score );
+
+          pBTask->visible = 0;
+          pBTask->flag = TASK_FLAG_DESTROY;
+          break;
+        }
+      }
+
+      pBTask = pBTask->Next;
+    }
+  }
+  
 
 	return( 0 );
 }

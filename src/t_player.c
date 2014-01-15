@@ -374,14 +374,6 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
         pTask->Data.player.direction = 1;
         MovePlayer( pTask , -CalcPlayerSpeed() , 0 , 1 );
       };
-      /*</s0115>*ƒoƒO‚ ‚è*/
-      {
-        struct TaskData* pBTask;
-
-        pBTask = AllocTask();
-        InitTaskPBullet( pBTask , pTask->x , pTask->y,1,10,0,0,0 );
-        AddlLink( pBTask , DISP_LEVEL_ENEMY );
-      };
       pTask->Data.player.count++;
 
       if( pTask->Data.player.count > 10 ) {
@@ -400,7 +392,18 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
           x -= 120;
         };
 
-        while( pFTask != NULL ) {
+        if (pTask->Data.player.count == 11){
+          struct TaskData* pBTask;
+          int dx = ( pTask->Data.player.direction == 0 ) ? 20 : -20;
+
+          pBTask = AllocTask();
+          if (pBTask != NULL) {
+            InitTaskPBullet( pBTask , x, y, 1, dx,0, 0,0 );
+            AddlLink( pBTask , DISP_LEVEL_PBULLET );
+          }
+        };
+
+        /*while( pFTask != NULL ) {
           if( pFTask->type == TASK_ENEMY ) {
             if( (pFTask->x - x)*(pFTask->x - x) + (pFTask->y - y)*(pFTask->y - y) < 50*50 ) {
               struct TaskData* pATask;
@@ -417,7 +420,7 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
           };
 
           pFTask = pFTask->Next;
-        };
+        };*/
       };
 
       if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode ] ].Frames ) {

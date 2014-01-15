@@ -14,7 +14,7 @@ static s32 CalcPBullet( struct TaskData* pTask , u32 Flag ) {
 	pTask->y += pTask->Data.pbullet.dy;
 	pTask->x += pTask->Data.pbullet.dx;
 
-	if( pTask->y < -32 ) {
+	if( ++pTask->Data.pbullet.count > 100 ) {
 		pTask->visible = 0;
 		pTask->flag = TASK_FLAG_DESTROY;
 	};
@@ -25,9 +25,14 @@ static s32 CalcPBullet( struct TaskData* pTask , u32 Flag ) {
 static s32 DrawPBullet( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
 	int w, h;
 
-	agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 2 , 1 );
-	ageTransferAAC( pDBuf, pTask->Data.pbullet.image, 0, &w, &h );
-	agDrawSPRITE( pDBuf, 1, pTask->x - (w<<1) , pTask->y - (h<<1) , pTask->x + (w<<1), pTask->y + (h<<1) );
+	if( (pTask->x + 50) > g_OffsetX && (pTask->x - 50) < (g_OffsetX + 1024) ) {
+		agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 2 , 1 );
+		ageTransferAAC( pDBuf, pTask->Data.pbullet.image, 0, &w, &h );
+
+		agDrawSPRITE( pDBuf, 1,
+				(pTask->x - g_OffsetX - w/2)<<2 , (pTask->y - g_OffsetY - h)<<2 ,
+				(pTask->x - g_OffsetX + w/2)<<2 , (pTask->y - g_OffsetY)<<2 );
+	};
 
 	return( 0 );
 }

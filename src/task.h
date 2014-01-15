@@ -13,19 +13,20 @@
 #include "t_object.h"
 #include "t_attack.h"
 #include "t_snake.h"
-#include "t_pbullet.h" /*<s0115>*/
+#include "t_pbullet.h"
 
 #define TASK_MAX			(512)
 #define DISP_LEVEL_MAX		(16)
 
-#define DISP_LEVEL_BG			(0)			//　最下層
+#define DISP_LEVEL_BG			(0)			  //　最下層
 #define DISP_LEVEL_OBJECT		(5)			//　オブジェクト
 #define DISP_LEVEL_FOOD			(6)			//　オブジェクト
 #define DISP_LEVEL_ENEMY		(7)			//　オブジェクト
-#define DISP_LEVEL_PLAYER		(8)			//　自機
-#define DISP_LEVEL_BG_FRONT		(9)			//　自機の前の背景
-#define DISP_LEVEL_FRAME		(10)		//　枠
-#define DISP_LEVEL_SCORE		(11)		//　スコア
+#define DISP_LEVEL_PBULLET		(8)		//　自機の弾
+#define DISP_LEVEL_PLAYER		(9)			//　自機
+#define DISP_LEVEL_BG_FRONT		(10)	//　自機の前の背景
+#define DISP_LEVEL_FRAME		(11)		//　枠
+#define DISP_LEVEL_SCORE		(12)		//　スコア
 #define DISP_LEVEL_TOP			(15)		//　スコア
 
 #define TASK_FLAG_DESTROY	(1)
@@ -44,7 +45,7 @@ enum TaskType {
 	TASK_SENARIO,
 	TASK_OPENING,
 
-	TASK_PBULLET,	/*<s0115>*/
+	TASK_PBULLET,
 };
 
 
