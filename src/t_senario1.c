@@ -212,6 +212,7 @@ void InitTaskSenario1( struct TaskData* pTask ) {
         break;
 
       case OBJECT_TYPE_FRONT:
+        is_hit = FALSE;
         disp_level = DISP_LEVEL_BG_FRONT;
         break;
 

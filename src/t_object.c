@@ -45,22 +45,17 @@ static s32 CalcObject( struct TaskData* pTask , u32 Flag ) {
   }
 
   // Ž©‹@‚Ì’e‚Ì”»’è
-  {
+  if (pTask->Data.object.is_hit) {
     struct TaskData* pBTask;
     pBTask = GetDispLink( DISP_LEVEL_PBULLET );
     while ( pBTask != NULL ) {
       if (pBTask->type == TASK_PBULLET) {
-        int w,h;
         struct RECT rect;
-
-        w = 128>>2;//ageRM3[ pBTask->Data.object.image ].Width;
-        h = 128>>2;//ageRM3[ pBTask->Data.object.image ].Height;
 
         rect.x0 = pBTask->x - 45;
         rect.y0 = pBTask->y - 109;
         rect.x1 = pBTask->x + 45;
         rect.y1 = pBTask->y - 19;
-        //if ( (pTask->x - pBTask->x) * (pTask->x - pBTask->x) + (pTask->y - pBTask->y) * (pTask->y - pBTask->y) < 50*50) {
         if ( HitObject(pTask, &rect) ) {
           struct TaskData* pATask;
 
