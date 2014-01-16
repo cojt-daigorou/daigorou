@@ -144,6 +144,8 @@ extern "C" {
 #define AG_CG_BG_4_2	(114)
 #define AG_CG_BG_4_3	(115)
 #define AG_CG_BG_4_4	(116)
+#define AG_CG_OBJ_TOGE	(117)
+#define AG_CG_OBJ_TOGE4	(118)
 
 /***************************************************************/
 /*                     RM3 Member Symbol                       */
@@ -194,7 +196,7 @@ extern "C" {
 /***************************************************************/
 /*                          Data Member                        */
 /***************************************************************/
-extern const AGERomMember ageRM[117];
+extern const AGERomMember ageRM[119];
 extern const AGERM3Member ageRM3[16];
 extern const u32 ageReserve[1];
 extern const u32 ageUser[1];
