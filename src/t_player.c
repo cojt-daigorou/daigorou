@@ -127,7 +127,7 @@ static int GetFood( struct TaskData* pTask ) {
   y = g_PlayerY + BBox[ pTask->Data.player.mode ].y1;
 
   while( pFTask != NULL ) {
-    if( (pFTask->x - x)*(pFTask->x - x) + (pFTask->y - y)*(pFTask->y - y) < 20*20 ) {
+    if( (pFTask->x - x)*(pFTask->x - x) + (pFTask->y - y)*(pFTask->y - y) < 90*90 ) {
       pFTask->visible = 0;
       pFTask->flag = TASK_FLAG_DESTROY;
 
