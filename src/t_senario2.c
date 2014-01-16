@@ -9,7 +9,7 @@
 #include "global.h"
 
 /******************************************************************/
-/*                          シナリオ１                            */
+/*                          シナリオ２                            */
 /******************************************************************/
 static struct SPos {
   int x, y;
@@ -37,15 +37,26 @@ static struct SPos {
 static struct SPos wpos[] = {
   { 150 , 419 , OBJECT_TYPE_FRONT , AG_CG_OBJ_GRASS },
 
-  { 1000 , 605      , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE4 },
-  { 1000 , 605-64   , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE3 },
-  { 1000 , 605-64*2 , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE2 },
-  { 1000 , 605-64*3 , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE1 },
+//  { 1000 , 605      , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE4 },
+//  { 1000 , 605-64   , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE3 },
+//  { 1000 , 605-64*2 , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE2 },
+//  { 1000 , 605-64*3 , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE1 },
+//
+//  { 1800 , 605      , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE4 },
+//  { 1800 , 605-64   , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE3 },
+//  { 1800 , 605-64*2 , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE2 },
+//  { 1800 , 605-64*3 , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE1 },
 
-  { 1800 , 605      , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE4 },
-  { 1800 , 605-64   , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE3 },
-  { 1800 , 605-64*2 , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE2 },
-  { 1800 , 605-64*3 , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE1 },
+  { 1300, 605 , OBJECT_TYPE_TOGE4V1 , AG_CG_OBJ_TOGE4 },
+  { 1300, 605+50 , OBJECT_TYPE_HITV1 , AG_CG_OBJ_WORKSTAND1 },
+
+  { 1300, 305 , OBJECT_TYPE_TOGE4V2 , AG_CG_OBJ_TOGE4 },
+  { 1300, 305-50 , OBJECT_TYPE_HITV2 , AG_CG_OBJ_WORKSTAND1 },
+
+  { 1800, 500 , OBJECT_TYPE_HIT , AG_CG_OBJ_WORKSTAND1 },
+
+  { 2300, 605 , OBJECT_TYPE_TOGE4V1 , AG_CG_OBJ_TOGE4 },
+  { 2300, 605+50 , OBJECT_TYPE_HITV1 , AG_CG_OBJ_WORKSTAND1 },
 
   { 2800+700*0 , 500 , OBJECT_TYPE_HITH1 , AG_CG_OBJ_WORKSTAND1 },
   { 2800+700*1 , 300 , OBJECT_TYPE_HITH2 , AG_CG_OBJ_WORKSTAND1 },
@@ -54,11 +65,30 @@ static struct SPos wpos[] = {
   { 2800+700*4 ,-300 , OBJECT_TYPE_HITH1 , AG_CG_OBJ_WORKSTAND1 },
   { 2800+700*5 ,-500 , OBJECT_TYPE_HIT ,   AG_CG_OBJ_WORKSTAND1 },
 
-  { 1300 ,605 , OBJECT_TYPE_TOGE4 , AG_CG_OBJ_TOGE4 },
+  { 2800+256*0, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
+  { 2800+256*1, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
+  { 2800+256*2, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
+  { 2800+256*3, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
+  { 2800+256*4, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
+  { 2800+256*5, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
+  { 2800+256*6, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
+  { 2800+256*7, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
+  { 2800+256*8, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
+  { 2800+256*9, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
+  { 2800+256*10, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
+  { 2800+256*11, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
+  { 2800+256*12, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
+  { 2800+256*13, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
+  { 2800+256*14, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
+  { 2800+256*15, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
+  { 2800+256*16, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
+  { 2800+256*17, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
+
 };
 
 static struct SPos fpos[] = {
-  { 1400 , 680 , 1 , 0 },
+  { 1300 , 680 , 1 , 0 },
+  { 1300 , 380 , 1 , 0 },
   { 2400 , 680 , 1 , 0 },
   { 2800 , 500 , 0 , 0 },
   { 3600 , 100 , 2 , 0 },
@@ -68,21 +98,21 @@ static struct SPos fpos[] = {
 
 static struct SPos epos[] = {
   { 820  , 674 , ENEMY_TYPE_FROG  , 300 },
-  //{ 820+100*2  , 674 , ENEMY_TYPE_FROG  , 300 },
-  //{ 820+200*2  , 674 , ENEMY_TYPE_FROG  , 300 },
-  { 820+300*2  , 674 , ENEMY_TYPE_FROG  , 300 },
-  //{ 820+400*2  , 674 , ENEMY_TYPE_FROG  , 300 },
-  //{ 820+500*2  , 674 , ENEMY_TYPE_FROG  , 300 },
-  { 820+600*2  , 674 , ENEMY_TYPE_FROG  , 300 },
-  //{ 820+700*2  , 674 , ENEMY_TYPE_FROG  , 300 },
-  //{ 820+800*2  , 674 , ENEMY_TYPE_FROG  , 300 },
-  //{ 820+900*2  , 674 , ENEMY_TYPE_FROG  , 300 },
-  { 1800 , 416 , ENEMY_TYPE_SNAKE , 300 },
+//  { 820+100*2  , 674 , ENEMY_TYPE_FROG  , 300 },
+//  { 820+200*2  , 674 , ENEMY_TYPE_FROG  , 300 },
+//  { 820+300*2  , 674 , ENEMY_TYPE_FROG  , 300 },
+//  { 820+400*2  , 674 , ENEMY_TYPE_FROG  , 300 },
+//  { 820+500*2  , 674 , ENEMY_TYPE_FROG  , 300 },
+//  { 820+600*2  , 674 , ENEMY_TYPE_FROG  , 300 },
+//  { 820+700*2  , 674 , ENEMY_TYPE_FROG  , 300 },
+//  { 820+800*2  , 674 , ENEMY_TYPE_FROG  , 300 },
+//  { 820+900*2  , 674 , ENEMY_TYPE_FROG  , 300 },
+//  { 1800 , 416 , ENEMY_TYPE_SNAKE , 300 },
 };
 
 static u8 is_StageCleared;
 
-static s32 CalcSenario1( struct TaskData* pTask , u32 Flag ) {
+static s32 CalcSenario2( struct TaskData* pTask , u32 Flag ) {
   pTask->x++;
 
   if( g_GameOver ) {
@@ -202,7 +232,7 @@ static s32 CalcSenario1( struct TaskData* pTask , u32 Flag ) {
   return( 0 );
 }
 
-void InitTaskSenario1( struct TaskData* pTask ) {
+void InitTaskSenario2( struct TaskData* pTask ) {
   int i;
 
   memset( pTask , 0 , sizeof( *pTask ) );
@@ -210,7 +240,7 @@ void InitTaskSenario1( struct TaskData* pTask ) {
   srandMT( 3475573 );
 
   pTask->type = TASK_SENARIO;
-  pTask->Calc = CalcSenario1;
+  pTask->Calc = CalcSenario2;
   pTask->x = 0;
   pTask->y = 0;
 
