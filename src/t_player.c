@@ -153,16 +153,11 @@ const static u16 MotionMap[] = {
   AG_RP_DAIGOROU_GAMEOVER,
 };
 
-const static s16 JumpPattern[] = {
-  50, 30, 22, 19, 15, 13, 10, 8 , 7 , 6 , 5 , 4 , 2 , 2 , 1, 1, 0, 0,
-};
-
 static int isRun = 0;
 
 static s32 CalcPlayerSpeed() {
   return isRun ? PLAYER_RUN_SPEED : PLAYER_WALK_SPEED;
 }
-
 
 //　地面にいる場合
 //　一番下でなく、足場が無くなった場合は下降モードへ。
@@ -187,6 +182,34 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
     pTask->Data.player.count = 0;
   }
 
+  // 攻撃
+  if (pTask->Data.player.mode != PLAYER_MODE_GAMEOVER) {
+    if( PadTrg()&PAD_X ) {
+      int x , y;
+
+      x = g_PlayerX;
+      y = g_PlayerY + BBox[ pTask->Data.player.mode ].y1;
+
+      if( pTask->Data.player.direction == 0 ) {
+        x += 120;
+      }
+      else {
+        x -= 120;
+      };
+
+      {
+        struct TaskData* pBTask;
+        int dx = ( pTask->Data.player.direction == 0 ) ? 20 : -20;
+
+        pBTask = AllocTask();
+        if (pBTask != NULL) {
+          InitTaskPBullet( pBTask , x, y, 1, dx,0, 0,0 );
+          AddlLink( pBTask , DISP_LEVEL_PBULLET );
+        };
+      };
+    };
+  }
+
   switch( pTask->Data.player.mode ) {
     //　地面にいる場合
     case PLAYER_MODE_WAIT :
@@ -202,13 +225,10 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
         pTask->Data.player.mode = PLAYER_MODE_FALL;
         pTask->Data.player.count = 0;
       }
-      else if( PadTrg()&PAD_X ) {
-        pTask->Data.player.mode = PLAYER_MODE_ATTACK;
-        pTask->Data.player.count = 0;
-      }
       else if( PadTrg()&PAD_A ) {		//　ボタンが押された場合はジャンプモードへ。
         pTask->Data.player.mode = PLAYER_MODE_JUMPSTART;
         pTask->Data.player.count = 0;
+        pTask->Data.player.jump_power = isRun ? 35 : 25;
         ageSndMgrPlayOneshot( AS_SND_JUMP , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
       }
       else if( PadLvl()&PAD_RIGHT || PadLvl()&PAD_LEFT ) {
@@ -282,19 +302,13 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
         MovePlayer( pTask , -CalcPlayerSpeed() , 0 , 1 );
       };
 
-      /*if( PadLvl()&PAD_A ) {*/		//　ボタンが押されている場合 <s01151244>Aを離しても停止しないように
       pTask->Data.player.count++;
 
       if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode ] ].Frames ) {
         pTask->Data.player.count = 0;
         pTask->Data.player.mode = PLAYER_MODE_JUMP;
-        pTask->Data.player.jump_count = 0;
       };
-      /*}
-        else {		//　ボタンが離された（ジャンプ直前なので停止へ移行）
-        pTask->Data.player.mode = PLAYER_MODE_WAIT;
-        pTask->Data.player.count = 0;
-        };</s01151244>*/
+
       break;
 
     case PLAYER_MODE_JUMP :
@@ -307,21 +321,19 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
         MovePlayer( pTask , -CalcPlayerSpeed() , 0 , 1 );
       };
 
-      if( PadLvl()&PAD_A ||(pTask->Data.player.jump_count<10)) {		/*<s01151244>ボタンが押されている場合orジャンプカウントが10になるまで*/
-        MovePlayer( pTask , 0 , -JumpPattern[ pTask->Data.player.jump_count ] , 1 );
-        pTask->Data.player.jump_count++;
+      if( pTask->Data.player.jump_power > 0 ) {
+        MovePlayer( pTask , 0 , -pTask->Data.player.jump_power , 1 );
+        pTask->Data.player.jump_power -= 2;// 重力加速度的な何か
 
-        if( pTask->Data.player.jump_count >= sizeof( JumpPattern )/sizeof( JumpPattern[0] ) ) {
-          pTask->Data.player.mode = PLAYER_MODE_FALL;
-        };
-
-        pTask->Data.player.count++;
-        if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode ] ].Frames ) {
-          pTask->Data.player.count = 0;
-        };
+        if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode ] ].Frames - 1 ) {
+          // 最大フレームに達したらカウントを止める
+        } else {
+          pTask->Data.player.count++;
+        }
       }
-      else {		//　ボタンが離されたので落ちモードへ。
+      else {// jump_power が 0 になったら落下モードへ。
         pTask->Data.player.mode = PLAYER_MODE_FALL;
+        pTask->Data.player.count = 0;
       };
       break;
 
@@ -376,49 +388,51 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
 
     case PLAYER_MODE_ATTACK :
 
-      /*<s01151238>攻撃中の左右移動*/
-      if( PadLvl()&PAD_RIGHT ) {
-        pTask->Data.player.direction = 0;
-        MovePlayer( pTask , CalcPlayerSpeed() , 0 , 1 );
-      };
-      if( PadLvl()&PAD_LEFT ) {
-        pTask->Data.player.direction = 1;
-        MovePlayer( pTask , -CalcPlayerSpeed() , 0 , 1 );
-      };
-      pTask->Data.player.count++;
+      // スターマシンガン用のMODE
 
-      if( pTask->Data.player.count > 10 ) {
-        int x , y;
-        struct TaskData* pFTask;
+      ///*<s01151238>攻撃中の左右移動*/
+      //if( PadLvl()&PAD_RIGHT ) {
+      //  pTask->Data.player.direction = 0;
+      //  MovePlayer( pTask , CalcPlayerSpeed() , 0 , 1 );
+      //};
+      //if( PadLvl()&PAD_LEFT ) {
+      //  pTask->Data.player.direction = 1;
+      //  MovePlayer( pTask , -CalcPlayerSpeed() , 0 , 1 );
+      //};
+      //pTask->Data.player.count++;
 
-        pFTask = GetDispLink( DISP_LEVEL_ENEMY );
+      //if( pTask->Data.player.count > 10 ) {
+      //  int x , y;
+      //  struct TaskData* pFTask;
 
-        x = g_PlayerX;
-        y = g_PlayerY + BBox[ pTask->Data.player.mode ].y1;
+      //  pFTask = GetDispLink( DISP_LEVEL_ENEMY );
 
-        if( pTask->Data.player.direction == 0 ) {
-          x += 120;
-        }
-        else {
-          x -= 120;
-        };
+      //  x = g_PlayerX;
+      //  y = g_PlayerY + BBox[ pTask->Data.player.mode ].y1;
 
-        if (pTask->Data.player.count == 11){
-          struct TaskData* pBTask;
-          int dx = ( pTask->Data.player.direction == 0 ) ? 20 : -20;
+      //  if( pTask->Data.player.direction == 0 ) {
+      //    x += 120;
+      //  }
+      //  else {
+      //    x -= 120;
+      //  };
 
-          pBTask = AllocTask();
-          if (pBTask != NULL) {
-            InitTaskPBullet( pBTask , x, y, 1, dx,0, 0,0 );
-            AddlLink( pBTask , DISP_LEVEL_PBULLET );
-          }
-        };
-      };
+      //  if (pTask->Data.player.count == 11){
+      //    struct TaskData* pBTask;
+      //    int dx = ( pTask->Data.player.direction == 0 ) ? 20 : -20;
 
-      if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode ] ].Frames ) {
-        pTask->Data.player.count = 0;
-        pTask->Data.player.mode = PLAYER_MODE_WAIT;
-      };
+      //    pBTask = AllocTask();
+      //    if (pBTask != NULL) {
+      //      InitTaskPBullet( pBTask , x, y, 1, dx,0, 0,0 );
+      //      AddlLink( pBTask , DISP_LEVEL_PBULLET );
+      //    }
+      //  };
+      //};
+
+      //if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode ] ].Frames ) {
+      //  pTask->Data.player.count = 0;
+      //  pTask->Data.player.mode = PLAYER_MODE_WAIT;
+      //};
       break;
 
     case PLAYER_MODE_GAMEOVER :
@@ -445,14 +459,14 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
   };
 
   //　画面オフセット補正
-  if( g_PlayerX > (1024-256) ) {
-    int nx = g_PlayerX - (1024-256);
+  if( g_PlayerX > (1024-512) ) {
+    int nx = g_PlayerX - (1024-512);
     if( nx > g_OffsetX ) {
       g_OffsetX = nx;
     };
   };
-  if ((g_PlayerX - g_OffsetX) < 256) {
-    g_OffsetX = g_PlayerX - 256;
+  if ((g_PlayerX - g_OffsetX) < 512) {
+    g_OffsetX = g_PlayerX - 512;
     if (g_OffsetX < 0 ) {
       g_OffsetX = 0;
     }

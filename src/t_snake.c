@@ -10,6 +10,10 @@
 #include "global.h"
 #include "t_snake.h"
 
+static void AddScore( u32 n ) {
+  g_Score += n;
+}
+
 /******************************************************************/
 /*                               ‚Ö‚Ñ                             */
 /******************************************************************/
@@ -48,6 +52,39 @@ static s32 CalcSnake( struct TaskData* pTask , u32 Flag ) {
 			};
 			break;
 	};
+
+  // Ž©‹@‚Ì’e‚Ì”»’è
+  {
+    struct TaskData* pBTask;
+    pBTask = GetDispLink( DISP_LEVEL_PBULLET );
+    while ( pBTask != NULL ) {
+      if (pBTask->type == TASK_PBULLET) {
+        if ( (pTask->x - pBTask->x) * (pTask->x - pBTask->x) + (pTask->y - pBTask->y) * (pTask->y - pBTask->y) < 50*50) {
+          struct TaskData* pATask;
+
+          pATask = AllocTask();
+          InitTaskAttack( pATask , pTask->x , pTask->y );
+          AddlLink( pATask , DISP_LEVEL_ENEMY );
+
+          pTask->visible = 0;
+          pTask->flag = TASK_FLAG_DESTROY;
+
+          AddScore( pTask->Data.frog.score );
+
+          pBTask->visible = 0;
+          pBTask->flag = TASK_FLAG_DESTROY;
+          break;
+        }
+      }
+
+      pBTask = pBTask->Next;
+    }
+  }
+
+  // Ž©‹@‚Æ‚Ì”»’è
+  if ( (pTask->x - g_PlayerX) * (pTask->x - g_PlayerX) + (pTask->y - g_PlayerY - 100) * (pTask->y - g_PlayerY - 100 ) < 80*80) {
+    g_Life = 0;
+  }
 
 	return( 0 );
 }
