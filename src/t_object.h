@@ -29,4 +29,6 @@ void InitTaskObject( struct TaskData* pTask, s32 x, s32 y, u16 image,
     u16 is_hit, u16 is_harmful, u16 is_breakable, 
     enum ObjectMotion motion, float phase, float frequency, float amplitude );
 
+static s32 HitObject( struct TaskData* pTask , const struct RECT* pRect );
+
 #endif // __TASK_OBJECT_H__

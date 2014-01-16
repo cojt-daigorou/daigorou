@@ -14,21 +14,6 @@
 /*                         固定オブジェクト                       */
 /******************************************************************/
 
-static s32 HitObject( struct TaskData* pTask , const struct RECT* pRect ) {
-  int w,h;
-  struct RECT rect;
-
-  w = ageRM[ pTask->Data.object.image ].Width;
-  h = ageRM[ pTask->Data.object.image ].Height;
-
-  rect.x0 = pTask->x - w/2;
-  rect.y0 = pTask->y;
-  rect.x1 = pTask->x + w/2;
-  rect.y1 = pTask->y + h;
-
-  return( IsHitRect( pRect , &rect ) );
-}
-
 static s32 CalcObject( struct TaskData* pTask , u32 Flag ) {
 
   switch( pTask->Data.object.motion ) {
@@ -92,6 +77,21 @@ static s32 DrawObject( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
         (pTask->x - w/2 - g_OffsetX)<<2 , (pTask->y - g_OffsetY)<<2 ,
         (pTask->x + w/2 - g_OffsetX)<<2, (pTask->y - g_OffsetY + h)<<2 );
   };
+}
+
+static s32 HitObject( struct TaskData* pTask , const struct RECT* pRect ) {
+  int w,h;
+  struct RECT rect;
+
+  w = ageRM[ pTask->Data.object.image ].Width;
+  h = ageRM[ pTask->Data.object.image ].Height;
+
+  rect.x0 = pTask->x - w/2;
+  rect.y0 = pTask->y;
+  rect.x1 = pTask->x + w/2;
+  rect.y1 = pTask->y + h;
+
+  return( IsHitRect( pRect , &rect ) );
 }
 
 void InitTaskObject( struct TaskData* pTask, s32 x, s32 y, u16 image,
