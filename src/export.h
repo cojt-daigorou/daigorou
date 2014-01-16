@@ -196,6 +196,21 @@ extern "C" {
 #define AS_SND_WALK_RIGHT	(15)
 #define AS_SND_WALK_LEFT	(16)
 #define AS_SND_DECIDE008	(17)
+#define AS_SND_A01	(18)
+#define AS_SND_A02	(19)
+#define AS_SND_A03	(20)
+#define AS_SND_A04	(21)
+#define AS_SND_B01	(22)
+#define AS_SND_B02	(23)
+#define AS_SND_B03	(24)
+#define AS_SND_B04	(25)
+#define AS_SND_B05	(26)
+#define AS_SND_B06	(27)
+#define AS_SND_B07	(28)
+#define AS_SND_B08	(29)
+#define AS_SND_B09	(30)
+#define AS_SND_B10	(31)
+#define AS_SND_B11	(32)
 
 /***************************************************************/
 /*                          Data Member                        */
@@ -205,7 +220,7 @@ extern const AGERM3Member ageRM3[18];
 extern const u32 ageReserve[1];
 extern const u32 ageUser[1];
 extern const s16 ageVGCnt;
-extern const AGESoundRomMember ageSRM[18];
+extern const AGESoundRomMember ageSRM[33];
 
 #ifdef __cplusplus
 }
