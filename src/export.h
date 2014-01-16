@@ -34,7 +34,7 @@ extern "C" {
 #define AG_CG_INFO_TIME	(4)
 #define AG_CG_WORKSTAND	(5)
 #define AG_CG_GAMECLEAR	(6)
-#define AG_CG_GAMEOVER_0	(7)
+#define AG_CG_GAMEOVER	(7)
 #define AG_CG_GAMESTART	(8)
 #define AG_CG_SCOREFONT	(9)
 #define AG_CG_TITLE_0	(10)
