@@ -24,7 +24,7 @@ struct PlayerData {
 	u8 direction;
 	u8 count;
 	u8 mode;
-	int jump_power;
+	s32 jump_power;
 };
 
 void InitTaskPlayer( struct TaskData* pTask );

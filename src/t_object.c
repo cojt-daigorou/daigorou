@@ -20,11 +20,11 @@ static s32 CalcObject( struct TaskData* pTask , u32 Flag ) {
       break;
     case ObjectMotion_Horizon:
       pTask->Data.object.pre_x = pTask->x;
-      pTask->x = pTask->Data.object.center_x + 100 * sinf(pTask->Data.object.phase + 0.05 * (pTask->Data.object.count++));
+      pTask->x = pTask->Data.object.center_x + pTask->Data.object.amplitude * sinf(pTask->Data.object.phase + pTask->Data.object.frequency * (pTask->Data.object.count++));
       break;
     case ObjectMotion_Vertical:
       pTask->Data.object.pre_y = pTask->y;
-      pTask->y = pTask->Data.object.center_y + 100 * sinf(pTask->Data.object.phase + 0.03 * (pTask->Data.object.count++));
+      pTask->y = pTask->Data.object.center_y + pTask->Data.object.amplitude * sinf(pTask->Data.object.phase + pTask->Data.object.frequency * (pTask->Data.object.count++));
       break;
   }
 
@@ -59,7 +59,10 @@ static s32 HitObject( struct TaskData* pTask , const struct RECT* pRect ) {
   return( IsHitRect( pRect , &rect ) );
 }
 
-void InitTaskObject( struct TaskData* pTask , s32 x , s32 y , u16 image , u16 is_hit, enum ObjectMotion motion, float phase ) {
+void InitTaskObject( struct TaskData* pTask, s32 x, s32 y, u16 image,
+    u16 is_hit, u16 is_harmful, u16 is_breakable, 
+    enum ObjectMotion motion, float phase, float frequency, float amplitude ) {
+
   memset( pTask , 0 , sizeof( *pTask ) );
 
   pTask->type = TASK_STATIC;
@@ -73,6 +76,8 @@ void InitTaskObject( struct TaskData* pTask , s32 x , s32 y , u16 image , u16 is
   };
   pTask->Data.object.image = image;
   pTask->Data.object.is_hit = is_hit;
+  pTask->Data.object.is_harmful = is_harmful;
+  pTask->Data.object.is_breakable = is_breakable;
   pTask->Data.object.motion = motion;
   pTask->Data.object.count = 0;
   pTask->Data.object.center_x = x;
@@ -80,4 +85,6 @@ void InitTaskObject( struct TaskData* pTask , s32 x , s32 y , u16 image , u16 is
   pTask->Data.object.center_y = y;
   pTask->Data.object.pre_y = y;
   pTask->Data.object.phase = phase;
+  pTask->Data.object.frequency = frequency;
+  pTask->Data.object.amplitude = amplitude;
 }

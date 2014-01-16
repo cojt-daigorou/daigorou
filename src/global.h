@@ -15,4 +15,7 @@ extern u32 g_Life;
 
 extern struct RECT* g_pPlayerRect;
 
+#define TURE 1
+#define FALSE 0
+
 #endif // __GLOBAL_H__

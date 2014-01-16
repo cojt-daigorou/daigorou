@@ -178,11 +178,11 @@ void InitTaskSenario1( struct TaskData* pTask ) {
   //　固定オブジェクトの作成
   for( i=0 ; i<(sizeof( wpos )/sizeof( wpos[0] )) ; i++ ) {
     struct TaskData* pWTask;
-    int is_hit = 0;
+    int is_hit = FALSE;
     int disp_level = DISP_LEVEL_OBJECT;
 
     if( wpos[i].type == OBJECT_TYPE_HIT ) {
-      is_hit = 1;
+      is_hit = TRUE;
     }
     else if( wpos[i].type == OBJECT_TYPE_FRONT ) {
       disp_level = DISP_LEVEL_BG_FRONT;
@@ -190,12 +190,12 @@ void InitTaskSenario1( struct TaskData* pTask ) {
     pWTask = AllocTask();
     if (i > 8) {
       if (i % 2) {
-        InitTaskObject( pWTask , wpos[i].x , wpos[i].y , wpos[i].image , is_hit, ObjectMotion_Horizon, 3.141592 * (i%2) );
+        InitTaskObject( pWTask , wpos[i].x , wpos[i].y , wpos[i].image , is_hit, FALSE, FALSE, ObjectMotion_Horizon, 3.141592 * (i%2), 0.05, 100 );
       } else {
-        InitTaskObject( pWTask , wpos[i].x , wpos[i].y , wpos[i].image , is_hit, ObjectMotion_Vertical, 3.141592 * (i%2) );
+        InitTaskObject( pWTask , wpos[i].x , wpos[i].y , wpos[i].image , is_hit, FALSE, FALSE, ObjectMotion_Vertical, 3.141592 * (i%2), 0.03, 100 );
       }
     } else {
-      InitTaskObject( pWTask , wpos[i].x , wpos[i].y , wpos[i].image , is_hit, ObjectMotion_None, 0 );
+      InitTaskObject( pWTask , wpos[i].x , wpos[i].y , wpos[i].image , is_hit, FALSE, FALSE, ObjectMotion_None, 0, 0, 0 );
     }
 
     AddlLink( pWTask , disp_level );
