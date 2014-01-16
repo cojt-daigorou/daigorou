@@ -146,8 +146,6 @@ extern "C" {
 #define AG_CG_BG_4_4	(116)
 #define AG_CG_OBJ_TOGE	(117)
 #define AG_CG_OBJ_TOGE4	(118)
-#define AG_CG_OBJ_PBULLET	(119)
-#define AG_CG_OBJ_EBULLET	(120)
 
 /***************************************************************/
 /*                     RM3 Member Symbol                       */
@@ -168,6 +166,8 @@ extern "C" {
 #define AG_RP_DAIGOROU_RT	(13)
 #define AG_RP_EFF_RT	(14)
 #define AG_RP_DAIGOROU_GAMEOVER	(15)
+#define AG_RP_OBJ_PBULLET	(16)
+#define AG_RP_OBJ_EBULLET	(17)
 
 /***************************************************************/
 /*                       Vram Group Symbol                     */
@@ -198,8 +198,8 @@ extern "C" {
 /***************************************************************/
 /*                          Data Member                        */
 /***************************************************************/
-extern const AGERomMember ageRM[121];
-extern const AGERM3Member ageRM3[16];
+extern const AGERomMember ageRM[119];
+extern const AGERM3Member ageRM3[18];
 extern const u32 ageReserve[1];
 extern const u32 ageUser[1];
 extern const s16 ageVGCnt;
