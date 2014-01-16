@@ -37,7 +37,7 @@ extern "C" {
 #define AG_CG_GAMEOVER	(7)
 #define AG_CG_GAMESTART	(8)
 #define AG_CG_SCOREFONT	(9)
-#define AG_CG_TITLE_0	(10)
+#define AG_CG_TITLE	(10)
 #define AG_CG_EFFECT_DMG1	(11)
 #define AG_CG_EFFECT_DMG2	(12)
 #define AG_CG_EFFECT_RECOVERY1	(13)

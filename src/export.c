@@ -15,7 +15,7 @@ const AGERomMember ageRM[] = {
 	{      28445,          0,  935,  493,  935,  3,     491696, NULL },		/* AG_CG_GAMEOVER */
 	{      89907,          0,  516,  198,  264,  8,      15200, NULL },		/* AG_CG_GAMESTART */
 	{      91807,          0,  638,   70,  320,  8,      19808, NULL },		/* AG_CG_SCOREFONT */
-	{      94283,          0,  592,  357,  592,  3,     184592, NULL },		/* AG_CG_TITLE_0 */
+	{      94283,          0,  592,  357,  592,  3,     184592, NULL },		/* AG_CG_TITLE */
 	{     117357,          0,  137,  133,   72,  8,       2336, NULL },		/* AG_CG_EFFECT_DMG1 */
 	{     117649,          0,  137,  133,   72,  8,       2688, NULL },		/* AG_CG_EFFECT_DMG2 */
 	{     117985,          0,  127,  127,   64,  8,       2016, NULL },		/* AG_CG_EFFECT_RECOVERY1 */
