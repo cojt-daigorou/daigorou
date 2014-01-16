@@ -11,8 +11,8 @@ enum ObjectMotion {
 
 struct ObjectData {
   u32 count;
-	u16 image;
-	u16 is_hit;
+  u16 image;
+  u16 is_hit;
   u16 is_harmful;
   u16 is_breakable;
   enum ObjectMotion motion;

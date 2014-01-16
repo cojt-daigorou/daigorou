@@ -17,18 +17,18 @@ static void AddScore( u32 n ) {
 /*                                player                          */
 /******************************************************************/
 struct RECT BBox[] = {
-  { -50 , -88 , 50 , 116 },// PLAYER_MODE_WAIT		  (0)
-  { -50 , -88 , 50 , 116 },// PLAYER_MODE_WALKSTART	(1)
-  { -50 , -88 , 50 , 116 },// PLAYER_MODE_WALK			(2)
-  { -50 , -88 , 50 , 116 },// PLAYER_MODE_WALKEND		(3)
-  { -50 , -88 , 50 , 116 },// PLAYER_MODE_JUMPSTART	(4)
-  { -50 , -128 , 50 , 50 },// PLAYER_MODE_JUMP		  (5)
-  { -50 , -88 , 50 , 116 },// PLAYER_MODE_JUMPEND		(6)
-  { -50 , -128 , 50 , 50 },// PLAYER_MODE_FALL		  (7)
-  { -50 , -88 , 50 , 116 },// PLAYER_MODE_ATTACK		(8)
-  { -50 , -88 , 50 , 116 },// PLAYER_MODE_RUNSTART	(1+8)
-  { -50 , -88 , 50 , 116 },// PLAYER_MODE_RUN			  (2+8)
-  { -50 , -88 , 50 , 116 },// PLAYER_MODE_RUNEND		(3+8)
+  { -50 , -88 , 50 , 116 },// PLAYER_MODE_WAIT      (0)
+  { -50 , -88 , 50 , 116 },// PLAYER_MODE_WALKSTART (1)
+  { -50 , -88 , 50 , 116 },// PLAYER_MODE_WALK      (2)
+  { -50 , -88 , 50 , 116 },// PLAYER_MODE_WALKEND   (3)
+  { -50 , -88 , 50 , 116 },// PLAYER_MODE_JUMPSTART (4)
+  { -50 , -128 , 50 , 50 },// PLAYER_MODE_JUMP      (5)
+  { -50 , -88 , 50 , 116 },// PLAYER_MODE_JUMPEND   (6)
+  { -50 , -128 , 50 , 50 },// PLAYER_MODE_FALL      (7)
+  { -50 , -88 , 50 , 116 },// PLAYER_MODE_ATTACK    (8)
+  { -50 , -88 , 50 , 116 },// PLAYER_MODE_RUNSTART  (1+8)
+  { -50 , -88 , 50 , 116 },// PLAYER_MODE_RUN       (2+8)
+  { -50 , -88 , 50 , 116 },// PLAYER_MODE_RUNEND    (3+8)
   { -50 , -88 , 50 , 116 },// PLAYER_MODE_GAMEOVER  (12)
 };
 
@@ -256,7 +256,7 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
         pTask->Data.player.mode = PLAYER_MODE_FALL;
         pTask->Data.player.count = 0;
       }
-      else if( PadTrg()&PAD_A ) {		//　ボタンが押された場合はジャンプモードへ。
+      else if( PadTrg()&PAD_A ) {   //　ボタンが押された場合はジャンプモードへ。
         pTask->Data.player.mode = PLAYER_MODE_JUMPSTART;
         pTask->Data.player.count = 0;
         pTask->Data.player.jump_power = isRun ? 35 : 25;
@@ -273,11 +273,11 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
           MovePlayer( pTask , -CalcPlayerSpeed() , 0 , 1 );
         };
 
-        if( pTask->Data.player.mode == PLAYER_MODE_WAIT ) {		//　止まってたら走り始める
+        if( pTask->Data.player.mode == PLAYER_MODE_WAIT ) {   //　止まってたら走り始める
           pTask->Data.player.mode = PLAYER_MODE_WALKSTART;
           pTask->Data.player.count = 0;
         }
-        else if( pTask->Data.player.mode == PLAYER_MODE_WALKEND ) {		//　止まりかけだったなら走る
+        else if( pTask->Data.player.mode == PLAYER_MODE_WALKEND ) {   //　止まりかけだったなら走る
           pTask->Data.player.mode = PLAYER_MODE_WALK;
           pTask->Data.player.count = 0;
         }
@@ -287,7 +287,7 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
           if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode + isRun*8 ] ].Frames ) {
             pTask->Data.player.count = 0;
 
-            if( pTask->Data.player.mode == PLAYER_MODE_WALKSTART ) {		//　走り始めが終わったら走りモードへ。
+            if( pTask->Data.player.mode == PLAYER_MODE_WALKSTART ) {    //　走り始めが終わったら走りモードへ。
               pTask->Data.player.mode = PLAYER_MODE_WALK;
             };
           };
@@ -300,17 +300,17 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
           ageSndMgrPlayOneshot( AS_SND_WALK_LEFT , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
         };
       }
-      else {		//　キー入力なし
-        if( pTask->Data.player.mode == PLAYER_MODE_WALKSTART ) {		//　走り始めは停止へ。
+      else {    //　キー入力なし
+        if( pTask->Data.player.mode == PLAYER_MODE_WALKSTART ) {    //　走り始めは停止へ。
           pTask->Data.player.mode = PLAYER_MODE_WAIT;
           pTask->Data.player.count = 0;
         }
-        else if( pTask->Data.player.mode == PLAYER_MODE_WALK ) {		//　走ってたら走り終わりへ。
+        else if( pTask->Data.player.mode == PLAYER_MODE_WALK ) {    //　走ってたら走り終わりへ。
           pTask->Data.player.mode = PLAYER_MODE_WALKEND;
           pTask->Data.player.count = 0;
 
         }
-        else {		//　止まってるか走り終わり
+        else {    //　止まってるか走り終わり
           pTask->Data.player.count++;
 
           if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode + isRun*8 ] ].Frames ) {
