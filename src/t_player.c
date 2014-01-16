@@ -445,14 +445,14 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
   };
 
   //　画面オフセット補正
-  if( g_PlayerX > (1024-256) ) {
-    int nx = g_PlayerX - (1024-256);
+  if( g_PlayerX > (1024-512) ) {
+    int nx = g_PlayerX - (1024-512);
     if( nx > g_OffsetX ) {
       g_OffsetX = nx;
     };
   };
-  if ((g_PlayerX - g_OffsetX) < 256) {
-    g_OffsetX = g_PlayerX - 256;
+  if ((g_PlayerX - g_OffsetX) < 512) {
+    g_OffsetX = g_PlayerX - 512;
     if (g_OffsetX < 0 ) {
       g_OffsetX = 0;
     }
