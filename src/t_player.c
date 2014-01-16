@@ -207,7 +207,7 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
 
         pBTask = AllocTask();
         if (pBTask != NULL) {
-          InitTaskPBullet( pBTask , x, y, 1, dx,0, 0,0 );
+          InitTaskPBullet( pBTask , x, y, AG_RP_OBJ_PBULLET, dx,0, 0,0 );
           AddlLink( pBTask , DISP_LEVEL_PBULLET );
         };
       };

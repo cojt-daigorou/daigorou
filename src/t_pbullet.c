@@ -11,10 +11,13 @@
 /*                         Player Bullet                          */
 /******************************************************************/
 static s32 CalcPBullet( struct TaskData* pTask , u32 Flag ) {
+
+  pTask->Data.pbullet.count++;
+
 	pTask->y += pTask->Data.pbullet.dy;
 	pTask->x += pTask->Data.pbullet.dx;
 
-	if( ++pTask->Data.pbullet.count > 100 ) {
+	if( pTask->Data.pbullet.count > 100 ) {
 		pTask->visible = 0;
 		pTask->flag = TASK_FLAG_DESTROY;
 	};
@@ -27,7 +30,8 @@ static s32 DrawPBullet( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
 
 	if( (pTask->x + 50) > g_OffsetX && (pTask->x - 50) < (g_OffsetX + 1024) ) {
 		agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 2 , 1 );
-		ageTransferAAC( pDBuf, pTask->Data.pbullet.image, 0, &w, &h );
+		//ageTransferAAC( pDBuf, pTask->Data.pbullet.image, 0, &w, &h );
+    ageTransferAAC_RM3( pDBuf, pTask->Data.pbullet.image , 0, &w, &h , (pTask->Data.pbullet.count>>1) % (ageRM3[pTask->Data.pbullet.image].Frames) );
 
 		agDrawSPRITE( pDBuf, 1,
 				(pTask->x - g_OffsetX - w/2)<<2 , (pTask->y - g_OffsetY - h)<<2 ,
