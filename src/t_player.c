@@ -71,6 +71,10 @@ static int MovePlayer( struct TaskData* pTask , int dx , int dy , int move_flag 
     if( pWTask->Hit != NULL ) {
       if( pWTask->Hit( pWTask , &crect ) ) {
 
+        if (pWTask->Data.object.is_harmful) {
+          g_Life = 0;
+        }
+
         // ‰¡‚©‚çÕ“Ë‚µ‚½‚ç—Ž‚Æ‚·
         if (y > pWTask->y ) {
           int tw = ageRM[ pWTask->Data.object.image ].Width;

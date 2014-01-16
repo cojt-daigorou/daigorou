@@ -3,6 +3,8 @@
 
 #include <agtypes.h>
 
+#define PI (3.14159265359)
+
 extern int g_PlayerX;
 extern int g_PlayerY;
 extern int g_OffsetX;
@@ -14,8 +16,5 @@ extern u32 g_Time;
 extern u32 g_Life;
 
 extern struct RECT* g_pPlayerRect;
-
-#define TURE 1
-#define FALSE 0
 
 #endif // __GLOBAL_H__
