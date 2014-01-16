@@ -47,6 +47,18 @@ void GotoMode( enum GameMode mode ) {
 			g_GameOver = 0;
       g_StageClear = FALSE;
 
+      switch (g_Stage) {
+        case 0: 
+          g_Score = 0;
+          g_Time = 100;
+          break;
+        case 1:
+          g_Time = 200;
+          break;
+        default:
+          break;
+      }
+
 			pTask = AllocTask();
 			InitTaskBg( pTask , AG_CG_BG_0_0 , 0 );
 			AddlLink( pTask , DISP_LEVEL_BG );
@@ -56,20 +68,7 @@ void GotoMode( enum GameMode mode ) {
 			AddlLink( pTask , DISP_LEVEL_PLAYER );
 
 			pTask = AllocTask();
-      switch (g_Stage) {
-        case 0: 
-          g_Score = 0;
-          g_Time = 100;
-          InitTaskSenario1( pTask );
-          break;
-        case 1:
-          g_Time = 200;
-          InitTaskSenario2( pTask );
-          break;
-        default:
-          InitTaskSenario1( pTask );
-          break;
-      }
+      InitTaskSenario1( pTask );
 			AddlLink( pTask , DISP_LEVEL_BG );
 
 			pTask = AllocTask();

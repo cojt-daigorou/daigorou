@@ -7,6 +7,7 @@
 #include "randMT.h"
 #include "export.h"
 #include "global.h"
+#include "t_senario1.h"
 
 /******************************************************************/
 /*                          シナリオ１                            */
@@ -34,7 +35,11 @@ static struct SPos {
 #define ENEMY_TYPE_FROG		    (0)
 #define ENEMY_TYPE_SNAKE	    (1)
 
-static struct SPos wpos[] = {
+//
+// stage 1
+//
+
+static struct SPos wpos_1[] = {
   { 150 , 419 , OBJECT_TYPE_FRONT , AG_CG_OBJ_GRASS },
 
   { 1000 , 605      , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE4 },
@@ -57,7 +62,7 @@ static struct SPos wpos[] = {
   { 1300 ,605 , OBJECT_TYPE_TOGE4 , AG_CG_OBJ_TOGE4 },
 };
 
-static struct SPos fpos[] = {
+static struct SPos fpos_1[] = {
   { 1400 , 680 , 1 , 0 },
   { 2400 , 680 , 1 , 0 },
   { 2800 , 500 , 0 , 0 },
@@ -66,7 +71,7 @@ static struct SPos fpos[] = {
   { 6500 , 680 , 1 , 0 },
 };
 
-static struct SPos epos[] = {
+static struct SPos epos_1[] = {
   { 820  , 674 , ENEMY_TYPE_FROG  , 300 },
   //{ 820+100*2  , 674 , ENEMY_TYPE_FROG  , 300 },
   //{ 820+200*2  , 674 , ENEMY_TYPE_FROG  , 300 },
@@ -79,6 +84,88 @@ static struct SPos epos[] = {
   //{ 820+900*2  , 674 , ENEMY_TYPE_FROG  , 300 },
   { 1800 , 416 , ENEMY_TYPE_SNAKE , 300 },
 };
+
+
+//
+// stage 2
+//
+
+static struct SPos wpos_2[] = {
+  { 150 , 419 , OBJECT_TYPE_FRONT , AG_CG_OBJ_GRASS },
+
+//  { 1000 , 605      , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE4 },
+//  { 1000 , 605-64   , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE3 },
+//  { 1000 , 605-64*2 , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE2 },
+//  { 1000 , 605-64*3 , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE1 },
+//
+//  { 1800 , 605      , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE4 },
+//  { 1800 , 605-64   , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE3 },
+//  { 1800 , 605-64*2 , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE2 },
+//  { 1800 , 605-64*3 , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE1 },
+
+  { 1300, 605 , OBJECT_TYPE_TOGE4V1 , AG_CG_OBJ_TOGE4 },
+  { 1300, 605+50 , OBJECT_TYPE_HITV1 , AG_CG_OBJ_WORKSTAND1 },
+
+  { 1300, 305 , OBJECT_TYPE_TOGE4V2 , AG_CG_OBJ_TOGE4 },
+  { 1300, 305-50 , OBJECT_TYPE_HITV2 , AG_CG_OBJ_WORKSTAND1 },
+
+  { 1800, 500 , OBJECT_TYPE_HIT , AG_CG_OBJ_WORKSTAND1 },
+
+  { 2300, 605 , OBJECT_TYPE_TOGE4V1 , AG_CG_OBJ_TOGE4 },
+  { 2300, 605+50 , OBJECT_TYPE_HITV1 , AG_CG_OBJ_WORKSTAND1 },
+
+  { 2800+700*0 , 500 , OBJECT_TYPE_HITH1 , AG_CG_OBJ_WORKSTAND1 },
+  { 2800+700*1 , 300 , OBJECT_TYPE_HITH2 , AG_CG_OBJ_WORKSTAND1 },
+  { 2800+700*2 , 100 , OBJECT_TYPE_HITH1 , AG_CG_OBJ_WORKSTAND1 },
+  { 2800+700*3 ,-100 , OBJECT_TYPE_HITH2 , AG_CG_OBJ_WORKSTAND1 },
+  { 2800+700*4 ,-300 , OBJECT_TYPE_HITH1 , AG_CG_OBJ_WORKSTAND1 },
+  { 2800+700*5 ,-500 , OBJECT_TYPE_HIT ,   AG_CG_OBJ_WORKSTAND1 },
+
+  { 2800+256*0, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
+  { 2800+256*1, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
+  { 2800+256*2, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
+  { 2800+256*3, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
+  { 2800+256*4, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
+  { 2800+256*5, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
+  { 2800+256*6, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
+  { 2800+256*7, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
+  { 2800+256*8, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
+  { 2800+256*9, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
+  { 2800+256*10, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
+  { 2800+256*11, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
+  { 2800+256*12, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
+  { 2800+256*13, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
+  { 2800+256*14, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
+  { 2800+256*15, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
+  { 2800+256*16, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
+  { 2800+256*17, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
+
+};
+
+static struct SPos fpos_2[] = {
+  { 1300 , 680 , 1 , 0 },
+  { 1300 , 380 , 1 , 0 },
+  { 2400 , 680 , 1 , 0 },
+  { 2800 , 500 , 0 , 0 },
+  { 3600 , 100 , 2 , 0 },
+  { 6200 , 680 , 0 , 0 },
+  { 6500 , 680 , 1 , 0 },
+};
+
+static struct SPos epos_2[] = {
+  { 820  , 674 , ENEMY_TYPE_FROG  , 300 },
+//  { 820+100*2  , 674 , ENEMY_TYPE_FROG  , 300 },
+//  { 820+200*2  , 674 , ENEMY_TYPE_FROG  , 300 },
+//  { 820+300*2  , 674 , ENEMY_TYPE_FROG  , 300 },
+//  { 820+400*2  , 674 , ENEMY_TYPE_FROG  , 300 },
+//  { 820+500*2  , 674 , ENEMY_TYPE_FROG  , 300 },
+//  { 820+600*2  , 674 , ENEMY_TYPE_FROG  , 300 },
+//  { 820+700*2  , 674 , ENEMY_TYPE_FROG  , 300 },
+//  { 820+800*2  , 674 , ENEMY_TYPE_FROG  , 300 },
+//  { 820+900*2  , 674 , ENEMY_TYPE_FROG  , 300 },
+//  { 1800 , 416 , ENEMY_TYPE_SNAKE , 300 },
+};
+
 
 static u8 is_StageCleared;
 
@@ -204,6 +291,8 @@ static s32 CalcSenario1( struct TaskData* pTask , u32 Flag ) {
 
 void InitTaskSenario1( struct TaskData* pTask ) {
   int i;
+  struct SPos *wpos, *fpos, *epos; 
+  int wn, fn, en;
 
   memset( pTask , 0 , sizeof( *pTask ) );
 
@@ -216,8 +305,27 @@ void InitTaskSenario1( struct TaskData* pTask ) {
 
   is_StageCleared = FALSE;
 
+  switch( g_Stage ) {
+    case 0:
+      wpos = wpos_1;
+      fpos = fpos_1;
+      epos = epos_1;
+      wn = (sizeof( wpos_1 )/sizeof( wpos_1[0] ));
+      fn = (sizeof( fpos_1 )/sizeof( fpos_1[0] ));
+      en = (sizeof( epos_1 )/sizeof( epos_1[0] ));
+      break;
+    case 1:
+      wpos = wpos_2;
+      fpos = fpos_2;
+      epos = epos_2;
+      wn = (sizeof( wpos_2 )/sizeof( wpos_2[0] ));
+      fn = (sizeof( fpos_2 )/sizeof( fpos_2[0] ));
+      en = (sizeof( epos_2 )/sizeof( epos_2[0] ));
+      break;
+  }
+
   //　食べ物の作成
-  for( i=0 ; i<(sizeof( fpos )/sizeof( fpos[0] )) ; i++ ) {
+  for( i=0 ; i<fn ; i++ ) {
     struct TaskData* pFTask;
 
     pFTask = AllocTask();
@@ -226,7 +334,7 @@ void InitTaskSenario1( struct TaskData* pTask ) {
   };
 
   //　固定オブジェクトの作成
-  for( i=0 ; i<(sizeof( wpos )/sizeof( wpos[0] )) ; i++ ) {
+  for( i=0 ; i<wn ; i++ ) {
     struct TaskData* pWTask;
 
     u16 is_hit        = TRUE;
@@ -326,7 +434,7 @@ void InitTaskSenario1( struct TaskData* pTask ) {
   };
 
   //　敵の作成
-  for( i=0 ; i<(sizeof( epos )/sizeof( epos[0] )) ; i++ ) {
+  for( i=0 ; i<en ; i++ ) {
     struct TaskData* pETask;
 
     pETask = AllocTask();
