@@ -211,6 +211,7 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
           AddlLink( pBTask , DISP_LEVEL_PBULLET );
         };
       };
+      ageSndMgrPlayOneshot( AS_SND_B03 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
     };
   }
 
@@ -234,6 +235,7 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
         pTask->Data.player.count = 0;
         pTask->Data.player.jump_power = isRun ? 35 : 25;
         ageSndMgrPlayOneshot( AS_SND_JUMP , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
+        ageSndMgrPlayOneshot( AS_SND_B06 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
       }
       else if( PadLvl()&PAD_RIGHT || PadLvl()&PAD_LEFT ) {
         if( PadLvl()&PAD_RIGHT ) {

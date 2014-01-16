@@ -154,6 +154,8 @@ static s32 CalcSenario1( struct TaskData* pTask , u32 Flag ) {
 
     g_GameOver = 1;
     pTask->x = 0;
+
+    ageSndMgrPlayOneshot( (g_OffsetX % 2) ? AS_SND_A02 : AS_SND_A03 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
   };
 
   //　ソフトリセット
