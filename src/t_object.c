@@ -13,6 +13,22 @@
 /******************************************************************/
 /*                         固定オブジェクト                       */
 /******************************************************************/
+
+static s32 HitObject( struct TaskData* pTask , const struct RECT* pRect ) {
+  int w,h;
+  struct RECT rect;
+
+  w = ageRM[ pTask->Data.object.image ].Width;
+  h = ageRM[ pTask->Data.object.image ].Height;
+
+  rect.x0 = pTask->x - w/2;
+  rect.y0 = pTask->y;
+  rect.x1 = pTask->x + w/2;
+  rect.y1 = pTask->y + h;
+
+  return( IsHitRect( pRect , &rect ) );
+}
+
 static s32 CalcObject( struct TaskData* pTask , u32 Flag ) {
 
   switch( pTask->Data.object.motion ) {
@@ -26,6 +42,45 @@ static s32 CalcObject( struct TaskData* pTask , u32 Flag ) {
       pTask->Data.object.pre_y = pTask->y;
       pTask->y = pTask->Data.object.center_y + pTask->Data.object.amplitude * sinf(pTask->Data.object.phase + pTask->Data.object.frequency * (pTask->Data.object.count++));
       break;
+  }
+
+  // 自機の弾の判定
+  {
+    struct TaskData* pBTask;
+    pBTask = GetDispLink( DISP_LEVEL_PBULLET );
+    while ( pBTask != NULL ) {
+      if (pBTask->type == TASK_PBULLET) {
+        int w,h;
+        struct RECT rect;
+
+        w = 128>>2;//ageRM3[ pBTask->Data.object.image ].Width;
+        h = 128>>2;//ageRM3[ pBTask->Data.object.image ].Height;
+
+        rect.x0 = pBTask->x - 45;
+        rect.y0 = pBTask->y + 19;
+        rect.x1 = pBTask->x + 45;
+        rect.y1 = pBTask->y + 109;
+        //if ( (pTask->x - pBTask->x) * (pTask->x - pBTask->x) + (pTask->y - pBTask->y) * (pTask->y - pBTask->y) < 50*50) {
+        if ( FALSE && HitObject(pTask, &rect) ) {
+          struct TaskData* pATask;
+
+          pATask = AllocTask();
+          InitTaskAttack( pATask , pBTask->x , pBTask->y);
+          AddlLink( pATask , DISP_LEVEL_ENEMY );
+
+          if (pTask->Data.object.is_breakable) {
+            pTask->visible = 0;
+            pTask->flag = TASK_FLAG_DESTROY;
+          }
+
+          pBTask->visible = 0;
+          pBTask->flag = TASK_FLAG_DESTROY;
+          break;
+        }
+      }
+
+      pBTask = pBTask->Next;
+    }
   }
 
   return( 0 );
@@ -42,21 +97,6 @@ static s32 DrawObject( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
         (pTask->x - w/2 - g_OffsetX)<<2 , (pTask->y - g_OffsetY)<<2 ,
         (pTask->x + w/2 - g_OffsetX)<<2, (pTask->y - g_OffsetY + h)<<2 );
   };
-}
-
-static s32 HitObject( struct TaskData* pTask , const struct RECT* pRect ) {
-  int w,h;
-  struct RECT rect;
-
-  w = ageRM[ pTask->Data.object.image ].Width;
-  h = ageRM[ pTask->Data.object.image ].Height;
-
-  rect.x0 = pTask->x - w/2;
-  rect.y0 = pTask->y;
-  rect.x1 = pTask->x + w/2;
-  rect.y1 = pTask->y + h;
-
-  return( IsHitRect( pRect , &rect ) );
 }
 
 void InitTaskObject( struct TaskData* pTask, s32 x, s32 y, u16 image,
