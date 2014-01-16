@@ -52,7 +52,7 @@ struct SPos wpos[] = {
   { 2800+700*2 , 100 , OBJECT_TYPE_HITH1 , AG_CG_OBJ_WORKSTAND1 },
   { 2800+700*3 ,-100 , OBJECT_TYPE_HITH2 , AG_CG_OBJ_WORKSTAND1 },
   { 2800+700*4 ,-300 , OBJECT_TYPE_HITH1 , AG_CG_OBJ_WORKSTAND1 },
-  { 2800+700*5 ,-500 , OBJECT_TYPE_HITV1 , AG_CG_OBJ_WORKSTAND1 },
+  { 2800+700*5 ,-500 , OBJECT_TYPE_HIT ,   AG_CG_OBJ_WORKSTAND1 },
 
   { 1300 ,605 , OBJECT_TYPE_TOGE4 , AG_CG_OBJ_TOGE4 },
 };
@@ -70,16 +70,17 @@ struct SPos epos[] = {
   { 820  , 674 , ENEMY_TYPE_FROG  , 300 },
   //{ 820+100*2  , 674 , ENEMY_TYPE_FROG  , 300 },
   //{ 820+200*2  , 674 , ENEMY_TYPE_FROG  , 300 },
-  //{ 820+300*2  , 674 , ENEMY_TYPE_FROG  , 300 },
+  { 820+300*2  , 674 , ENEMY_TYPE_FROG  , 300 },
   //{ 820+400*2  , 674 , ENEMY_TYPE_FROG  , 300 },
   //{ 820+500*2  , 674 , ENEMY_TYPE_FROG  , 300 },
-  //{ 820+600*2  , 674 , ENEMY_TYPE_FROG  , 300 },
+  { 820+600*2  , 674 , ENEMY_TYPE_FROG  , 300 },
   //{ 820+700*2  , 674 , ENEMY_TYPE_FROG  , 300 },
   //{ 820+800*2  , 674 , ENEMY_TYPE_FROG  , 300 },
   //{ 820+900*2  , 674 , ENEMY_TYPE_FROG  , 300 },
   { 1800 , 416 , ENEMY_TYPE_SNAKE , 300 },
 };
 
+static u8 is_StageCleared;
 
 static s32 CalcSenario1( struct TaskData* pTask , u32 Flag ) {
   pTask->x++;
@@ -90,6 +91,40 @@ static s32 CalcSenario1( struct TaskData* pTask , u32 Flag ) {
       ageSndMgrRelease( pTask->Data.title.bgm_handle );
       GotoMode( MODE_TITLE );
     };
+    return(0);
+  };
+
+  if ( g_StageClear ) {
+    if (is_StageCleared) {
+      pTask->x++;
+      if( pTask->x > 800 ) {
+        ageSndMgrRelease( pTask->Data.title.bgm_handle );
+        g_Stage++;
+        GotoMode( MODE_GAME );
+      };
+    } else {
+      struct TaskData* pETask;
+      int w,h;
+
+      w = ageRM[ AG_CG_GAMEOVER ].Width;
+      h = ageRM[ AG_CG_GAMEOVER ].Height;
+
+      pETask = AllocTask();
+      InitTaskStatic( pETask , (1024-w)/2 , (768-h)/2 , AG_CG_GAMEOVER , 1 );
+      AddlLink( pETask , DISP_LEVEL_TOP );
+
+      ageSndMgrRelease( pTask->Data.title.bgm_handle );
+
+      pTask->Data.senario.bgm_handle = ageSndMgrAlloc( AS_SND_GAMEOVER , 0 , 1 , AGE_SNDMGR_PANMODE_LR12 , 0 );
+
+      ageSndMgrPlay( pTask->Data.senario.bgm_handle );
+      ageSndMgrSetVolume( pTask->Data.senario.bgm_handle , 0xa0 );
+      ageSndMgrSetPanMode( pTask->Data.senario.bgm_handle , 0 );
+      ageSndMgrSetPan( pTask->Data.senario.bgm_handle , 0x8080 );
+
+      pTask->x = 0;
+      is_StageCleared = TRUE;
+    }
     return(0);
   };
 
@@ -178,6 +213,8 @@ void InitTaskSenario1( struct TaskData* pTask ) {
   pTask->Calc = CalcSenario1;
   pTask->x = 0;
   pTask->y = 0;
+
+  is_StageCleared = FALSE;
 
   //@H‚×•¨‚Ìì¬
   for( i=0 ; i<(sizeof( fpos )/sizeof( fpos[0] )) ; i++ ) {
@@ -307,6 +344,16 @@ void InitTaskSenario1( struct TaskData* pTask ) {
     };
     AddlLink( pETask , DISP_LEVEL_ENEMY );
   };
+
+  // ƒƒƒ“ƒpƒ“
+  {
+    struct TaskData* pKTask;
+
+    pKTask = AllocTask();
+    InitTaskKey( pKTask, 2800+700*5 ,-500, AG_CG_ICON_LIFE1 , 0, 0 );
+    AddlLink( pKTask , DISP_LEVEL_KEY );
+  };
+
 
   pTask->Data.senario.bgm_handle = ageSndMgrAlloc( AS_SND_BGM , 0 , 1 , AGE_SNDMGR_PANMODE_LR12 , 0 );
 

@@ -10,10 +10,12 @@ extern int g_PlayerY;
 extern int g_OffsetX;
 extern int g_OffsetY;
 extern int g_GameOver;
+extern int g_StageClear;
 
 extern u32 g_Score;
 extern u32 g_Time;
 extern u32 g_Life;
+extern u32 g_Stage;
 
 extern struct RECT* g_pPlayerRect;
 

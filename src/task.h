@@ -6,6 +6,7 @@
 #include "t_bg.h"
 #include "t_static.h"
 #include "t_food.h"
+#include "t_key.h"
 #include "t_senario1.h"
 #include "t_opening.h"
 #include "t_score.h"
@@ -16,20 +17,22 @@
 #include "t_pbullet.h"
 
 #define TASK_MAX			(512)
-#define DISP_LEVEL_MAX		(16)
-
-#define DISP_LEVEL_BG			(0)			  //　最下層
-#define DISP_LEVEL_OBJECT		(5)			//　オブジェクト
-#define DISP_LEVEL_FOOD			(6)			//　オブジェクト
-#define DISP_LEVEL_ENEMY		(7)			//　オブジェクト
-#define DISP_LEVEL_PBULLET		(8)		//　自機の弾
-#define DISP_LEVEL_PLAYER		(9)			//　自機
-#define DISP_LEVEL_BG_FRONT		(10)	//　自機の前の背景
-#define DISP_LEVEL_FRAME		(11)		//　枠
-#define DISP_LEVEL_SCORE		(12)		//　スコア
-#define DISP_LEVEL_TOP			(15)		//　スコア
-
 #define TASK_FLAG_DESTROY	(1)
+
+enum DISP_LEVEL {
+  DISP_LEVEL_BG = 0,			//　最下層
+  DISP_LEVEL_OBJECT,		 	//　オブジェクト
+  DISP_LEVEL_FOOD,			 	//　オブジェクト
+  DISP_LEVEL_KEY,			 	  //　オブジェクト
+  DISP_LEVEL_ENEMY,		 	  //　オブジェクト
+  DISP_LEVEL_PBULLET,     //　自機の弾
+  DISP_LEVEL_PLAYER,		 	//　自機
+  DISP_LEVEL_BG_FRONT,	  //　自機の前の背景
+  DISP_LEVEL_FRAME,		 	  //　枠
+  DISP_LEVEL_SCORE,		 	  //　スコア
+  DISP_LEVEL_TOP,			 	  //　スコア
+  DISP_LEVEL_MAX,		  
+};
 
 enum TaskType {
 	TASK_NONE = 0,
@@ -39,6 +42,7 @@ enum TaskType {
 	TASK_STATIC,
 
 	TASK_FOOD,
+	TASK_KEY,
 	TASK_ENEMY,
 	TASK_EFFECT,
 
@@ -74,6 +78,7 @@ struct TaskData {
 		struct BgData bg;
 		struct StaticData st;
 		struct FoodData food;
+		struct KeyData key;
 		struct SenarioData senario;
 		struct TitleData title;
 		struct ScoreData score;
@@ -81,7 +86,7 @@ struct TaskData {
 		struct ObjectData object;
 		struct AttackData attack;
 		struct SnakeData snake;
-		struct PBulletData pbullet;/*<s0115>*/
+		struct PBulletData pbullet;
 	} Data;
 };
 

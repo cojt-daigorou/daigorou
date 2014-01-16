@@ -39,13 +39,14 @@ void GotoMode( enum GameMode mode ) {
 
 		case MODE_GAME :
 			g_Score = 0;
-			g_Time = 9999;
+			g_Time = 99;
 			g_Life = 1;
 			g_OffsetX = 0;
 			g_OffsetY = 0;
 			g_PlayerX = 0;
 			g_PlayerY = 0;
 			g_GameOver = 0;
+      g_StageClear = FALSE;
 
 			pTask = AllocTask();
 			InitTaskBg( pTask , AG_CG_BG_0_0 , 0 );
