@@ -308,6 +308,15 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
 		  ageSndMgrPlayOneshot( AS_SND_B05 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
 		  pTask->Data.player.mode = PLAYER_MODE_RETWEET;
 		  pTask->Data.player.count = 0;
+		  {
+			  struct TaskData* pRTTask;
+			  int dx = ( pTask->Data.player.direction == 0 ) ? 20 : -20;
+			  pRTTask = AllocTask();
+			  if (pRTTask != NULL) {
+				  InitTaskRetweet( pRTTask , g_PlayerX, g_PlayerY ,pTask->Data.player.direction);
+				  AddlLink( pRTTask , DISP_LEVEL_BG_FRONT );
+			  };
+		  };
 	  }
       else {    //　キー入力なし
         if( pTask->Data.player.mode == PLAYER_MODE_WALKSTART ) {    //　走り始めは停止へ。

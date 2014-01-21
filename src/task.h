@@ -16,6 +16,7 @@
 #include "t_snake.h"
 #include "t_pbullet.h"
 #include "t_ebullet.h"
+#include "t_retweet.h"
 
 #define TASK_MAX			(512)
 #define TASK_FLAG_DESTROY	(1)
@@ -90,6 +91,7 @@ struct TaskData {
 		struct SnakeData snake;
 		struct PBulletData pbullet;
 		struct EBulletData ebullet;
+		struct RetweetData retweet;
 	} Data;
 };
 
