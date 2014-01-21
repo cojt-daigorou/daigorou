@@ -133,7 +133,7 @@ static int GetItem( struct TaskData* pTask ) {
       pITask->flag = TASK_FLAG_DESTROY;
 
       if (pITask->Data.item.is_keyitem) {
-        g_StageClear = TRUE;
+        g_isGetKeyItem = TRUE;
       } else {
         AddScore( pITask->Data.item.score );
       }
@@ -187,7 +187,7 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
   AddRect( &rect , g_PlayerX , g_PlayerY );
   g_pPlayerRect = &rect;
 
-  if (g_GameOver && pTask->Data.player.mode != PLAYER_MODE_GAMEOVER) {
+  if (g_isGameOver && pTask->Data.player.mode != PLAYER_MODE_GAMEOVER) {
     pTask->Data.player.mode = PLAYER_MODE_GAMEOVER;
     pTask->Data.player.count = 0;
   }

@@ -167,12 +167,10 @@ static struct SPos epos_2[] = {
 };
 
 
-static u8 is_StageCleared;
-
 static s32 CalcSenario1( struct TaskData* pTask , u32 Flag ) {
   pTask->x++;
 
-  if( g_GameOver ) {
+  if( g_isGameOver ) {
     pTask->x++;
     if( pTask->x > 800 ) {
       ageSndMgrRelease( pTask->Data.title.bgm_handle );
@@ -181,37 +179,13 @@ static s32 CalcSenario1( struct TaskData* pTask , u32 Flag ) {
     return(0);
   };
 
-  if ( g_StageClear ) {
-    if (is_StageCleared) {
-      pTask->x++;
-      if( pTask->x > 800 ) {
-        ageSndMgrRelease( pTask->Data.title.bgm_handle );
-        g_Stage++;
-        GotoMode( MODE_GAME );
-      };
-    } else {
-      struct TaskData* pETask;
-      int w,h;
-
-      w = ageRM[ AG_CG_GAMEOVER ].Width;
-      h = ageRM[ AG_CG_GAMEOVER ].Height;
-
-      pETask = AllocTask();
-      InitTaskStatic( pETask , (1024-w)/2 , (768-h)/2 , AG_CG_GAMEOVER , 1 );
-      AddlLink( pETask , DISP_LEVEL_TOP );
-
+  if ( g_isStageClear ) {
+    pTask->x++;
+    if( pTask->x > 800 ) {
       ageSndMgrRelease( pTask->Data.title.bgm_handle );
-
-      pTask->Data.senario.bgm_handle = ageSndMgrAlloc( AS_SND_GAMEOVER , 0 , 1 , AGE_SNDMGR_PANMODE_LR12 , 0 );
-
-      ageSndMgrPlay( pTask->Data.senario.bgm_handle );
-      ageSndMgrSetVolume( pTask->Data.senario.bgm_handle , 0xa0 );
-      ageSndMgrSetPanMode( pTask->Data.senario.bgm_handle , 0 );
-      ageSndMgrSetPan( pTask->Data.senario.bgm_handle , 0x8080 );
-
-      pTask->x = 0;
-      is_StageCleared = TRUE;
-    }
+      g_Stage++;
+      GotoMode( MODE_GAME );
+    }; 
     return(0);
   };
 
@@ -249,7 +223,7 @@ static s32 CalcSenario1( struct TaskData* pTask , u32 Flag ) {
       ageSndMgrSetPanMode( pTask->Data.senario.bgm_handle , 0 );
       ageSndMgrSetPan( pTask->Data.senario.bgm_handle , 0x8080 );
 
-      g_GameOver = 1;
+      g_isGameOver = 1;
       pTask->x = 0;
     };
   };
@@ -274,7 +248,33 @@ static s32 CalcSenario1( struct TaskData* pTask , u32 Flag ) {
     ageSndMgrSetPanMode( pTask->Data.senario.bgm_handle , 0 );
     ageSndMgrSetPan( pTask->Data.senario.bgm_handle , 0x8080 );
 
-    g_GameOver = 1;
+    g_isGameOver = TRUE;
+    pTask->x = 0;
+
+    ageSndMgrPlayOneshot( (g_OffsetX % 2) ? AS_SND_A02 : AS_SND_A03 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
+  };
+
+  if ( g_isGetKeyItem ){
+    struct TaskData* pETask;
+    int w,h;
+
+    w = ageRM[ AG_CG_GAMEOVER ].Width;
+    h = ageRM[ AG_CG_GAMEOVER ].Height;
+
+    pETask = AllocTask();
+    InitTaskStatic( pETask , (1024-w)/2 , (768-h)/2 , AG_CG_GAMEOVER , 1 );
+    AddlLink( pETask , DISP_LEVEL_TOP );
+
+    ageSndMgrRelease( pTask->Data.title.bgm_handle );
+
+    pTask->Data.senario.bgm_handle = ageSndMgrAlloc( AS_SND_GAMEOVER , 0 , 1 , AGE_SNDMGR_PANMODE_LR12 , 0 );
+
+    ageSndMgrPlay( pTask->Data.senario.bgm_handle );
+    ageSndMgrSetVolume( pTask->Data.senario.bgm_handle , 0xa0 );
+    ageSndMgrSetPanMode( pTask->Data.senario.bgm_handle , 0 );
+    ageSndMgrSetPan( pTask->Data.senario.bgm_handle , 0x8080 );
+
+    g_isStageClear = TRUE;
     pTask->x = 0;
 
     ageSndMgrPlayOneshot( (g_OffsetX % 2) ? AS_SND_A02 : AS_SND_A03 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
@@ -302,8 +302,6 @@ void InitTaskSenario1( struct TaskData* pTask ) {
   pTask->Calc = CalcSenario1;
   pTask->x = 0;
   pTask->y = 0;
-
-  is_StageCleared = FALSE;
 
   switch( g_Stage ) {
     case 0:

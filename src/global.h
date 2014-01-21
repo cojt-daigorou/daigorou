@@ -9,8 +9,10 @@ extern int g_PlayerX;
 extern int g_PlayerY;
 extern int g_OffsetX;
 extern int g_OffsetY;
-extern int g_GameOver;
-extern int g_StageClear;
+
+extern int g_isGameOver;
+extern int g_isStageClear;
+extern int g_isGetKeyItem;
 
 extern u32 g_Score;
 extern u32 g_Time;

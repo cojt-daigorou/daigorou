@@ -19,14 +19,18 @@ void GotoMode( enum GameMode mode ) {
 
 	switch( mode ) {
 		case MODE_TITLE :
-			g_Score = 0;
-			g_Time = 100;
-			g_Life = 1;
 			g_OffsetX = 0;
 			g_OffsetY = 0;
 			g_PlayerX = 0;
 			g_PlayerY = 0;
-			g_GameOver = 0;
+
+			g_isGameOver = 0;
+      g_isStageClear = FALSE;
+      g_isGetKeyItem = FALSE;
+
+			g_Score = 0;
+			g_Time = 100;
+			g_Life = 1;
       g_Stage = 0;
 
 			pTask = AllocTask();
@@ -44,8 +48,10 @@ void GotoMode( enum GameMode mode ) {
 			g_OffsetY = 0;
 			g_PlayerX = 0;
 			g_PlayerY = 0;
-			g_GameOver = 0;
-      g_StageClear = FALSE;
+
+			g_isGameOver = 0;
+      g_isStageClear = FALSE;
+      g_isGetKeyItem = FALSE;
 
       switch (g_Stage) {
         case 0: 
