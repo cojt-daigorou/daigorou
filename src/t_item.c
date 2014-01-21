@@ -7,21 +7,21 @@
 #include "randMT.h"
 #include "export.h"
 #include "global.h"
-#include "t_food.h"
+#include "t_item.h"
 
 /******************************************************************/
-/*                              クリアアイテム                    */
+/*                              食べ物                            */
 /******************************************************************/
-static s32 CalcKey( struct TaskData* pTask , u32 Flag ) {
+static s32 CalcItem( struct TaskData* pTask , u32 Flag ) {
 	return( 0 );
 }
 
-static s32 DrawKey( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
+static s32 DrawItem( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
 	int w, h;
 
 	if( (pTask->x + 50) > g_OffsetX && (pTask->x - 50) < (g_OffsetX + 1024) ) {
 		agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 2 , 1 );
-		ageTransferAAC( pDBuf, pTask->Data.food.image, 0, &w, &h );
+		ageTransferAAC( pDBuf, pTask->Data.item.image, 0, &w, &h );
 
 		agDrawSPRITE( pDBuf, 1,
 				(pTask->x - g_OffsetX - w/2)<<2 , (pTask->y - g_OffsetY - h)<<2 ,
@@ -29,17 +29,18 @@ static s32 DrawKey( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
 	};
 }
 
-void InitTaskKey( struct TaskData* pTask , s32 x , s32 y , u16 Image , u16 erase_time , u16 Score ) {
+void InitTaskItem( struct TaskData* pTask , s32 x , s32 y , u16 Image , u16 erase_time , u16 Score , u16 is_keyitem) {
 	memset( pTask , 0 , sizeof( *pTask ) );
 
-	pTask->type = TASK_KEY;
+	pTask->type = TASK_ITEM;
 	pTask->visible = 1;
 	pTask->x = x;
 	pTask->y = y;
-	pTask->Calc = CalcKey;
-	pTask->Draw = DrawKey;
-	pTask->Data.food.count = 0;
-	pTask->Data.food.image = Image;
-	pTask->Data.food.erase_time = erase_time;
-	pTask->Data.food.score = Score;
+	pTask->Calc = CalcItem;
+	pTask->Draw = DrawItem;
+	pTask->Data.item.count = 0;
+	pTask->Data.item.image = Image;
+	pTask->Data.item.erase_time = erase_time;
+	pTask->Data.item.score = Score;
+  pTask->Data.item.is_keyitem = is_keyitem;
 }

@@ -329,8 +329,8 @@ void InitTaskSenario1( struct TaskData* pTask ) {
     struct TaskData* pFTask;
 
     pFTask = AllocTask();
-    InitTaskFood( pFTask , fpos[i].x , fpos[i].y , AG_CG_ICON_FOOD_ODANGO + fpos[i].type , 300 , 100 );
-    AddlLink( pFTask , DISP_LEVEL_FOOD );
+    InitTaskItem( pFTask , fpos[i].x , fpos[i].y , AG_CG_ICON_FOOD_ODANGO + fpos[i].type , 300 , 100 , FALSE);
+    AddlLink( pFTask , DISP_LEVEL_ITEM );
   };
 
   //　固定オブジェクトの作成
@@ -453,13 +453,13 @@ void InitTaskSenario1( struct TaskData* pTask ) {
     AddlLink( pETask , DISP_LEVEL_ENEMY );
   };
 
-  // メロンパン
+  // クリアアイテム
   {
     struct TaskData* pKTask;
 
     pKTask = AllocTask();
-    InitTaskKey( pKTask, 2800+700*5 ,-500, AG_CG_ICON_LIFE1 , 0, 0 );
-    AddlLink( pKTask , DISP_LEVEL_KEY );
+    InitTaskItem( pKTask, 2800+700*5 ,-500, AG_CG_ICON_LIFE1 , 0, 0, TRUE );
+    AddlLink( pKTask , DISP_LEVEL_ITEM );
   };
 
 

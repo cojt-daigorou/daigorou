@@ -117,52 +117,30 @@ static int MovePlayer( struct TaskData* pTask , int dx , int dy , int move_flag 
   return( isHit );
 }
 
-static int GetFood( struct TaskData* pTask ) {
-  struct TaskData* pFTask;
+static int GetItem( struct TaskData* pTask ) {
+  struct TaskData* pITask;
   int x,y;
   int isGet = 0;
 
-  pFTask = GetDispLink( DISP_LEVEL_FOOD );
+  pITask = GetDispLink( DISP_LEVEL_ITEM );
 
   x = g_PlayerX;
   y = g_PlayerY + BBox[ pTask->Data.player.mode ].y1;
 
-  while( pFTask != NULL ) {
-    if( (pFTask->x - x)*(pFTask->x - x) + (pFTask->y - y)*(pFTask->y - y) < 90*90 ) {
-      pFTask->visible = 0;
-      pFTask->flag = TASK_FLAG_DESTROY;
+  while( pITask != NULL ) {
+    if( (pITask->x - x)*(pITask->x - x) + (pITask->y - y)*(pITask->y - y) < 90*90 ) {
+      pITask->visible = 0;
+      pITask->flag = TASK_FLAG_DESTROY;
 
-      AddScore( pFTask->Data.food.score );
+      if (pITask->Data.item.is_keyitem) {
+        g_StageClear = TRUE;
+      } else {
+        AddScore( pITask->Data.item.score );
+      }
       isGet++;
     };
 
-    pFTask = pFTask->Next;
-  };
-
-  return( isGet );
-}
-
-static int GetKey( struct TaskData* pTask ) {
-  struct TaskData* pKTask;
-  int x,y;
-  int isGet = 0;
-
-  pKTask = GetDispLink( DISP_LEVEL_KEY );
-
-  x = g_PlayerX;
-  y = g_PlayerY + BBox[ pTask->Data.player.mode ].y1;
-
-  while( pKTask != NULL ) {
-    if( (pKTask->x - x)*(pKTask->x - x) + (pKTask->y - y)*(pKTask->y - y) < 90*90 ) {
-      pKTask->visible = 0;
-      pKTask->flag = TASK_FLAG_DESTROY;
-
-      //AddScore( pKTask->Data.food.score );
-      g_StageClear = TRUE;
-      isGet++;
-    };
-
-    pKTask = pKTask->Next;
+    pITask = pITask->Next;
   };
 
   return( isGet );
@@ -523,14 +501,14 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
   };
 
   //　アイテム取得
-  if( GetFood( pTask ) ) {
+  if( GetItem( pTask ) ) {
     ageSndMgrPlayOneshot( AS_SND_GET3 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
   };
 
-  // クリアアイテム取得
-  if ( GetKey( pTask ) ) {
-    ageSndMgrPlayOneshot( AS_SND_B08 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
-  }
+  //// クリアアイテム取得
+  //if ( GetKey( pTask ) ) {
+  //  ageSndMgrPlayOneshot( AS_SND_B08 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
+  //}
 
   //　画面オフセット補正
   if( g_PlayerX > (1024-512) ) {

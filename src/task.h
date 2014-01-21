@@ -5,8 +5,7 @@
 #include "t_player.h"
 #include "t_bg.h"
 #include "t_static.h"
-#include "t_food.h"
-#include "t_key.h"
+#include "t_item.h"
 #include "t_senario1.h"
 #include "t_opening.h"
 #include "t_score.h"
@@ -24,8 +23,7 @@
 enum DISP_LEVEL {
   DISP_LEVEL_BG = 0,			//　最下層
   DISP_LEVEL_OBJECT,		 	//　オブジェクト
-  DISP_LEVEL_FOOD,			 	//　オブジェクト
-  DISP_LEVEL_KEY,			 	  //　オブジェクト
+  DISP_LEVEL_ITEM,			 	//　オブジェクト
   DISP_LEVEL_ENEMY,		 	  //　オブジェクト
   DISP_LEVEL_PBULLET,     //　自機の弾
   DISP_LEVEL_PLAYER,		 	//　自機
@@ -43,8 +41,7 @@ enum TaskType {
 	TASK_SCORE,
 	TASK_STATIC,
 
-	TASK_FOOD,
-	TASK_KEY,
+	TASK_ITEM,
 	TASK_ENEMY,
 	TASK_EFFECT,
 
@@ -80,8 +77,7 @@ struct TaskData {
 		struct PlayerData player;
 		struct BgData bg;
 		struct StaticData st;
-		struct FoodData food;
-		struct KeyData key;
+		struct ItemData item;
 		struct SenarioData senario;
 		struct TitleData title;
 		struct ScoreData score;
