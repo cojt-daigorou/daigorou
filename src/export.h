@@ -196,21 +196,21 @@ extern "C" {
 #define AS_SND_WALK_RIGHT	(15)
 #define AS_SND_WALK_LEFT	(16)
 #define AS_SND_DECIDE008	(17)
-#define AS_SND_A01	(18)
-#define AS_SND_A02	(19)
-#define AS_SND_A03	(20)
-#define AS_SND_A04	(21)
-#define AS_SND_B01	(22)
-#define AS_SND_B02	(23)
-#define AS_SND_B03	(24)
-#define AS_SND_B04	(25)
-#define AS_SND_B05	(26)
-#define AS_SND_B06	(27)
-#define AS_SND_B07	(28)
-#define AS_SND_B08	(29)
-#define AS_SND_B09	(30)
-#define AS_SND_B10	(31)
-#define AS_SND_B11	(32)
+#define AS_SND_A01	(18)	//タイトルコール「大五郎の冒険」
+#define AS_SND_A02	(19)	//ゲームオーバー「まだ終わってない」
+#define AS_SND_A03	(20)	//ゲームオーバー「大五郎どこー？」
+#define AS_SND_A04	(21)	//ゲームクリア「ずっと探していたんだよ」
+#define AS_SND_B01	(22)	//プロローグ 「えりたんを探しに」
+#define AS_SND_B02	(23)	//ステージスタート「今あいにいくのだ」
+#define AS_SND_B03	(24)	//弱攻撃「ふぁぼ」
+#define AS_SND_B04	(25)	//必殺発動「スターマシンガン」
+#define AS_SND_B05	(26)	//カウンター「りついーと」
+#define AS_SND_B06	(27)	//ジャンプ「わん」
+#define AS_SND_B07	(28)	//ダメージ「きゃいん」
+#define AS_SND_B08	(29)	//ステージ１クリア「メロンパン」
+#define AS_SND_B09	(30)	//ステージ２クリア「UNIXspテキスト」
+#define AS_SND_B10	(31)	//ゲームクリア「やっとあえた」
+#define AS_SND_B11	(32)	//ゲームクリア「迷子は」
 
 /***************************************************************/
 /*                          Data Member                        */

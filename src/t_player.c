@@ -30,6 +30,7 @@ struct RECT BBox[] = {
   { -50 , -88 , 50 , 116 },// PLAYER_MODE_RUN       (2+8)
   { -50 , -88 , 50 , 116 },// PLAYER_MODE_RUNEND    (3+8)
   { -50 , -88 , 50 , 116 },// PLAYER_MODE_GAMEOVER  (12)
+  { -50 , -88 , 50 , 116 },// PLAYER_MODE_RETWEET   (13)
 };
 
 static int MovePlayer( struct TaskData* pTask , int dx , int dy , int move_flag ) {
@@ -181,6 +182,7 @@ const static u16 MotionMap[] = {
   AG_RP_DAIGOROU_RUN,
   AG_RP_DAIGOROU_RUNEND,
   AG_RP_DAIGOROU_GAMEOVER,
+  AG_RP_DAIGOROU_RT,
 };
 
 static int isRun = 0;
@@ -241,6 +243,8 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
     };
   }
 
+
+
   switch( pTask->Data.player.mode ) {
     //　地面にいる場合
     case PLAYER_MODE_WAIT :
@@ -300,6 +304,11 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
           ageSndMgrPlayOneshot( AS_SND_WALK_LEFT , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
         };
       }
+	  else if( PadLvl()&PAD_DOWN ){		//	パッド↓でリツイートモードへ
+		  ageSndMgrPlayOneshot( AS_SND_B05 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
+		  pTask->Data.player.mode = PLAYER_MODE_RETWEET;
+		  pTask->Data.player.count = 0;
+	  }
       else {    //　キー入力なし
         if( pTask->Data.player.mode == PLAYER_MODE_WALKSTART ) {    //　走り始めは停止へ。
           pTask->Data.player.mode = PLAYER_MODE_WAIT;
@@ -367,6 +376,8 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
         pTask->Data.player.mode = PLAYER_MODE_FALL;
         pTask->Data.player.count = 0;
       };
+
+
       break;
 
     case PLAYER_MODE_FALL :
@@ -385,11 +396,14 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
         pTask->Data.player.mode = PLAYER_MODE_JUMPEND;
         pTask->Data.player.count = 0;
       }
+
       else if( g_PlayerY >= GROUND_LINE ) {
         g_PlayerY = GROUND_LINE;
         pTask->Data.player.mode = PLAYER_MODE_JUMPEND;
         pTask->Data.player.count = 0;
       }
+
+
       else {
         pTask->Data.player.count++;
 
@@ -397,6 +411,8 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
           pTask->Data.player.count = 0;
         };
       };
+
+
       break;
 
     case PLAYER_MODE_JUMPEND :
@@ -480,6 +496,18 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
       }
 
       break;
+
+	case PLAYER_MODE_RETWEET:
+
+      pTask->Data.player.count++;
+	  MovePlayer( pTask , 0 , 0 , 1 );
+
+      if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode ] ].Frames ) {
+        pTask->Data.player.count = 0;
+        pTask->Data.player.mode = PLAYER_MODE_WAIT;
+      };
+	  break;
+
 
     default :
       break;

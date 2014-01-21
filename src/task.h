@@ -15,6 +15,7 @@
 #include "t_attack.h"
 #include "t_snake.h"
 #include "t_pbullet.h"
+#include "t_ebullet.h"
 
 #define TASK_MAX			(512)
 #define TASK_FLAG_DESTROY	(1)
@@ -50,6 +51,7 @@ enum TaskType {
 	TASK_OPENING,
 
 	TASK_PBULLET,
+	TASK_EBULLET,
 };
 
 
@@ -87,6 +89,7 @@ struct TaskData {
 		struct AttackData attack;
 		struct SnakeData snake;
 		struct PBulletData pbullet;
+		struct EBulletData ebullet;
 	} Data;
 };
 

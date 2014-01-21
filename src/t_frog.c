@@ -25,6 +25,29 @@ static s32 CalcFrog( struct TaskData* pTask , u32 Flag ) {
 			if( pTask->Data.frog.count > 60 ) {
 				pTask->Data.frog.count = 0;
 				pTask->Data.frog.mode = 1;		//@ƒWƒƒƒ“ƒvó‘Ô
+
+				{	//’e”­ŽË
+					int x , y;
+					x = pTask->x;
+					y = pTask->y;
+
+					if( pTask->Data.frog.direction == 0 ) {
+						x += 60;
+					}
+					else {
+						x -= 60;
+					};
+
+					{
+						struct TaskData* pBTask;
+						int dx = ( pTask->Data.frog.direction == 0 ) ? -20 : 20;
+						pBTask = AllocTask();
+						if (pBTask != NULL) {
+							InitTaskEBullet( pBTask , x, y, AG_RP_OBJ_EBULLET, dx,0, 0,0 );
+							AddlLink( pBTask , DISP_LEVEL_PBULLET );
+						};
+      };
+    };
 			};
 			break;
 

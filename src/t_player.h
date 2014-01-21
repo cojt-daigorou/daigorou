@@ -14,7 +14,7 @@
 //#define PLAYER_MODE_RUN       (2+8)
 //#define PLAYER_MODE_RUNEND    (3+8)
 #define PLAYER_MODE_GAMEOVER  (12)
-
+#define PLAYER_MODE_RETWEET		(13)
 #define PLAYER_WALK_SPEED   (8)
 #define PLAYER_RUN_SPEED    (16)
 
