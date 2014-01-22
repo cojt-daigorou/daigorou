@@ -23,6 +23,7 @@ struct PlayerData {
   s32 jump_power;
 };
 
+void AddScore( u32 n );
 void InitTaskPlayer( struct TaskData* pTask );
 
 #endif // __TASK_PLAYER_H__

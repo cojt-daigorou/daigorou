@@ -9,7 +9,7 @@
 #include "global.h"
 #include "t_player.h"
 
-static void AddScore( u32 n ) {
+void AddScore( u32 n ) {
   g_Score += n;
 }
 
