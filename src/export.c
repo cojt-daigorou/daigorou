@@ -123,12 +123,18 @@ const AGERomMember ageRM[] = {
 	{     151987,          0,  512,  252,  256,  6,      29848, NULL },		/* AG_CG_BG_4_3 */
 	{     155718,          0,  452,  252,  232,  6,      32728, NULL },		/* AG_CG_BG_4_4 */
 	{     240289,          0,   32,   32,   16,  8,        512, NULL },		/* AG_CG_OBJ_TOGE */
-	{     240353,          0,  128,   32,   64,  8,       1344, NULL },		/* AG_CG_OBJ_TOGE4 */
-	{     240521,          0,  128,  128,   64,  8,       5952, NULL },		/* AG_CG_OBJ_BLOCK */
-	{     241265,          0,  128,  128,   64,  8,       6848, NULL },		/* AG_CG_OBJ_BLOCK_H */
-	{     242121,          0,  512,  128,  256,  8,      23328, NULL },		/* AG_CG_OBJ_BLOCK4_0 */
-	{     245037,          0,  512,  128,  256,  8,      26944, NULL },		/* AG_CG_OBJ_BLOCK_H4 */
-	{     248405,          0,  128,   32,   64,  8,        800, NULL },		/* AG_CG_OBJ_LIFT */
+	{     240353,          0,   32,   32,   16,  8,        512, NULL },		/* AG_CG_OBJ_TOGE_D */
+	{     240417,          0,   32,   32,   16,  8,        512, NULL },		/* AG_CG_OBJ_TOGE_L */
+	{     240481,          0,   32,   32,   16,  8,        512, NULL },		/* AG_CG_OBJ_TOGE_R */
+	{     240545,          0,  128,   32,   64,  8,       1344, NULL },		/* AG_CG_OBJ_TOGE4 */
+	{     240713,          0,  128,   32,   64,  8,       1344, NULL },		/* AG_CG_OBJ_TOGE4_D */
+	{     240881,          0,   34,  129,   24,  8,       1664, NULL },		/* AG_CG_OBJ_TOGE4_L */
+	{     241089,          0,   34,  129,   24,  8,       1696, NULL },		/* AG_CG_OBJ_TOGE4_R */
+	{     241301,          0,  128,  128,   64,  8,       5952, NULL },		/* AG_CG_OBJ_BLOCK */
+	{     242045,          0,  128,  128,   64,  8,       6848, NULL },		/* AG_CG_OBJ_BLOCK_H */
+	{     242901,          0,  512,  128,  256,  8,      23328, NULL },		/* AG_CG_OBJ_BLOCK4_0 */
+	{     245817,          0,  512,  128,  256,  8,      26944, NULL },		/* AG_CG_OBJ_BLOCK_H4 */
+	{     249185,          0,  128,   32,   64,  8,        800, NULL },		/* AG_CG_OBJ_LIFT */
 };
 
 /***************************************************************/
@@ -238,7 +244,7 @@ const u32 ageRM3Offsets0017[] = {		/* AG_RP_OBJ_PBULLET */
 };
 
 const u32 ageRM3Offsets0018[] = {		/* AG_RP_SIN_MESSAGE */
-	    248525,    253705,    255789,    258741,    262148,    262176,    262200,
+	    249305,    254485,    256569,    259521,    262928,    262956,    262980,
 };
 
 const AGERM3Member ageRM3[] = {
@@ -261,7 +267,7 @@ const AGERM3Member ageRM3[] = {
 	{     208711,  256,  256,   7680,     41, 2, 0, ageRM3Offsets0015, NULL        },		/* AG_RP_EFF_RT */
 	{     231203,   64,   64,   7680,     29, 2, 0, ageRM3Offsets0016, NULL        },		/* AG_RP_OBJ_EBULLET */
 	{     234604,   64,   64,   7680,     30, 2, 0, ageRM3Offsets0017, NULL        },		/* AG_RP_OBJ_PBULLET */
-	{     248505,  943,  407,   7680,      7, 2, 1, ageRM3Offsets0018, NULL        },		/* AG_RP_SIN_MESSAGE */
+	{     249285,  943,  407,   7680,      7, 2, 1, ageRM3Offsets0018, NULL        },		/* AG_RP_SIN_MESSAGE */
 };
 
 /***************************************************************/

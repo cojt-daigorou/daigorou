@@ -145,12 +145,18 @@ extern "C" {
 #define AG_CG_BG_4_3	(115)
 #define AG_CG_BG_4_4	(116)
 #define AG_CG_OBJ_TOGE	(117)
-#define AG_CG_OBJ_TOGE4	(118)
-#define AG_CG_OBJ_BLOCK	(119)
-#define AG_CG_OBJ_BLOCK_H	(120)
-#define AG_CG_OBJ_BLOCK4_0	(121)
-#define AG_CG_OBJ_BLOCK_H4	(122)
-#define AG_CG_OBJ_LIFT	(123)
+#define AG_CG_OBJ_TOGE_D	(118)
+#define AG_CG_OBJ_TOGE_L	(119)
+#define AG_CG_OBJ_TOGE_R	(120)
+#define AG_CG_OBJ_TOGE4	(121)
+#define AG_CG_OBJ_TOGE4_D	(122)
+#define AG_CG_OBJ_TOGE4_L	(123)
+#define AG_CG_OBJ_TOGE4_R	(124)
+#define AG_CG_OBJ_BLOCK	(125)
+#define AG_CG_OBJ_BLOCK_H	(126)
+#define AG_CG_OBJ_BLOCK4_0	(127)
+#define AG_CG_OBJ_BLOCK_H4	(128)
+#define AG_CG_OBJ_LIFT	(129)
 
 /***************************************************************/
 /*                     RM3 Member Symbol                       */
@@ -219,7 +225,7 @@ extern "C" {
 /***************************************************************/
 /*                          Data Member                        */
 /***************************************************************/
-extern const AGERomMember ageRM[124];
+extern const AGERomMember ageRM[130];
 extern const AGERM3Member ageRM3[19];
 extern const u32 ageReserve[1];
 extern const u32 ageUser[1];
