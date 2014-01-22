@@ -17,20 +17,20 @@ static void AddScore( u32 n ) {
 /*                                player                          */
 /******************************************************************/
 struct RECT BBox[] = {
-  { -50 , -88 , 50 , 116 },// PLAYER_MODE_WAIT      (0)
-  { -50 , -88 , 50 , 116 },// PLAYER_MODE_WALKSTART (1)
-  { -50 , -88 , 50 , 116 },// PLAYER_MODE_WALK      (2)
-  { -50 , -88 , 50 , 116 },// PLAYER_MODE_WALKEND   (3)
-  { -50 , -88 , 50 , 116 },// PLAYER_MODE_JUMPSTART (4)
-  { -50 , -128 , 50 , 50 },// PLAYER_MODE_JUMP      (5)
-  { -50 , -88 , 50 , 116 },// PLAYER_MODE_JUMPEND   (6)
-  { -50 , -128 , 50 , 50 },// PLAYER_MODE_FALL      (7)
-  { -50 , -88 , 50 , 116 },// PLAYER_MODE_ATTACK    (8)
-  { -50 , -88 , 50 , 116 },// PLAYER_MODE_RUNSTART  (1+8)
-  { -50 , -88 , 50 , 116 },// PLAYER_MODE_RUN       (2+8)
-  { -50 , -88 , 50 , 116 },// PLAYER_MODE_RUNEND    (3+8)
-  { -50 , -88 , 50 , 116 },// PLAYER_MODE_GAMEOVER  (12)
-  { -50 , -88 , 50 , 116 },// PLAYER_MODE_RETWEET   (13)
+  { -50/2 , -88/2 ,  50/2 , 116/2 },// PLAYER_MODE_WAIT      (0)
+  { -50/2 , -88/2 ,  50/2 , 116/2 },// PLAYER_MODE_WALKSTART (1)
+  { -50/2 , -88/2 ,  50/2 , 116/2 },// PLAYER_MODE_WALK      (2)
+  { -50/2 , -88/2 ,  50/2 , 116/2 },// PLAYER_MODE_WALKEND   (3)
+  { -50/2 , -88/2 ,  50/2 , 116/2 },// PLAYER_MODE_JUMPSTART (4)
+  { -50/2 , -128/2 , 50/2 , 50/2 },// PLAYER_MODE_JUMP      (5)
+  { -50/2 , -88/2 ,  50/2 , 116/2 },// PLAYER_MODE_JUMPEND   (6)
+  { -50/2 , -128/2 , 50/2 , 50/2 },// PLAYER_MODE_FALL      (7)
+  { -50/2 , -88/2 ,  50/2 , 116/2 },// PLAYER_MODE_ATTACK    (8)
+  { -50/2 , -88/2 ,  50/2 , 116/2 },// PLAYER_MODE_RUNSTART  (1+8)
+  { -50/2 , -88/2 ,  50/2 , 116/2 },// PLAYER_MODE_RUN       (2+8)
+  { -50/2 , -88/2 ,  50/2 , 116/2 },// PLAYER_MODE_RUNEND    (3+8)
+  { -50/2 , -88/2 ,  50/2 , 116/2 },// PLAYER_MODE_GAMEOVER  (12)
+  { -50/2 , -88/2 ,  50/2 , 116/2 },// PLAYER_MODE_RETWEET   (13)
 };
 
 static int MovePlayer( struct TaskData* pTask , int dx , int dy , int move_flag ) {
@@ -241,7 +241,7 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
       else if( PadTrg()&PAD_A ) {   //　ボタンが押された場合はジャンプモードへ。
         pTask->Data.player.mode = PLAYER_MODE_JUMPSTART;
         pTask->Data.player.count = 0;
-        pTask->Data.player.jump_power = isRun ? 35 : 25;
+        pTask->Data.player.jump_power = isRun ? 25 : 20;
         ageSndMgrPlayOneshot( AS_SND_JUMP , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
         ageSndMgrPlayOneshot( AS_SND_B06 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
       }
@@ -559,6 +559,9 @@ static s32 DrawPlayer( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
     isRun2 = 0;
   }
   ageTransferAAC_RM3( pDBuf, MotionMap[ pTask->Data.player.mode + isRun2*8 ] , 0, &w, &h , pat );
+
+  w = w / 2;
+  h = h / 2;
 
   x = g_PlayerX - g_OffsetX;
   y = g_PlayerY - g_OffsetY;

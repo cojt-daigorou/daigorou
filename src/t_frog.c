@@ -18,38 +18,38 @@ static void AddScore( u32 n ) {
 /*                              かえる                            */
 /******************************************************************/
 static s32 CalcFrog( struct TaskData* pTask , u32 Flag ) {
-	switch( pTask->Data.frog.mode ) {
-		default :
-		case 0 :		//　通常待機状態
-			pTask->Data.frog.count++;
-			if( pTask->Data.frog.count > 60 ) {
-				pTask->Data.frog.count = 0;
-				pTask->Data.frog.mode = 1;		//　ジャンプ状態
+  switch( pTask->Data.frog.mode ) {
+    default :
+    case 0 :		//　通常待機状態
+      pTask->Data.frog.count++;
+      if( pTask->Data.frog.count > 60 ) {
+        pTask->Data.frog.count = 0;
+        pTask->Data.frog.mode = 1;		//　ジャンプ状態
 
-				{	//弾発射
-					int x , y;
-					x = pTask->x;
-					y = pTask->y;
+        if (FALSE) {	//弾発射
+          int x , y;
+          x = pTask->x;
+          y = pTask->y;
 
-					if( pTask->Data.frog.direction == 0 ) {
-						x += 60;
-					}
-					else {
-						x -= 60;
-					};
+          if( pTask->Data.frog.direction == 0 ) {
+            x += 60;
+          }
+          else {
+            x -= 60;
+          };
 
-					{
-						struct TaskData* pBTask;
-						int dx = ( pTask->Data.frog.direction == 0 ) ? -20 : 20;
-						pBTask = AllocTask();
-						if (pBTask != NULL) {
-							InitTaskEBullet( pBTask , x, y, AG_RP_OBJ_EBULLET, dx,0, 0,0 );
-							AddlLink( pBTask , DISP_LEVEL_PBULLET );
-						};
+          {
+            struct TaskData* pBTask;
+            int dx = ( pTask->Data.frog.direction == 0 ) ? -20 : 20;
+            pBTask = AllocTask();
+            if (pBTask != NULL) {
+              InitTaskEBullet( pBTask , x, y, AG_RP_OBJ_EBULLET, dx,0, 0,0 );
+              AddlLink( pBTask , DISP_LEVEL_PBULLET );
+            };
+          };
+        };
       };
-    };
-			};
-			break;
+      break;
 
 		case 1 :		//　ジャンプ状態
 			if( pTask->Data.frog.direction == 0 ) {		//　左向き

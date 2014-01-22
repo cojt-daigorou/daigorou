@@ -44,7 +44,7 @@ static s32 DrawRetweet( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
 	u8 flip;
 
 	x = (g_PlayerX - g_OffsetX)<<2;
-	y = (g_PlayerY - g_OffsetY+256)<<2;
+	y = (g_PlayerY - g_OffsetY+128)<<2;
 	if( pTask->Data.retweet.direction == 0 ) {
 		flip = 0;
 	}
@@ -53,6 +53,10 @@ static s32 DrawRetweet( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
 	};
 
 	ageTransferAAC_RM3( pDBuf, pTask->Data.retweet.image , 0, &w, &h , (pTask->Data.retweet.count>>1) % (ageRM3[pTask->Data.retweet.image].Frames) );
+
+  w = w/2;
+  h = h/2;
+
 	if(flip==0){
 		agDrawSPRITE( pDBuf, 1 , x - (w<<1) , y - (h<<2) , x + (w<<1), y );
 	}
