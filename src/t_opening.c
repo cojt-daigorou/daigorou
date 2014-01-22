@@ -29,7 +29,7 @@ static s32 CalcOpening( struct TaskData* pTask , u32 Flag ) {
 		if( pTask->Data.title.count/32 >= 0xa0 ) {
 			ageSndMgrRelease( pTask->Data.title.bgm_handle );
 
-			GotoMode( MODE_GAME );
+			GotoMode( MODE_STORY );
 		};
 	};
 

@@ -42,6 +42,17 @@ void GotoMode( enum GameMode mode ) {
 			AddlLink( pTask , DISP_LEVEL_OBJECT );
 			break;
 
+    case MODE_STORY:
+
+			pTask = AllocTask();
+			InitTaskBg( pTask , AG_CG_BG_0_0 , 0 );
+			AddlLink( pTask , DISP_LEVEL_BG );
+
+			pTask = AllocTask();
+			InitTaskStory( pTask );
+			AddlLink( pTask , DISP_LEVEL_OBJECT );
+      break;
+
 		case MODE_GAME :
 			g_Life = 1;
 			g_OffsetX = 0;

@@ -4,6 +4,7 @@
 enum GameMode {
 	MODE_NONE,
 	MODE_TITLE,
+  MODE_STORY,
 	MODE_GAME,
 };
 

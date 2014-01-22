@@ -180,7 +180,7 @@ static s32 CalcSenario1( struct TaskData* pTask , u32 Flag ) {
     if( pTask->x > 800 ) {
       ageSndMgrRelease( pTask->Data.title.bgm_handle );
       g_Stage++;
-      GotoMode( MODE_GAME );
+      GotoMode( MODE_STORY );
     }; 
     return(0);
   };

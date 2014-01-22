@@ -16,6 +16,7 @@
 #include "t_pbullet.h"
 #include "t_ebullet.h"
 #include "t_retweet.h"
+#include "t_story.h"
 
 #define TASK_MAX			(512)
 #define TASK_FLAG_DESTROY	(1)
@@ -40,6 +41,7 @@ enum TaskType {
 	TASK_BG,
 	TASK_SCORE,
 	TASK_STATIC,
+  TASK_STORY,
 
 	TASK_ITEM,
 	TASK_ENEMY,
@@ -77,6 +79,7 @@ struct TaskData {
 		struct PlayerData player;
 		struct BgData bg;
 		struct StaticData st;
+    struct StoryData story;
 		struct ItemData item;
 		struct SenarioData senario;
 		struct TitleData title;
