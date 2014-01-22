@@ -18,22 +18,23 @@ static struct SPos {
   int image;
 };
 
+enum {
+  OBJECT_TYPE_HIT = 0 ,
+  OBJECT_TYPE_NOHIT   ,
+  OBJECT_TYPE_FRONT	  ,
+  OBJECT_TYPE_HIT_H1  ,
+  OBJECT_TYPE_HIT_V1  ,
+  OBJECT_TYPE_HIT_H2  ,
+  OBJECT_TYPE_HIT_V2  ,
+  OBJECT_TYPE_TOGE	  ,
+  OBJECT_TYPE_TOGE_H1 ,
+  OBJECT_TYPE_TOGE_V1 ,
+  OBJECT_TYPE_TOGE_H2 ,
+  OBJECT_TYPE_TOGE_V2 ,
+};
 
-#define OBJECT_TYPE_HIT		  (0)
-#define OBJECT_TYPE_NOHIT   (1)
-#define OBJECT_TYPE_FRONT	  (2)
-#define OBJECT_TYPE_HITH1   (3)
-#define OBJECT_TYPE_HITV1   (4)
-#define OBJECT_TYPE_HITH2   (5)
-#define OBJECT_TYPE_HITV2   (6)
-#define OBJECT_TYPE_TOGE4	  (7)
-#define OBJECT_TYPE_TOGE4H1	(8)
-#define OBJECT_TYPE_TOGE4V1	(9)
-#define OBJECT_TYPE_TOGE4H2	(10)
-#define OBJECT_TYPE_TOGE4V2	(11)
-
-#define ENEMY_TYPE_FROG		    (0)
-#define ENEMY_TYPE_SNAKE	    (1)
+#define ENEMY_TYPE_FROG		  (0)
+#define ENEMY_TYPE_SNAKE	  (1)
 
 //
 // stage 1
@@ -53,13 +54,13 @@ static struct SPos wpos_1[] = {
   //{ 1800 , 605-64*3 , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE1 },
   
   { 1024, 541, OBJECT_TYPE_HIT , AG_CG_OBJ_BLOCK },
-  { 1024+128, GROUND_LINE - 32, OBJECT_TYPE_TOGE4 , AG_CG_OBJ_TOGE },
+  { 1024+128, GROUND_LINE - 32, OBJECT_TYPE_TOGE , AG_CG_OBJ_TOGE },
 
-  { 2800+400*0 , 500 , OBJECT_TYPE_HITH1 , AG_CG_OBJ_LIFT },
-  { 2800+400*1 , 400 , OBJECT_TYPE_HITH2 , AG_CG_OBJ_LIFT },
-  { 2800+400*2 , 300 , OBJECT_TYPE_HITH1 , AG_CG_OBJ_LIFT },
-  { 2800+400*3 , 200 , OBJECT_TYPE_HITH2 , AG_CG_OBJ_LIFT },
-  { 2800+400*4 , 100 , OBJECT_TYPE_HITH1 , AG_CG_OBJ_LIFT },
+  { 2800+400*0 , 500 , OBJECT_TYPE_HIT_H1 , AG_CG_OBJ_LIFT },
+  { 2800+400*1 , 400 , OBJECT_TYPE_HIT_H2 , AG_CG_OBJ_LIFT },
+  { 2800+400*2 , 300 , OBJECT_TYPE_HIT_H1 , AG_CG_OBJ_LIFT },
+  { 2800+400*3 , 200 , OBJECT_TYPE_HIT_H2 , AG_CG_OBJ_LIFT },
+  { 2800+400*4 , 100 , OBJECT_TYPE_HIT_H1 , AG_CG_OBJ_LIFT },
   { 2800+400*5 , 000 , OBJECT_TYPE_HIT ,   AG_CG_OBJ_LIFT },
 
 };
@@ -98,42 +99,42 @@ static struct SPos wpos_2[] = {
 //  { 1800 , 605-64*2 , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE2 },
 //  { 1800 , 605-64*3 , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE1 },
 
-  { 1300, 605 , OBJECT_TYPE_TOGE4V1 , AG_CG_OBJ_TOGE4 },
-  { 1300, 605+50 , OBJECT_TYPE_HITV1 , AG_CG_OBJ_WORKSTAND1 },
+  { 1300, 605 , OBJECT_TYPE_TOGE_V1 , AG_CG_OBJ_TOGE4 },
+  { 1300, 605+50 , OBJECT_TYPE_HIT_V1 , AG_CG_OBJ_WORKSTAND1 },
 
-  { 1300, 305 , OBJECT_TYPE_TOGE4V2 , AG_CG_OBJ_TOGE4 },
-  { 1300, 305-50 , OBJECT_TYPE_HITV2 , AG_CG_OBJ_WORKSTAND1 },
+  { 1300, 305 , OBJECT_TYPE_TOGE_V2 , AG_CG_OBJ_TOGE4 },
+  { 1300, 305-50 , OBJECT_TYPE_HIT_V2 , AG_CG_OBJ_WORKSTAND1 },
 
   { 1800, 500 , OBJECT_TYPE_HIT , AG_CG_OBJ_WORKSTAND1 },
 
-  { 2300, 605 , OBJECT_TYPE_TOGE4V1 , AG_CG_OBJ_TOGE4 },
-  { 2300, 605+50 , OBJECT_TYPE_HITV1 , AG_CG_OBJ_WORKSTAND1 },
+  { 2300, 605 , OBJECT_TYPE_TOGE_V1 , AG_CG_OBJ_TOGE4 },
+  { 2300, 605+50 , OBJECT_TYPE_HIT_V1 , AG_CG_OBJ_WORKSTAND1 },
 
-  { 2800+700*0 , 500 , OBJECT_TYPE_HITH1 , AG_CG_OBJ_WORKSTAND1 },
-  { 2800+700*1 , 300 , OBJECT_TYPE_HITH2 , AG_CG_OBJ_WORKSTAND1 },
-  { 2800+700*2 , 100 , OBJECT_TYPE_HITH1 , AG_CG_OBJ_WORKSTAND1 },
-  { 2800+700*3 ,-100 , OBJECT_TYPE_HITH2 , AG_CG_OBJ_WORKSTAND1 },
-  { 2800+700*4 ,-300 , OBJECT_TYPE_HITH1 , AG_CG_OBJ_WORKSTAND1 },
+  { 2800+700*0 , 500 , OBJECT_TYPE_HIT_H1 , AG_CG_OBJ_WORKSTAND1 },
+  { 2800+700*1 , 300 , OBJECT_TYPE_HIT_H2 , AG_CG_OBJ_WORKSTAND1 },
+  { 2800+700*2 , 100 , OBJECT_TYPE_HIT_H1 , AG_CG_OBJ_WORKSTAND1 },
+  { 2800+700*3 ,-100 , OBJECT_TYPE_HIT_H2 , AG_CG_OBJ_WORKSTAND1 },
+  { 2800+700*4 ,-300 , OBJECT_TYPE_HIT_H1 , AG_CG_OBJ_WORKSTAND1 },
   { 2800+700*5 ,-500 , OBJECT_TYPE_HIT ,   AG_CG_OBJ_WORKSTAND1 },
 
-  { 2800+256*0, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
-  { 2800+256*1, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
-  { 2800+256*2, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
-  { 2800+256*3, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
-  { 2800+256*4, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
-  { 2800+256*5, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
-  { 2800+256*6, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
-  { 2800+256*7, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
-  { 2800+256*8, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
-  { 2800+256*9, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
-  { 2800+256*10, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
-  { 2800+256*11, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
-  { 2800+256*12, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
-  { 2800+256*13, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
-  { 2800+256*14, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
-  { 2800+256*15, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
-  { 2800+256*16, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
-  { 2800+256*17, 605, OBJECT_TYPE_TOGE4, AG_CG_OBJ_TOGE4 },
+  { 2800+256*0, 605, OBJECT_TYPE_TOGE, AG_CG_OBJ_TOGE4 },
+  { 2800+256*1, 605, OBJECT_TYPE_TOGE, AG_CG_OBJ_TOGE4 },
+  { 2800+256*2, 605, OBJECT_TYPE_TOGE, AG_CG_OBJ_TOGE4 },
+  { 2800+256*3, 605, OBJECT_TYPE_TOGE, AG_CG_OBJ_TOGE4 },
+  { 2800+256*4, 605, OBJECT_TYPE_TOGE, AG_CG_OBJ_TOGE4 },
+  { 2800+256*5, 605, OBJECT_TYPE_TOGE, AG_CG_OBJ_TOGE4 },
+  { 2800+256*6, 605, OBJECT_TYPE_TOGE, AG_CG_OBJ_TOGE4 },
+  { 2800+256*7, 605, OBJECT_TYPE_TOGE, AG_CG_OBJ_TOGE4 },
+  { 2800+256*8, 605, OBJECT_TYPE_TOGE, AG_CG_OBJ_TOGE4 },
+  { 2800+256*9, 605, OBJECT_TYPE_TOGE, AG_CG_OBJ_TOGE4 },
+  { 2800+256*10, 605, OBJECT_TYPE_TOGE, AG_CG_OBJ_TOGE4 },
+  { 2800+256*11, 605, OBJECT_TYPE_TOGE, AG_CG_OBJ_TOGE4 },
+  { 2800+256*12, 605, OBJECT_TYPE_TOGE, AG_CG_OBJ_TOGE4 },
+  { 2800+256*13, 605, OBJECT_TYPE_TOGE, AG_CG_OBJ_TOGE4 },
+  { 2800+256*14, 605, OBJECT_TYPE_TOGE, AG_CG_OBJ_TOGE4 },
+  { 2800+256*15, 605, OBJECT_TYPE_TOGE, AG_CG_OBJ_TOGE4 },
+  { 2800+256*16, 605, OBJECT_TYPE_TOGE, AG_CG_OBJ_TOGE4 },
+  { 2800+256*17, 605, OBJECT_TYPE_TOGE, AG_CG_OBJ_TOGE4 },
 
 };
 
@@ -354,39 +355,39 @@ void InitTaskSenario1( struct TaskData* pTask ) {
         disp_level = DISP_LEVEL_BG_FRONT;
         break;
 
-      case OBJECT_TYPE_HITH1:
+      case OBJECT_TYPE_HIT_H1:
         motion = ObjectMotion_Horizon;
         phase = 0.0;
         frequency = 0.025;
         amplitude = 100;
         break;
 
-      case OBJECT_TYPE_HITV1:
+      case OBJECT_TYPE_HIT_V1:
         motion = ObjectMotion_Vertical;
         phase = 0.0;
         frequency = 0.03;
         amplitude = 100;
         break;
 
-      case OBJECT_TYPE_HITH2:
+      case OBJECT_TYPE_HIT_H2:
         motion = ObjectMotion_Horizon;
         phase = PI;
         frequency = 0.025;
         amplitude = 100;
         break;
 
-      case OBJECT_TYPE_HITV2:
+      case OBJECT_TYPE_HIT_V2:
         motion = ObjectMotion_Vertical;
         phase = PI;
         frequency = 0.03;
         amplitude = 100;
         break;
 
-      case OBJECT_TYPE_TOGE4:
+      case OBJECT_TYPE_TOGE:
         is_harmful = TRUE;
         break;
 
-      case OBJECT_TYPE_TOGE4H1:
+      case OBJECT_TYPE_TOGE_H1:
         is_harmful = TRUE;
         motion = ObjectMotion_Horizon;
         phase = 0.0;
@@ -394,7 +395,7 @@ void InitTaskSenario1( struct TaskData* pTask ) {
         amplitude = 100;
         break;
 
-      case OBJECT_TYPE_TOGE4V1:	
+      case OBJECT_TYPE_TOGE_V1:	
         is_harmful = TRUE;
         motion = ObjectMotion_Vertical;
         phase = 0.0;
@@ -402,7 +403,7 @@ void InitTaskSenario1( struct TaskData* pTask ) {
         amplitude = 100;
         break;
 
-      case OBJECT_TYPE_TOGE4H2:	
+      case OBJECT_TYPE_TOGE_H2:	
         is_harmful = TRUE;
         motion = ObjectMotion_Horizon;
         phase = PI;
@@ -410,7 +411,7 @@ void InitTaskSenario1( struct TaskData* pTask ) {
         amplitude = 100;
         break;
 
-      case OBJECT_TYPE_TOGE4V2:	
+      case OBJECT_TYPE_TOGE_V2:	
         is_harmful = TRUE;
         motion = ObjectMotion_Vertical;
         phase = PI;

@@ -23,20 +23,20 @@ static void AddScore( u32 n ) {
 /*                                player                          */
 /******************************************************************/
 struct RECT BBox[] = {
-  { -50/2 , -88/2 ,  50/2 , 116/2 },// PLAYER_MODE_WAIT      (0)
-  { -50/2 , -88/2 ,  50/2 , 116/2 },// PLAYER_MODE_WALKSTART (1)
-  { -50/2 , -88/2 ,  50/2 , 116/2 },// PLAYER_MODE_WALK      (2)
-  { -50/2 , -88/2 ,  50/2 , 116/2 },// PLAYER_MODE_WALKEND   (3)
-  { -50/2 , -88/2 ,  50/2 , 116/2 },// PLAYER_MODE_JUMPSTART (4)
+  { -50/2 , -88/2 ,  50/2 , 130/2 },// PLAYER_MODE_WAIT      (0)
+  { -50/2 , -88/2 ,  50/2 , 130/2 },// PLAYER_MODE_WALKSTART (1)
+  { -50/2 , -88/2 ,  50/2 , 130/2 },// PLAYER_MODE_WALK      (2)
+  { -50/2 , -88/2 ,  50/2 , 130/2 },// PLAYER_MODE_WALKEND   (3)
+  { -50/2 , -88/2 ,  50/2 , 130/2 },// PLAYER_MODE_JUMPSTART (4)
   { -50/2 , -128/2 , 50/2 , 50/2 },// PLAYER_MODE_JUMP      (5)
-  { -50/2 , -88/2 ,  50/2 , 116/2 },// PLAYER_MODE_JUMPEND   (6)
+  { -50/2 , -88/2 ,  50/2 , 130/2 },// PLAYER_MODE_JUMPEND   (6)
   { -50/2 , -128/2 , 50/2 , 50/2 },// PLAYER_MODE_FALL      (7)
-  { -50/2 , -88/2 ,  50/2 , 116/2 },// PLAYER_MODE_ATTACK    (8)
-  { -50/2 , -88/2 ,  50/2 , 116/2 },// PLAYER_MODE_RUNSTART  (1+8)
-  { -50/2 , -88/2 ,  50/2 , 116/2 },// PLAYER_MODE_RUN       (2+8)
-  { -50/2 , -88/2 ,  50/2 , 116/2 },// PLAYER_MODE_RUNEND    (3+8)
-  { -50/2 , -88/2 ,  50/2 , 116/2 },// PLAYER_MODE_GAMEOVER  (12)
-  { -50/2 , -88/2 ,  50/2 , 116/2 },// PLAYER_MODE_RETWEET   (13)
+  { -50/2 , -88/2 ,  50/2 , 130/2 },// PLAYER_MODE_ATTACK    (8)
+  { -50/2 , -88/2 ,  50/2 , 130/2 },// PLAYER_MODE_RUNSTART  (1+8)
+  { -50/2 , -88/2 ,  50/2 , 130/2 },// PLAYER_MODE_RUN       (2+8)
+  { -50/2 , -88/2 ,  50/2 , 130/2 },// PLAYER_MODE_RUNEND    (3+8)
+  { -50/2 , -88/2 ,  50/2 , 130/2 },// PLAYER_MODE_GAMEOVER  (12)
+  { -50/2 , -88/2 ,  50/2 , 130/2 },// PLAYER_MODE_RETWEET   (13)
 };
 
 static int MovePlayer( struct TaskData* pTask , int dx , int dy , int move_flag ) {
