@@ -42,24 +42,26 @@ static struct SPos {
 static struct SPos wpos_1[] = {
   { 150 , 419 , OBJECT_TYPE_FRONT , AG_CG_OBJ_GRASS },
 
-  { 1000 , 605      , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE4 },
-  { 1000 , 605-64   , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE3 },
-  { 1000 , 605-64*2 , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE2 },
-  { 1000 , 605-64*3 , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE1 },
+  //{ 1000 , 605      , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE4 },
+  //{ 1000 , 605-64   , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE3 },
+  //{ 1000 , 605-64*2 , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE2 },
+  //{ 1000 , 605-64*3 , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE1 },
 
-  { 1800 , 605      , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE4 },
-  { 1800 , 605-64   , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE3 },
-  { 1800 , 605-64*2 , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE2 },
-  { 1800 , 605-64*3 , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE1 },
+  //{ 1800 , 605      , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE4 },
+  //{ 1800 , 605-64   , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE3 },
+  //{ 1800 , 605-64*2 , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE2 },
+  //{ 1800 , 605-64*3 , OBJECT_TYPE_HIT , AG_CG_OBJ_TAKE1 },
+  
+  { 1024, 541, OBJECT_TYPE_HIT , AG_CG_OBJ_BLOCK },
+  { 1024+128, 605, OBJECT_TYPE_TOGE4 , AG_CG_OBJ_TOGE },
 
-  { 2800+700*0 , 500 , OBJECT_TYPE_HITH1 , AG_CG_OBJ_WORKSTAND1 },
-  { 2800+700*1 , 300 , OBJECT_TYPE_HITH2 , AG_CG_OBJ_WORKSTAND1 },
-  { 2800+700*2 , 100 , OBJECT_TYPE_HITH1 , AG_CG_OBJ_WORKSTAND1 },
-  { 2800+700*3 ,-100 , OBJECT_TYPE_HITH2 , AG_CG_OBJ_WORKSTAND1 },
-  { 2800+700*4 ,-300 , OBJECT_TYPE_HITH1 , AG_CG_OBJ_WORKSTAND1 },
-  { 2800+700*5 ,-500 , OBJECT_TYPE_HIT ,   AG_CG_OBJ_WORKSTAND1 },
+  { 2800+400*0 , 500 , OBJECT_TYPE_HITH1 , AG_CG_OBJ_LIFT },
+  { 2800+400*1 , 400 , OBJECT_TYPE_HITH2 , AG_CG_OBJ_LIFT },
+  { 2800+400*2 , 300 , OBJECT_TYPE_HITH1 , AG_CG_OBJ_LIFT },
+  { 2800+400*3 , 200 , OBJECT_TYPE_HITH2 , AG_CG_OBJ_LIFT },
+  { 2800+400*4 , 100 , OBJECT_TYPE_HITH1 , AG_CG_OBJ_LIFT },
+  { 2800+400*5 , 000 , OBJECT_TYPE_HIT ,   AG_CG_OBJ_LIFT },
 
-  { 1300 ,605 , OBJECT_TYPE_TOGE4 , AG_CG_OBJ_TOGE4 },
 };
 
 static struct SPos fpos_1[] = {
@@ -72,16 +74,9 @@ static struct SPos fpos_1[] = {
 };
 
 static struct SPos epos_1[] = {
-  { 820  , 674 , ENEMY_TYPE_FROG  , 300 },
-  //{ 820+100*2  , 674 , ENEMY_TYPE_FROG  , 300 },
-  //{ 820+200*2  , 674 , ENEMY_TYPE_FROG  , 300 },
-  { 820+300*2  , 674 , ENEMY_TYPE_FROG  , 300 },
-  //{ 820+400*2  , 674 , ENEMY_TYPE_FROG  , 300 },
-  //{ 820+500*2  , 674 , ENEMY_TYPE_FROG  , 300 },
-  { 820+600*2  , 674 , ENEMY_TYPE_FROG  , 300 },
-  //{ 820+700*2  , 674 , ENEMY_TYPE_FROG  , 300 },
-  //{ 820+800*2  , 674 , ENEMY_TYPE_FROG  , 300 },
-  //{ 820+900*2  , 674 , ENEMY_TYPE_FROG  , 300 },
+  //{ 420  , 674 , ENEMY_TYPE_FROG  , 300 },
+  //{ 820+300*2  , 674 , ENEMY_TYPE_FROG  , 300 },
+  //{ 820+600*2  , 674 , ENEMY_TYPE_FROG  , 300 },
   { 1800 , 416 , ENEMY_TYPE_SNAKE , 300 },
 };
 
@@ -362,7 +357,7 @@ void InitTaskSenario1( struct TaskData* pTask ) {
       case OBJECT_TYPE_HITH1:
         motion = ObjectMotion_Horizon;
         phase = 0.0;
-        frequency = 0.05;
+        frequency = 0.025;
         amplitude = 100;
         break;
 
@@ -376,7 +371,7 @@ void InitTaskSenario1( struct TaskData* pTask ) {
       case OBJECT_TYPE_HITH2:
         motion = ObjectMotion_Horizon;
         phase = PI;
-        frequency = 0.05;
+        frequency = 0.025;
         amplitude = 100;
         break;
 
@@ -456,7 +451,7 @@ void InitTaskSenario1( struct TaskData* pTask ) {
     struct TaskData* pKTask;
 
     pKTask = AllocTask();
-    InitTaskItem( pKTask, 2800+700*5 ,-500, AG_CG_ICON_LIFE1 , 0, 0, TRUE );
+    InitTaskItem( pKTask, 2800+400*5 ,0, AG_CG_ICON_LIFE1 , 0, 0, TRUE );
     AddlLink( pKTask , DISP_LEVEL_ITEM );
   };
 
