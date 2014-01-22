@@ -151,7 +151,6 @@ extern "C" {
 #define AG_CG_OBJ_BLOCK4_0	(121)
 #define AG_CG_OBJ_BLOCK_H4	(122)
 #define AG_CG_OBJ_LIFT	(123)
-#define AG_CG_B08MELON	(124)
 
 /***************************************************************/
 /*                     RM3 Member Symbol                       */
@@ -159,21 +158,22 @@ extern "C" {
 #define AG_RP_DAIGOROU_CLEAR	(0)
 #define AG_RP_DAIGOROU_LOSE	(1)
 #define AG_RP_DAIGOROU_ONIGIRI	(2)
-#define AG_RP_DAIGOROU_JUMP	(3)
-#define AG_RP_DAIGOROU_JUMPEND	(4)
-#define AG_RP_DAIGOROU_JUMPSTART	(5)
-#define AG_RP_DAIGOROU_RUN	(6)
-#define AG_RP_DAIGOROU_RUNEND	(7)
-#define AG_RP_DAIGOROU_RUNSTART	(8)
-#define AG_RP_DAIGOROU_WAIT	(9)
-#define AG_RP_DAIGOROU_WALK	(10)
-#define AG_RP_DAIGOROU_WALKEND	(11)
-#define AG_RP_DAIGOROU_WALKSTART	(12)
-#define AG_RP_DAIGOROU_RT	(13)
-#define AG_RP_EFF_RT	(14)
-#define AG_RP_DAIGOROU_GAMEOVER	(15)
-#define AG_RP_OBJ_PBULLET	(16)
-#define AG_RP_OBJ_EBULLET	(17)
+#define AG_RP_DAIGOROU_GAMEOVER	(3)
+#define AG_RP_DAIGOROU_JUMP	(4)
+#define AG_RP_DAIGOROU_JUMPEND	(5)
+#define AG_RP_DAIGOROU_JUMPSTART	(6)
+#define AG_RP_DAIGOROU_RT	(7)
+#define AG_RP_DAIGOROU_RUN	(8)
+#define AG_RP_DAIGOROU_RUNEND	(9)
+#define AG_RP_DAIGOROU_RUNSTART	(10)
+#define AG_RP_DAIGOROU_WAIT	(11)
+#define AG_RP_DAIGOROU_WALK	(12)
+#define AG_RP_DAIGOROU_WALKEND	(13)
+#define AG_RP_DAIGOROU_WALKSTART	(14)
+#define AG_RP_EFF_RT	(15)
+#define AG_RP_OBJ_EBULLET	(16)
+#define AG_RP_OBJ_PBULLET	(17)
+#define AG_RP_SIN_MESSAGE	(18)
 
 /***************************************************************/
 /*                       Vram Group Symbol                     */
@@ -219,8 +219,8 @@ extern "C" {
 /***************************************************************/
 /*                          Data Member                        */
 /***************************************************************/
-extern const AGERomMember ageRM[125];
-extern const AGERM3Member ageRM3[18];
+extern const AGERomMember ageRM[124];
+extern const AGERM3Member ageRM3[19];
 extern const u32 ageReserve[1];
 extern const u32 ageUser[1];
 extern const s16 ageVGCnt;
