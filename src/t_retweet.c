@@ -54,9 +54,6 @@ static s32 DrawRetweet( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
 
 	ageTransferAAC_RM3( pDBuf, pTask->Data.retweet.image , 0, &w, &h , (pTask->Data.retweet.count>>1) % (ageRM3[pTask->Data.retweet.image].Frames) );
 
-  w = w/2;
-  h = h/2;
-
 	if(flip==0){
 		agDrawSPRITE( pDBuf, 1 , x - (w<<1) , y - (h<<2) , x + (w<<1), y );
 	}

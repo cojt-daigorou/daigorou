@@ -4,6 +4,7 @@
 #include <agtypes.h>
 
 #define PI (3.14159265359)
+#define GROUND_LINE (668)
 
 extern int g_PlayerX;
 extern int g_PlayerY;

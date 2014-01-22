@@ -16,12 +16,6 @@
 #define PLAYER_MODE_GAMEOVER  (12)
 #define PLAYER_MODE_RETWEET		(13)
 
-// スピード
-#define PLAYER_WALK_SPEED   (4)
-#define PLAYER_RUN_SPEED    (8)
-
-#define GROUND_LINE       (548+116/2)
-
 struct PlayerData {
   u8 direction;
   u8 count;

@@ -13,6 +13,12 @@ static void AddScore( u32 n ) {
   g_Score += n;
 }
 
+#define PLAYER_GROUND_LINE (GROUND_LINE - 64)
+
+// スピード
+#define PLAYER_WALK_SPEED   (4)
+#define PLAYER_RUN_SPEED    (8)
+
 /******************************************************************/
 /*                                player                          */
 /******************************************************************/
@@ -201,15 +207,15 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
       y = g_PlayerY + BBox[ pTask->Data.player.mode ].y1;
 
       if( pTask->Data.player.direction == 0 ) {
-        x += 120;
+        x += 60;
       }
       else {
-        x -= 120;
+        x -= 60;
       };
 
       {
         struct TaskData* pBTask;
-        int dx = ( pTask->Data.player.direction == 0 ) ? 20 : -20;
+        int dx = ( pTask->Data.player.direction == 0 ) ? 10 : -10;
 
         pBTask = AllocTask();
         if (pBTask != NULL) {
@@ -231,7 +237,7 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
     case PLAYER_MODE_WALK :
     case PLAYER_MODE_WALKEND :
       isRun = (PadLvl()&PAD_B) == PAD_B;
-      if( g_PlayerY < GROUND_LINE && !MovePlayer( pTask , 0 , 10 , 0 )) {
+      if( g_PlayerY < PLAYER_GROUND_LINE && !MovePlayer( pTask , 0 , 10 , 0 )) {
         //　一番下でなく、足場が無くなった場合は下降モードへ。
         g_PlayerY += BBox[ PLAYER_MODE_WAIT ].y1 - BBox[ PLAYER_MODE_FALL ].y1;
 
@@ -384,8 +390,8 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
         pTask->Data.player.count = 0;
       }
 
-      else if( g_PlayerY >= GROUND_LINE ) {
-        g_PlayerY = GROUND_LINE;
+      else if( g_PlayerY >= PLAYER_GROUND_LINE ) {
+        g_PlayerY = PLAYER_GROUND_LINE;
         pTask->Data.player.mode = PLAYER_MODE_JUMPEND;
         pTask->Data.player.count = 0;
       }
@@ -472,8 +478,8 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
 
     case PLAYER_MODE_GAMEOVER :
 
-      if( !MovePlayer( pTask , 0 , 15 , 1 ) && g_PlayerY >= GROUND_LINE ) {
-        g_PlayerY = GROUND_LINE;
+      if( !MovePlayer( pTask , 0 , 15 , 1 ) && g_PlayerY >= PLAYER_GROUND_LINE ) {
+        g_PlayerY = PLAYER_GROUND_LINE;
       }
 
       if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode ] ].Frames - 1 ) {
@@ -560,9 +566,6 @@ static s32 DrawPlayer( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
   }
   ageTransferAAC_RM3( pDBuf, MotionMap[ pTask->Data.player.mode + isRun2*8 ] , 0, &w, &h , pat );
 
-  w = w / 2;
-  h = h / 2;
-
   x = g_PlayerX - g_OffsetX;
   y = g_PlayerY - g_OffsetY;
   if( flip == 0 ) {
@@ -581,7 +584,7 @@ void InitTaskPlayer( struct TaskData* pTask ) {
   pTask->type = TASK_PLAYER;
   pTask->visible = 1;
   g_PlayerX = AGE_FB_WIDTH/2;
-  g_PlayerY = GROUND_LINE;
+  g_PlayerY = PLAYER_GROUND_LINE;
   pTask->Calc = CalcPlayer;
   pTask->Draw = DrawPlayer;
   pTask->Data.player.direction = 0;
