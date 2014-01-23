@@ -258,12 +258,12 @@ static s32 CalcSenario1( struct TaskData* pTask , u32 Flag ) {
     h = ageRM[ AG_CG_GAMEOVER ].Height;
 
     pETask = AllocTask();
-    InitTaskStatic( pETask , (1024-w)/2 , (768-h)/2 , AG_CG_GAMEOVER , 1 );
+    InitTaskStatic( pETask , (1024-w)/2 , (768*3/4-h)/2 , AG_CG_GAMECLEAR , 1 );
     AddlLink( pETask , DISP_LEVEL_TOP );
 
     ageSndMgrRelease( pTask->Data.title.bgm_handle );
 
-    pTask->Data.senario.bgm_handle = ageSndMgrAlloc( AS_SND_GAMEOVER , 0 , 1 , AGE_SNDMGR_PANMODE_LR12 , 0 );
+    pTask->Data.senario.bgm_handle = ageSndMgrAlloc( AS_SND_GAMECLEAR , 0 , 1 , AGE_SNDMGR_PANMODE_LR12 , 0 );
 
     ageSndMgrPlay( pTask->Data.senario.bgm_handle );
     ageSndMgrSetVolume( pTask->Data.senario.bgm_handle , 0xa0 );
@@ -273,7 +273,7 @@ static s32 CalcSenario1( struct TaskData* pTask , u32 Flag ) {
     g_isStageClear = TRUE;
     pTask->x = 0;
 
-    ageSndMgrPlayOneshot( (g_OffsetX % 2) ? AS_SND_A02 : AS_SND_A03 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
+    //ageSndMgrPlayOneshot( (g_OffsetX % 2) ? AS_SND_A02 : AS_SND_A03 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
   };
 
   //　ソフトリセット

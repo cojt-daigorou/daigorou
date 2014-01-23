@@ -54,6 +54,23 @@ static float ease_out(float t) {
   return 1 - expf( -6.0 * t );
 }
 
+static void DrawMessage( struct TaskData* pTask , AGDrawBuffer* pDBuf, int frame, float t ) {
+  int w,h;
+	int x,y;
+
+  agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 2 , 1 );
+  ageTransferAAC_RM3( pDBuf, AG_RP_SIN_MESSAGE, 0, &w, &h, frame );
+
+  w *= 0.8;
+  h *= 0.8;
+
+  x = (1024-w)/2;
+  y = (768/2-h)/2 + 768 - 768/2 * ease_out(t);
+  //y = (768/2-h)/2 + 768/2 * ease_out(t);
+
+  agDrawSPRITE( pDBuf, 1, x<<2 , y<<2 , (x+w)<<2 , (y+h)<<2 );
+}
+
 static s32 DrawStory( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
 	int w, h;
 	int a;
@@ -87,21 +104,12 @@ static s32 DrawStory( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
   switch( pTask->Data.story.mode ) {
     case 0:// message: –Ú‚ð—£‚µ‚½‚ç‚¦‚è‚½‚ñ‚ª‚¢‚È‚¢‚Ì‚¾!
     case 1:// message: ‚¦‚è‚½‚ñ!¡A‰ï‚¢‚És‚­‚Ì‚¾!
-      agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 2 , 1 );
-      ageTransferAAC_RM3( pDBuf, AG_RP_SIN_MESSAGE, 0, &w, &h, pTask->Data.story.mode );
-
-      w *= 0.8;
-      h *= 0.8;
-
       t = (float)min(pTask->Data.story.count, 50) / 50;
-      x = (1024-w)/2;
-      y = (768/2-h)/2 + 768 - 768/2 * ease_out(t);
-      //y = (768/2-h)/2 + 768/2 * ease_out(t);
-
-      agDrawSPRITE( pDBuf, 1, x<<2 , y<<2 , (x+w)<<2 , (y+h)<<2 );
+      DrawMessage( pTask, pDBuf, pTask->Data.story.mode, t );
       break;
 
     case 2:
+      DrawMessage( pTask, pDBuf, 1, 1.0 );
       {
         int at = pTask->Data.story.count / 64 * 255 / 80;
 
