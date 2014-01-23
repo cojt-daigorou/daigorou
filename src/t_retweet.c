@@ -17,7 +17,7 @@ static s32 CalcRetweet( struct TaskData* pTask , u32 Flag ) {
 		if( pTask->Data.retweet.count%5 == 0 ) {
 			int i;
 			int x = g_PlayerX;
-			int y = g_PlayerY + 128;
+			int y = g_PlayerY + 64;
 			for(i=0;i<8;i++){
 				int dx = (int)(20*cosf(pTask->Data.retweet.count + PI*i/4));
 				int dy = (int)(20*sinf(pTask->Data.retweet.count + PI*i/4));

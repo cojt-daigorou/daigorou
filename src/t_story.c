@@ -23,7 +23,7 @@ static struct SStory stories[] = {
   {2, {0, 1},     {AS_SND_B01, AS_SND_B02} },
   {2, {2, 1},     {AS_SND_B08, AS_SND_B02} },
   {2, {3, 1},     {AS_SND_B09, AS_SND_B02} },
-  {3, {4, 6, 5},  {AS_SND_B10, AS_SND_A04, AS_SND_B11} },
+  {3, {4, 5, 6},  {AS_SND_B10, AS_SND_A04, AS_SND_B11} },
 };
 
 static s32 CalcStory( struct TaskData* pTask , u32 Flag ) {
