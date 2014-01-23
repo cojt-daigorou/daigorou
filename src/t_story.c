@@ -16,19 +16,24 @@
 static struct SStory {
   int n;
   int pages[5];
+  int snds[5];
 };
 
 static struct SStory stories[] = {
-  {2, {0, 1} },
-  {2, {2, 1} },
-  {2, {3, 1} },
-  {3, {4, 6, 5} },
+  {2, {0, 1},     {AS_SND_B01, AS_SND_B02} },
+  {2, {2, 1},     {AS_SND_B08, AS_SND_B02} },
+  {2, {3, 1},     {AS_SND_B09, AS_SND_B02} },
+  {3, {4, 6, 5},  {AS_SND_B10, AS_SND_A04, AS_SND_B11} },
 };
 
 static s32 CalcStory( struct TaskData* pTask , u32 Flag ) {
 
   if ( pTask->Data.story.mode < stories[g_Stage].n ) {
     pTask->Data.story.count++;
+    
+    if (pTask->Data.story.count == 30) {
+      ageSndMgrPlayOneshot( stories[g_Stage].snds[pTask->Data.story.mode] , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
+    }
 
     if( PadTrg()&PAD_A || PadTrg()&PAD_B || (PadTrg()&PAD_LEFT && PadTrg()&PAD_RIGHT) ) {
       pTask->Data.story.mode++;
