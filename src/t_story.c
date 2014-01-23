@@ -102,8 +102,9 @@ static s32 DrawStory( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
 		a = abs( (pTask->Data.story.count%510) - 255 );
 	};
 
+  // TODO: ƒGƒƒQ•—‚É‘åŒÜ˜Y‚â‚¦‚è‚½‚ñ‚Ì—§ŠG‚É·‚µ‘Ö‚¦‚éB
 	agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 2 , 1 );
-	ageTransferAAC( pDBuf, AG_CG_GAMECLEAR, 0, &w, &h );
+	ageTransferAAC( pDBuf, AG_CG_TITLE, 0, &w, &h );
 
 	x = (1024-w)/2;
 	y = (768*3/4-h)/2;
