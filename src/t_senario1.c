@@ -455,8 +455,6 @@ void InitTaskSenario1( struct TaskData* pTask ) {
     AddlLink( pETask , DISP_LEVEL_ENEMY );
   };
 
-
-
   pTask->Data.senario.bgm_handle = ageSndMgrAlloc( AS_SND_BGM , 0 , 1 , AGE_SNDMGR_PANMODE_LR12 , 0 );
 
   ageSndMgrPlay( pTask->Data.senario.bgm_handle );

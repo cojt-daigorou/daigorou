@@ -12,31 +12,44 @@
 /******************************************************************/
 /*                              story                             */
 /******************************************************************/
+
+static struct SStory {
+  int n;
+  int pages[5];
+};
+
+static struct SStory stories[] = {
+  {2, {0, 1} },
+  {2, {2, 1} },
+  {2, {3, 1} },
+  {3, {4, 6, 5} },
+};
+
 static s32 CalcStory( struct TaskData* pTask , u32 Flag ) {
 
-  switch( pTask->Data.story.mode ) {
-    case 0:// message: 目を離したらえりたんがいないのだ!
-    case 1:// message: えりたん!今、会いに行くのだ!
-      pTask->Data.story.count++;
+  if ( pTask->Data.story.mode < stories[g_Stage].n ) {
+    pTask->Data.story.count++;
 
-      if( PadTrg()&PAD_A || PadTrg()&PAD_B || (PadTrg()&PAD_LEFT && PadTrg()&PAD_RIGHT) ) {
-        pTask->Data.story.mode++;
-        pTask->Data.story.count = 0;
+    if( PadTrg()&PAD_A || PadTrg()&PAD_B || (PadTrg()&PAD_LEFT && PadTrg()&PAD_RIGHT) ) {
+      pTask->Data.story.mode++;
+      pTask->Data.story.count = 0;
 
-        ageSndMgrPlayOneshot( AS_SND_DECIDE008 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
-      };
-      break;
+      ageSndMgrPlayOneshot( AS_SND_DECIDE008 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
+    };
+  } else {
+    // スタートボタン後
+    pTask->Data.story.count += 64;
 
-    case 2:// スタートボタン後
-      pTask->Data.story.count += 64;
+    ageSndMgrSetVolume( pTask->Data.story.bgm_handle , 0xa0 - pTask->Data.story.count/32 );
+    if( pTask->Data.story.count/32 >= 0xa0 ) {
+      ageSndMgrRelease( pTask->Data.story.bgm_handle );
 
-      ageSndMgrSetVolume( pTask->Data.story.bgm_handle , 0xa0 - pTask->Data.story.count/32 );
-      if( pTask->Data.story.count/32 >= 0xa0 ) {
-        ageSndMgrRelease( pTask->Data.story.bgm_handle );
-
+      if ( g_Stage == 3) {
+        GotoMode( MODE_TITLE );
+      } else {
         GotoMode( MODE_GAME );
-      };
-      break;
+      }
+    };
   };
 
 	return( 0 );
@@ -100,27 +113,21 @@ static s32 DrawStory( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
 
 	//agDrawSPRITE( pDBuf, 1, x<<2 , y<<2 , (x+w)<<2 , (y+h)<<2 );
 
-  // message
-  switch( pTask->Data.story.mode ) {
-    case 0:// message: 目を離したらえりたんがいないのだ!
-    case 1:// message: えりたん!今、会いに行くのだ!
-      t = (float)min(pTask->Data.story.count, 50) / 50;
-      DrawMessage( pTask, pDBuf, pTask->Data.story.mode, t );
-      break;
+  if ( pTask->Data.story.mode < stories[g_Stage].n ) {
+    // message
+    t = (float)min(pTask->Data.story.count, 50) / 50;
+    DrawMessage( pTask, pDBuf, stories[g_Stage].pages[pTask->Data.story.mode], t );
+  } else {
+    // start
+    DrawMessage( pTask, pDBuf, stories[g_Stage].pages[pTask->Data.story.mode - 1], 1.0 );
+    {
+      int at = pTask->Data.story.count / 64 * 255 / 80;
 
-    case 2:
-      DrawMessage( pTask, pDBuf, 1, 1.0 );
-      {
-        int at = pTask->Data.story.count / 64 * 255 / 80;
-
-        agPictureSetBlendMode( pDBuf , 0 , at , 0 , 0 , 0 , 1 );
-        agDrawSETFCOLOR( pDBuf , ARGB( 0xff , 0xff , 0xff , 0xff ) );
-        agDrawSPRITE( pDBuf, 0, 0<<2 , 0<<2 , (1024)<<2 , (768)<<2 );
-      };
-      break;
+      agPictureSetBlendMode( pDBuf , 0 , at , 0 , 0 , 0 , 1 );
+      agDrawSETFCOLOR( pDBuf , ARGB( 0xff , 0xff , 0xff , 0xff ) );
+      agDrawSPRITE( pDBuf, 0, 0<<2 , 0<<2 , (1024)<<2 , (768)<<2 );
+    };
   };
-
-
 
 	g_OffsetX++;
 
