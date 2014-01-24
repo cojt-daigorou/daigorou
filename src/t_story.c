@@ -103,7 +103,22 @@ static s32 DrawStory( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
 		a = abs( (pTask->Data.story.count%510) - 255 );
 	};
 
-  //g_Stage = 3;
+  g_Stage = 3;
+
+  if (g_Stage > 0) {
+    // 集中線
+		int a = abs( ((pTask->Data.story.count * 8)%256) - 128 ) + 127;
+    agPictureSetBlendMode( pDBuf , 0 , a , 0 , 0 , 2 , 1 );
+    ageTransferAAC( pDBuf, AG_CG_STORY_SHUCHU, 0, &w, &h );
+    x = 280;
+    y = 200;
+    agPictureRotTex(pDBuf, AG_CG_STORY_SHUCHU, 
+        x<<2, 
+        y<<2, 
+        pTask->Data.story.count % 360, 
+        0x100);
+    //agDrawSPRITE( pDBuf, 1, x<<2 , y<<2 , (x+w)<<2 , (y+h)<<2 );
+  }
 
   switch( g_Stage ) {
     case 0:
@@ -125,7 +140,7 @@ static s32 DrawStory( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
       // UNIXスーパーテキスト
       agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 2 , 1 );
       ageTransferAAC( pDBuf, AG_CG_ITEM_UNIXSP256, 0, &w, &h );
-      x = 150;
+      x = 150 + 50;
       y = 100;
       agDrawSPRITE( pDBuf, 1, x<<2 , y<<2 , (x+w)<<2 , (y+h)<<2 );
       daigorou_dx = 150;
@@ -135,13 +150,12 @@ static s32 DrawStory( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
       // えりたん
       agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 2 , 1 );
       ageTransferAAC( pDBuf, AG_CG_STORY_ERITAN, 0, &w, &h );
-      x = (1024-w)/2 - 300;
+      x = (1024-w)/2 - 330;
       y = (768-h)/2 + 20;
       agDrawSPRITE( pDBuf, 1, x<<2 , y<<2 , (x+w)<<2 , (y+h)<<2 );
       daigorou_dx = 220;
       break;
   }
-
 
   // 大五郎
 	agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 2 , 1 );
