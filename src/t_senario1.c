@@ -144,7 +144,7 @@ static s32 CalcSenario1( struct TaskData* pTask , u32 Flag ) {
   if( g_isGameOver ) {
     pTask->x++;
     if( pTask->x > 800 ) {
-      ageSndMgrRelease( pTask->Data.title.bgm_handle );
+      ageSndMgrRelease( pTask->Data.senario.bgm_handle );
       GotoMode( MODE_TITLE );
     };
     return(0);
@@ -210,7 +210,7 @@ static s32 CalcSenario1( struct TaskData* pTask , u32 Flag ) {
     InitTaskStatic( pETask , (1024-w)/2 , (768-h)/2 , AG_CG_GAMEOVER , 1 );
     AddlLink( pETask , DISP_LEVEL_TOP );
 
-    ageSndMgrRelease( pTask->Data.title.bgm_handle );
+    ageSndMgrRelease( pTask->Data.senario.bgm_handle );
 
     pTask->Data.senario.bgm_handle = ageSndMgrAlloc( AS_SND_GAMEOVER , 0 , 1 , AGE_SNDMGR_PANMODE_LR12 , 0 );
 
@@ -236,7 +236,7 @@ static s32 CalcSenario1( struct TaskData* pTask , u32 Flag ) {
     InitTaskStatic( pETask , (1024-w)/2 , (768*3/4-h)/2 , AG_CG_GAMECLEAR , 1 );
     AddlLink( pETask , DISP_LEVEL_TOP );
 
-    ageSndMgrRelease( pTask->Data.title.bgm_handle );
+    ageSndMgrRelease( pTask->Data.senario.bgm_handle );
 
     pTask->Data.senario.bgm_handle = ageSndMgrAlloc( AS_SND_GAMECLEAR , 0 , 1 , AGE_SNDMGR_PANMODE_LR12 , 0 );
 
@@ -251,7 +251,7 @@ static s32 CalcSenario1( struct TaskData* pTask , u32 Flag ) {
 
   //　ソフトリセット
   if( PadTrg()&PAD_UP && PadTrg()&PAD_DOWN ) {
-    ageSndMgrRelease( pTask->Data.title.bgm_handle );
+    ageSndMgrRelease( pTask->Data.senario.bgm_handle );
     GotoMode( MODE_TITLE );
   };
 
@@ -264,6 +264,7 @@ void InitTaskSenario1( struct TaskData* pTask ) {
   int wn, fn, en;
 
   memset( pTask , 0 , sizeof( *pTask ) );
+  g_pSenarioTask = pTask;
 
   srandMT( 3475573 );
 

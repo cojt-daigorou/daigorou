@@ -25,5 +25,6 @@ extern u32 g_Stage;
 
 extern struct RECT* g_pPlayerRect;
 extern struct TaskData* g_pPlayerTask;
+extern struct TaskData* g_pSenarioTask;
 
 #endif // __GLOBAL_H__

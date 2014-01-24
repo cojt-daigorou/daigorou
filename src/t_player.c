@@ -486,7 +486,7 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
         // 最大フレームに達したらカウントを止める
         if ( g_Life > 0) {
           --g_Life;
-          ageSndMgrRelease( pTask->Data.senario.bgm_handle );
+          ageSndMgrRelease( g_pSenarioTask->Data.senario.bgm_handle );
           GotoMode( MODE_GAME );
         }
       } else {
