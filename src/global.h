@@ -20,6 +20,7 @@ extern int g_isGetKeyItem;
 extern u32 g_Score;
 extern u32 g_Time;
 extern u32 g_Life;
+extern u32 g_Star;
 extern u32 g_Stage;
 
 extern struct RECT* g_pPlayerRect;

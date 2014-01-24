@@ -22,10 +22,10 @@ static s32 DrawScore( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
 
 	score = *(pTask->Data.score.pScore);
 
-	for( i=0 ; i<4 ; i++ ) {
+	for( i=0 ; i<pTask->Data.score.digit ; i++ ) {
 		u32 n = score%10;
 
-		x = pTask->x + ((4-i) * 50);
+		x = pTask->x + ((pTask->Data.score.digit-i) * 50);
 		y = pTask->y;
 
 		agDrawSPRITE_UV( pDBuf, x<<2 , y<<2 , (n*58*0x1000)/w , 0 , (x+58)<<2 , (y+70)<<2 , ((n+1)*58*0x1000)/w , 0x1000 );
@@ -36,7 +36,7 @@ static s32 DrawScore( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
 	return( 0 );
 }
 
-void InitTaskScore( struct TaskData* pTask , s32 x , s32 y , u32* pScore ) {
+void InitTaskScore( struct TaskData* pTask , s32 x , s32 y , u32* pScore, u8 digit ) {
 	pTask->type = TASK_SCORE;
 	pTask->visible = 1;
 	pTask->x = x;
@@ -44,4 +44,5 @@ void InitTaskScore( struct TaskData* pTask , s32 x , s32 y , u32* pScore ) {
 	pTask->Calc = NULL;
 	pTask->Draw = DrawScore;
 	pTask->Data.score.pScore = pScore;
+	pTask->Data.score.digit = digit;
 }

@@ -30,7 +30,8 @@ void GotoMode( enum GameMode mode ) {
 
 			g_Score = 0;
 			g_Time = 100;
-			g_Life = 1;
+			g_Life = 10;
+			g_Star = 30;
       g_Stage = 0;
 
 			pTask = AllocTask();
@@ -68,10 +69,18 @@ void GotoMode( enum GameMode mode ) {
         case 0: 
           g_Score = 0;
           g_Time = 100;
+          g_Life = 10;
+          g_Star = 30;
           break;
+
         case 1:
           g_Time = 200;
           break;
+
+        case 2:
+          g_Time = 200;
+          break;
+
         default:
           break;
       }
@@ -88,16 +97,46 @@ void GotoMode( enum GameMode mode ) {
       InitTaskSenario1( pTask );
 			AddlLink( pTask , DISP_LEVEL_BG );
 
+      // スコア表示などのインジケーター
+
+      // SCORE
 			pTask = AllocTask();
-			InitTaskScore( pTask , 750 , 30 , &(g_Score) );
+			InitTaskScore( pTask , 0 , 30 , &(g_Score), 3 );
+			AddlLink( pTask , DISP_LEVEL_SCORE );
+
+      // LIFE
+			pTask = AllocTask();
+			InitTaskStatic( pTask , 230 , 10 , AG_CG_ICON_DAIGORO , 1 );
 			AddlLink( pTask , DISP_LEVEL_SCORE );
 
 			pTask = AllocTask();
-			InitTaskScore( pTask , 30 , 30 , &(g_Time) );
+			InitTaskStatic( pTask , 315 , 50 , AG_CG_ICON_CROSS , 1 );
 			AddlLink( pTask , DISP_LEVEL_SCORE );
 
 			pTask = AllocTask();
-			InitTaskStatic( pTask , 0 , 10 , AG_CG_INFO_TIME , 1 );
+			InitTaskScore( pTask , 290 , 30 , &(g_Life), 2 );
+			AddlLink( pTask , DISP_LEVEL_SCORE );
+
+      // STAR
+			pTask = AllocTask();
+			InitTaskStatic( pTask , 500 , 10 , AG_CG_ICON_STAR , 1 );
+			AddlLink( pTask , DISP_LEVEL_SCORE );
+
+			pTask = AllocTask();
+			InitTaskStatic( pTask , 585 , 50 , AG_CG_ICON_CROSS , 1 );
+			AddlLink( pTask , DISP_LEVEL_SCORE );
+
+			pTask = AllocTask();
+			InitTaskScore( pTask , 560 , 30 , &(g_Star), 2 );
+			AddlLink( pTask , DISP_LEVEL_SCORE );
+
+      // TIME
+			pTask = AllocTask();
+			InitTaskStatic( pTask , 760 , 10 , AG_CG_INFO_TIME , 1 );
+			AddlLink( pTask , DISP_LEVEL_SCORE );
+
+			pTask = AllocTask();
+			InitTaskScore( pTask , 790 , 30 , &(g_Time), 3 );
 			AddlLink( pTask , DISP_LEVEL_SCORE );
 
 			break;
