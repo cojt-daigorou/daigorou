@@ -82,7 +82,7 @@ static struct SPos ipos_1[] = {
   { 3600 , 100 , ITEM_TYPE_A , 0 },
   { 6200 , 680 , ITEM_TYPE_B , 0 },
   { 6500 , 680 , ITEM_TYPE_C , 0 },
-  { 2800+400*5, 0, ITEM_TYPE_KEY, AG_CG_ICON_LIFE1 },
+  { 2800+400*5, 0, ITEM_TYPE_KEY, AG_CG_ITEM_MERONPAN64 },
 };
 
 static struct SPos epos_1[] = {
@@ -105,7 +105,7 @@ static struct SPos ipos_2[] = {
   { 800+100*0 , 680 , ITEM_TYPE_A , 0 },
   { 800+100*1 , 680 , ITEM_TYPE_B , 0 },
   { 800+100*2 , 680 , ITEM_TYPE_C , 0 },
-  { 800+100*3 , 680 , ITEM_TYPE_KEY , AG_CG_ICON_LIFE1 },
+  { 800+100*3 , 680 , ITEM_TYPE_KEY , AG_CG_ITEM_UNIXSP64 },
 };
 
 static struct SPos epos_2[] = {
@@ -125,7 +125,7 @@ static struct SPos ipos_3[] = {
   { 800+100*0 , 680 , ITEM_TYPE_A , 0 },
   { 800+100*1 , 680 , ITEM_TYPE_B , 0 },
   { 800+100*2 , 680 , ITEM_TYPE_C , 0 },
-  { 800+100*3 , 680 , ITEM_TYPE_KEY , AG_CG_ICON_LIFE1 },
+  { 800+100*3 , 680 , ITEM_TYPE_KEY , AG_CG_ITEM_ERITAN },
 };
 
 static struct SPos epos_3[] = {

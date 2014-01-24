@@ -94,6 +94,7 @@ static s32 DrawStory( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
 	int a;
 	int x,y;
   float t;
+  int daigorou_dx = 0;
 
 	if( pTask->Data.story.mode == 0 ) {
 		a = abs( (pTask->Data.story.count%256) - 128 ) + 127;
@@ -102,26 +103,61 @@ static s32 DrawStory( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
 		a = abs( (pTask->Data.story.count%510) - 255 );
 	};
 
-  // TODO: エロゲ風に大五郎やえりたんの立絵に差し替える。
+  //g_Stage = 3;
+
+  switch( g_Stage ) {
+    case 0:
+      // なし
+      daigorou_dx = 0;
+      break;
+
+    case 1:
+      // めろんぱん
+      agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 2 , 1 );
+      ageTransferAAC( pDBuf, AG_CG_ITEM_MERONPAN256, 0, &w, &h );
+      x = 150;
+      y = 100;
+      agDrawSPRITE( pDBuf, 1, x<<2 , y<<2 , (x+w)<<2 , (y+h)<<2 );
+      daigorou_dx = 150;
+      break;
+
+    case 2:
+      // UNIXスーパーテキスト
+      agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 2 , 1 );
+      ageTransferAAC( pDBuf, AG_CG_ITEM_UNIXSP256, 0, &w, &h );
+      x = 150;
+      y = 100;
+      agDrawSPRITE( pDBuf, 1, x<<2 , y<<2 , (x+w)<<2 , (y+h)<<2 );
+      daigorou_dx = 150;
+      break;
+
+    case 3:
+      // えりたん
+      agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 2 , 1 );
+      ageTransferAAC( pDBuf, AG_CG_STORY_ERITAN, 0, &w, &h );
+      x = (1024-w)/2 - 300;
+      y = (768-h)/2 + 20;
+      agDrawSPRITE( pDBuf, 1, x<<2 , y<<2 , (x+w)<<2 , (y+h)<<2 );
+      daigorou_dx = 220;
+      break;
+  }
+
+
+  // 大五郎
 	agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 2 , 1 );
   ageTransferAAC( pDBuf, AG_CG_STORY_DAIGOROU, 0, &w, &h );
-	x = (1024-w)/2;
+	x = (1024-w)/2 + daigorou_dx;
 	y = (768-h)/2 + 50;
 	agDrawSPRITE( pDBuf, 1, x<<2 , y<<2 , (x+w)<<2 , (y+h)<<2 );
   
-  agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 2 , 1 );
-  ageTransferAAC( pDBuf, AG_CG_STORY_CLOUD_ERITAN, 0, &w, &h );
-	x = (1024-w)/2 + 170;
-	y = (768-h)/2 - 260;
-	agDrawSPRITE( pDBuf, 1, x<<2 , y<<2 , (x+w)<<2 , (y+h)<<2 );
-
-	//agPictureSetBlendMode( pDBuf , 0 , a , 0 , 0 , 2 , 1 );
-	//ageTransferAAC( pDBuf, AG_CG_GAMESTART, 0, &w, &h );
-
-  //x = (1024-w)/2;
-	//y = (768/2-h)/2 + 768/2;
-
-	//agDrawSPRITE( pDBuf, 1, x<<2 , y<<2 , (x+w)<<2 , (y+h)<<2 );
+  if ( g_Stage < 3) {
+    // えりたんを思い浮かべる雲
+    agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 2 , 1 );
+    ageTransferAAC( pDBuf, AG_CG_STORY_CLOUD_ERITAN, 0, &w, &h );
+    x = x + 200;
+    y = y - 100;
+    agDrawSPRITE( pDBuf, 1, x<<2 , y<<2 , (x+w)<<2 , (y+h)<<2 );
+  }
 
   if ( pTask->Data.story.mode < stories[g_Stage].n ) {
     // message
