@@ -17,6 +17,8 @@ void KillPlayer( struct TaskData* pTask ) {
   if (pTask->Data.player.mode != PLAYER_MODE_GAMEOVER) {
     pTask->Data.player.mode = PLAYER_MODE_GAMEOVER;
     pTask->Data.player.count = 0;
+
+    ageSndMgrPlayOneshot( AS_SND_B07 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
   }
 }
 
