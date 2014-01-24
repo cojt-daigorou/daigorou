@@ -17,3 +17,4 @@ u32 g_Star = 30;
 u32 g_Stage = 0;
 
 struct RECT *g_pPlayerRect = NULL;
+struct TaskData* g_pPlayerTask = NULL;

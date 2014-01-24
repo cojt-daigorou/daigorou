@@ -13,6 +13,11 @@ void AddScore( u32 n ) {
   g_Score += n;
 }
 
+void KillPlayer( struct TaskData* pTask ) {
+  pTask->Data.player.mode = PLAYER_MODE_GAMEOVER;
+  pTask->Data.player.count = 0;
+}
+
 #define PLAYER_GROUND_LINE (GROUND_LINE - 64)
 
 // スピード
@@ -78,8 +83,8 @@ static int MovePlayer( struct TaskData* pTask , int dx , int dy , int move_flag 
     if( pWTask->Hit != NULL ) {
       if( pWTask->Hit( pWTask , &crect ) ) {
 
-        if (pWTask->Data.object.is_harmful) {
-          g_Life = 0;
+        if ( pTask->Data.player.mode != PLAYER_MODE_GAMEOVER &&  pWTask->Data.object.is_harmful ) {
+          KillPlayer( pTask );
         }
 
         // 横から衝突したら落とす
@@ -192,11 +197,6 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
   rect = BBox[ pTask->Data.player.mode ];
   AddRect( &rect , g_PlayerX , g_PlayerY );
   g_pPlayerRect = &rect;
-
-  if (g_isGameOver && pTask->Data.player.mode != PLAYER_MODE_GAMEOVER) {
-    pTask->Data.player.mode = PLAYER_MODE_GAMEOVER;
-    pTask->Data.player.count = 0;
-  }
 
   // 攻撃
   if (pTask->Data.player.mode != PLAYER_MODE_GAMEOVER) {
@@ -484,6 +484,11 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
 
       if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode ] ].Frames - 1 ) {
         // 最大フレームに達したらカウントを止める
+        if ( g_Life > 0) {
+          --g_Life;
+          ageSndMgrRelease( pTask->Data.senario.bgm_handle );
+          GotoMode( MODE_GAME );
+        }
       } else {
         pTask->Data.player.count++;
       }
@@ -580,6 +585,8 @@ static s32 DrawPlayer( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
 
 void InitTaskPlayer( struct TaskData* pTask ) {
   memset( pTask , 0 , sizeof( *pTask ) );
+
+  g_pPlayerTask = pTask;
 
   pTask->type = TASK_PLAYER;
   pTask->visible = 1;

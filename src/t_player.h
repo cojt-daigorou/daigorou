@@ -24,6 +24,7 @@ struct PlayerData {
 };
 
 void AddScore( u32 n );
+void KillPlayer( struct TaskData* pTask );
 void InitTaskPlayer( struct TaskData* pTask );
 
 #endif // __TASK_PLAYER_H__

@@ -55,7 +55,6 @@ void GotoMode( enum GameMode mode ) {
       break;
 
 		case MODE_GAME :
-			g_Life = 1;
 			g_OffsetX = 0;
 			g_OffsetY = 0;
 			g_PlayerX = 0;
@@ -67,18 +66,15 @@ void GotoMode( enum GameMode mode ) {
 
       switch (g_Stage) {
         case 0: 
-          g_Score = 0;
-          g_Time = 100;
-          g_Life = 10;
-          g_Star = 30;
+          g_Time = 300;
           break;
 
         case 1:
-          g_Time = 200;
+          g_Time = 300;
           break;
 
         case 2:
-          g_Time = 200;
+          g_Time = 300;
           break;
 
         default:
