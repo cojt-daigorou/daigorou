@@ -31,8 +31,16 @@ static s32 CalcStory( struct TaskData* pTask , u32 Flag ) {
   if ( pTask->Data.story.mode < stories[g_Stage].n ) {
     pTask->Data.story.count++;
     
-    if (pTask->Data.story.count == 30) {
-      ageSndMgrPlayOneshot( stories[g_Stage].snds[pTask->Data.story.mode] , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
+    if (pTask->Data.story.count == 10) {
+      // ‘O‚Ì‘äŽŒ‚ÌÄ¶‚ðŽ~‚ß‚é
+      ageSndMgrRelease( pTask->Data.story.voice_handle );
+
+      // ‘äŽŒ‚ðÄ¶‚·‚é
+      pTask->Data.story.voice_handle = ageSndMgrAlloc( stories[g_Stage].snds[pTask->Data.story.mode] , 0 , 0 , AGE_SNDMGR_PANMODE_LR12 , 0 );
+
+      ageSndMgrPlay( pTask->Data.story.voice_handle );
+      ageSndMgrSetVolume( pTask->Data.story.voice_handle , 0xa0 );
+      ageSndMgrSetPanMode( pTask->Data.story.voice_handle , 0 );
     }
 
     if( PadTrg()&PAD_A || PadTrg()&PAD_B || (PadTrg()&PAD_LEFT && PadTrg()&PAD_RIGHT) ) {
@@ -208,6 +216,7 @@ void InitTaskStory( struct TaskData* pTask ) {
 	pTask->Data.story.count = 0;
 
 	pTask->Data.story.bgm_handle = ageSndMgrAlloc( AS_SND_TITLE , 0 , 1 , AGE_SNDMGR_PANMODE_LR12 , 0 );
+	pTask->Data.story.voice_handle = 0;
 
 	ageSndMgrPlay( pTask->Data.story.bgm_handle );
 	ageSndMgrSetVolume( pTask->Data.story.bgm_handle , 0xa0 );

@@ -5,6 +5,7 @@
 
 struct StoryData {
 	s32 bgm_handle;
+	s32 voice_handle;
   u16 mode;
   u16 count;
 };
