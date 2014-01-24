@@ -140,10 +140,11 @@ const AGERomMember ageRM[] = {
 	{     271292,          0,  233,  200,  120,  8,      10112, NULL },		/* AG_CG_STORY_CLOUD_ERITAN */
 	{     272556,          0,  256,  210,  128,  8,      10464, NULL },		/* AG_CG_ITEM_MERONPAN256 */
 	{     273864,          0,  178,  256,   96,  8,       9632, NULL },		/* AG_CG_ITEM_UNIXSP256 */
-	{     275068,          0,   64,   53,   32,  8,       1696, NULL },		/* AG_CG_ITEM_MERONPAN64 */
-	{     275280,          0,   45,   64,   24,  8,       1600, NULL },		/* AG_CG_ITEM_UNIXSP64 */
-	{     275480,          0,   33,  128,   24,  8,       2688, NULL },		/* AG_CG_ITEM_ERITAN */
-	{     275816,          0,  100,  100,   56,  8,       1888, NULL },		/* AG_CG_DAIGORO_ICON */
+	{     275068,          0,  512,  512,  256,  8,      87360, NULL },		/* AG_CG_STORY_SHUCHU */
+	{     285988,          0,   64,   53,   32,  8,       1696, NULL },		/* AG_CG_ITEM_MERONPAN64 */
+	{     286200,          0,   45,   64,   24,  8,       1600, NULL },		/* AG_CG_ITEM_UNIXSP64 */
+	{     286400,          0,   33,  128,   24,  8,       2688, NULL },		/* AG_CG_ITEM_ERITAN */
+	{     286736,          0,  100,  100,   56,  8,       1888, NULL },		/* AG_CG_DAIGORO_ICON */
 };
 
 /***************************************************************/
