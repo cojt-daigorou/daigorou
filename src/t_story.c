@@ -64,6 +64,7 @@ static s32 CalcStory( struct TaskData* pTask , u32 Flag ) {
     ageSndMgrSetVolume( pTask->Data.story.bgm_handle , 0xa0 - pTask->Data.story.count/32 );
     if( pTask->Data.story.count/32 >= 0xa0 ) {
       ageSndMgrRelease( pTask->Data.story.bgm_handle );
+      ageSndMgrRelease( pTask->Data.story.voice_handle );
 
       if ( g_Stage == STAGE_N) {
         GotoMode( MODE_TITLE );
