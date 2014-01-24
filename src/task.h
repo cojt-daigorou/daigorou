@@ -27,6 +27,7 @@ enum DISP_LEVEL {
   DISP_LEVEL_ITEM,			 	//　オブジェクト
   DISP_LEVEL_ENEMY,		 	  //　オブジェクト
   DISP_LEVEL_PBULLET,     //　自機の弾
+  DISP_LEVEL_ATTACK,      //　星の爆発
   DISP_LEVEL_PLAYER,		 	//　自機
   DISP_LEVEL_BG_FRONT,	  //　自機の前の背景
   DISP_LEVEL_FRAME,		 	  //　枠

@@ -55,12 +55,12 @@ static s32 CalcSnake( struct TaskData* pTask , u32 Flag ) {
     pBTask = GetDispLink( DISP_LEVEL_PBULLET );
     while ( pBTask != NULL ) {
       if (pBTask->type == TASK_PBULLET) {
-        if ( (pTask->x - pBTask->x) * (pTask->x - pBTask->x) + (pTask->y - pBTask->y) * (pTask->y - pBTask->y) < 50*50) {
+        if ( (pTask->x - pBTask->x) * (pTask->x - pBTask->x) + (pTask->y - pBTask->y) * (pTask->y - pBTask->y) < 40*40) {
           struct TaskData* pATask;
 
           pATask = AllocTask();
           InitTaskAttack( pATask , pTask->x , pTask->y );
-          AddlLink( pATask , DISP_LEVEL_ENEMY );
+          AddlLink( pATask , DISP_LEVEL_ATTACK );
 
           pTask->visible = 0;
           pTask->flag = TASK_FLAG_DESTROY;
@@ -79,7 +79,7 @@ static s32 CalcSnake( struct TaskData* pTask , u32 Flag ) {
 
   // Ž©‹@‚Æ‚Ì”»’è
   if ( (pTask->x - g_PlayerX) * (pTask->x - g_PlayerX) + (pTask->y - g_PlayerY - 100) * (pTask->y - g_PlayerY - 100 ) < 80*80) {
-    g_Life = 0;
+    KillPlayer( g_pPlayerTask );
   }
 
 	return( 0 );

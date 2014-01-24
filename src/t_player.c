@@ -14,8 +14,10 @@ void AddScore( u32 n ) {
 }
 
 void KillPlayer( struct TaskData* pTask ) {
-  pTask->Data.player.mode = PLAYER_MODE_GAMEOVER;
-  pTask->Data.player.count = 0;
+  if (pTask->Data.player.mode != PLAYER_MODE_GAMEOVER) {
+    pTask->Data.player.mode = PLAYER_MODE_GAMEOVER;
+    pTask->Data.player.count = 0;
+  }
 }
 
 #define PLAYER_GROUND_LINE (GROUND_LINE - 64)
@@ -83,7 +85,7 @@ static int MovePlayer( struct TaskData* pTask , int dx , int dy , int move_flag 
     if( pWTask->Hit != NULL ) {
       if( pWTask->Hit( pWTask , &crect ) ) {
 
-        if ( pTask->Data.player.mode != PLAYER_MODE_GAMEOVER &&  pWTask->Data.object.is_harmful ) {
+        if ( pWTask->Data.object.is_harmful ) {
           KillPlayer( pTask );
         }
 
@@ -515,11 +517,6 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
   if( GetItem( pTask ) ) {
     ageSndMgrPlayOneshot( AS_SND_GET3 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
   };
-
-  //// クリアアイテム取得
-  //if ( GetKey( pTask ) ) {
-  //  ageSndMgrPlayOneshot( AS_SND_B08 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
-  //}
 
   //　画面オフセット補正
   if( g_PlayerX > (1024-512) ) {

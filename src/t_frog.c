@@ -103,7 +103,7 @@ static s32 CalcFrog( struct TaskData* pTask , u32 Flag ) {
 
           pATask = AllocTask();
           InitTaskAttack( pATask , pTask->x , pTask->y );
-          AddlLink( pATask , DISP_LEVEL_ENEMY );
+          AddlLink( pATask , DISP_LEVEL_ATTACK );
 
           pTask->visible = 0;
           pTask->flag = TASK_FLAG_DESTROY;
@@ -121,9 +121,9 @@ static s32 CalcFrog( struct TaskData* pTask , u32 Flag ) {
   }
 
   // Ž©‹@‚Æ‚Ì”»’è
-  if ( (pTask->x - g_PlayerX) * (pTask->x - g_PlayerX) + (pTask->y - g_PlayerY - 100) * (pTask->y - g_PlayerY - 100 ) < 80*80) {
+  if ( (pTask->x - g_PlayerX) * (pTask->x - g_PlayerX) + (pTask->y - g_PlayerY - 100) * (pTask->y - g_PlayerY - 100 ) < 40*40) {
   //if ( g_pPlayerRect != NULL && HitFrog(pTask, g_pPlayerRect) ) {
-    g_Life = 0;
+    KillPlayer( g_pPlayerTask );
   }
 
 	return( 0 );

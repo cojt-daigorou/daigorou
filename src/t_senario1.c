@@ -141,6 +141,12 @@ static struct SPos epos_3[] = {
 static s32 CalcSenario1( struct TaskData* pTask , u32 Flag ) {
   pTask->x++;
 
+  //　ソフトリセット
+  if( PadTrg()&PAD_UP && PadTrg()&PAD_DOWN ) {
+    ageSndMgrRelease( pTask->Data.senario.bgm_handle );
+    GotoMode( MODE_TITLE );
+  };
+
   if( g_isGameOver ) {
     pTask->x++;
     if( pTask->x > 800 ) {
@@ -247,12 +253,6 @@ static s32 CalcSenario1( struct TaskData* pTask , u32 Flag ) {
 
     g_isStageClear = TRUE;
     pTask->x = 0;
-  };
-
-  //　ソフトリセット
-  if( PadTrg()&PAD_UP && PadTrg()&PAD_DOWN ) {
-    ageSndMgrRelease( pTask->Data.senario.bgm_handle );
-    GotoMode( MODE_TITLE );
   };
 
   return( 0 );

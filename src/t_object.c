@@ -46,7 +46,7 @@ static s32 CalcObject( struct TaskData* pTask , u32 Flag ) {
 
           pATask = AllocTask();
           InitTaskAttack( pATask , pBTask->x , pBTask->y);
-          AddlLink( pATask , DISP_LEVEL_ENEMY );
+          AddlLink( pATask , DISP_LEVEL_ATTACK );
 
           if (pTask->Data.object.is_breakable) {
             pTask->visible = 0;
