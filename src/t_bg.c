@@ -11,12 +11,14 @@
 
 // îwåiÇÃï™äÑêî
 #define BG_DX (4)
-#define BG_DY (4)
+#define BG_DY (6)
 
 #define BG_WIDTH	(256*BG_DX)
 #define BG_HEIGHT	(256*BG_DY)
 
 static const u16 bg_list[BG_DY][BG_DX] = {
+	{ AG_CG_BG_0_0_0, AG_CG_BG_0_0_1, AG_CG_BG_0_0_2, AG_CG_BG_0_0_3 },
+	{ AG_CG_BG_0_0_0, AG_CG_BG_0_0_1, AG_CG_BG_0_0_2, AG_CG_BG_0_0_3 },
 	{ AG_CG_BG_0_0_0, AG_CG_BG_0_0_1, AG_CG_BG_0_0_2, AG_CG_BG_0_0_3 },
 	{ AG_CG_BG_0_1_0, AG_CG_BG_0_1_1, AG_CG_BG_0_1_2, AG_CG_BG_0_1_3 },
 	{ AG_CG_BG_0_2_0, AG_CG_BG_0_2_1, AG_CG_BG_0_2_2, AG_CG_BG_0_2_3 },
