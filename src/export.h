@@ -167,8 +167,8 @@ extern "C" {
 #define AG_CG_ITEM_MERONPAN64	(137)
 #define AG_CG_ITEM_UNIXSP64	(138)
 #define AG_CG_ITEM_ERITAN	(139)
-#define AG_CG_ICON_CROSS	(140)
-#define AG_CG_ICON_DAIGORO	(141)
+#define AG_CG_ICON_DAIGORO	(140)
+#define AG_CG_ICON_CROSS	(141)
 #define AG_CG_ICON_STAR	(142)
 
 /***************************************************************/

@@ -101,29 +101,29 @@ void GotoMode( enum GameMode mode ) {
 
       // SCORE
 			pTask = AllocTask();
-			InitTaskScore( pTask , 0 , 30 , &(g_Score), 3 );
+			InitTaskScore( pTask , -30 , 30 , &(g_Score), 4 );
 			AddlLink( pTask , DISP_LEVEL_SCORE );
 
       // LIFE
 			pTask = AllocTask();
-			InitTaskStatic( pTask , 230 , 10 , AG_CG_ICON_DAIGORO , 1 );
+			InitTaskStatic( pTask , 250 , 10 , AG_CG_ICON_DAIGORO , 1 );
 			AddlLink( pTask , DISP_LEVEL_SCORE );
 
 			pTask = AllocTask();
-			InitTaskStatic( pTask , 315 , 50 , AG_CG_ICON_CROSS , 1 );
+			InitTaskStatic( pTask , 335 , 30 , AG_CG_ICON_CROSS , 1 );
 			AddlLink( pTask , DISP_LEVEL_SCORE );
 
 			pTask = AllocTask();
-			InitTaskScore( pTask , 290 , 30 , &(g_Life), 2 );
+			InitTaskScore( pTask , 320 , 30 , &(g_Life), 2 );
 			AddlLink( pTask , DISP_LEVEL_SCORE );
 
       // STAR
 			pTask = AllocTask();
-			InitTaskStatic( pTask , 500 , 10 , AG_CG_ICON_STAR , 1 );
+			InitTaskStatic( pTask , 500 , 18 , AG_CG_ICON_STAR , 1 );
 			AddlLink( pTask , DISP_LEVEL_SCORE );
 
 			pTask = AllocTask();
-			InitTaskStatic( pTask , 585 , 50 , AG_CG_ICON_CROSS , 1 );
+			InitTaskStatic( pTask , 575 , 30 , AG_CG_ICON_CROSS , 1 );
 			AddlLink( pTask , DISP_LEVEL_SCORE );
 
 			pTask = AllocTask();
