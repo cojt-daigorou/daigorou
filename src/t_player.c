@@ -30,20 +30,20 @@ void KillPlayer( struct TaskData* pTask ) {
 /*                                player                          */
 /******************************************************************/
 struct RECT BBox[] = {
-  { -50/2 , -88/2 ,  50/2 , 130/2 },// PLAYER_MODE_WAIT      (0)
-  { -50/2 , -88/2 ,  50/2 , 130/2 },// PLAYER_MODE_WALKSTART (1)
-  { -50/2 , -88/2 ,  50/2 , 130/2 },// PLAYER_MODE_WALK      (2)
-  { -50/2 , -88/2 ,  50/2 , 130/2 },// PLAYER_MODE_WALKEND   (3)
-  { -50/2 , -88/2 ,  50/2 , 130/2 },// PLAYER_MODE_JUMPSTART (4)
-  { -50/2 , -128/2 , 50/2 , 50/2 },// PLAYER_MODE_JUMP      (5)
-  { -50/2 , -88/2 ,  50/2 , 130/2 },// PLAYER_MODE_JUMPEND   (6)
-  { -50/2 , -128/2 , 50/2 , 50/2 },// PLAYER_MODE_FALL      (7)
-  { -50/2 , -88/2 ,  50/2 , 130/2 },// PLAYER_MODE_ATTACK    (8)
-  { -50/2 , -88/2 ,  50/2 , 130/2 },// PLAYER_MODE_RUNSTART  (1+8)
-  { -50/2 , -88/2 ,  50/2 , 130/2 },// PLAYER_MODE_RUN       (2+8)
-  { -50/2 , -88/2 ,  50/2 , 130/2 },// PLAYER_MODE_RUNEND    (3+8)
-  { -50/2 , -88/2 ,  50/2 , 130/2 },// PLAYER_MODE_GAMEOVER  (12)
-  { -50/2 , -88/2 ,  50/2 , 130/2 },// PLAYER_MODE_RETWEET   (13)
+  { -50/2 , 0,  50/2 , 130/2 },// PLAYER_MODE_WAIT      (0)
+  { -50/2 , 0,  50/2 , 130/2 },// PLAYER_MODE_WALKSTART (1)
+  { -50/2 , 0,  50/2 , 130/2 },// PLAYER_MODE_WALK      (2)
+  { -50/2 , 0,  50/2 , 130/2 },// PLAYER_MODE_WALKEND   (3)
+  { -50/2 , 0,  50/2 , 130/2 },// PLAYER_MODE_JUMPSTART (4)
+  { -50/2 , 0,  50/2 , 50/2 },// PLAYER_MODE_JUMP      (5)
+  { -50/2 , 0,  50/2 , 130/2 },// PLAYER_MODE_JUMPEND   (6)
+  { -50/2 , 0,  50/2 , 50/2 },// PLAYER_MODE_FALL      (7)
+  { -50/2 , 0,  50/2 , 130/2 },// PLAYER_MODE_ATTACK    (8)
+  { -50/2 , 0,  50/2 , 130/2 },// PLAYER_MODE_RUNSTART  (1+8)
+  { -50/2 , 0,  50/2 , 130/2 },// PLAYER_MODE_RUN       (2+8)
+  { -50/2 , 0,  50/2 , 130/2 },// PLAYER_MODE_RUNEND    (3+8)
+  { -50/2 , 0,  50/2 , 130/2 },// PLAYER_MODE_GAMEOVER  (12)
+  { -50/2 , 0,  50/2 , 130/2 },// PLAYER_MODE_RETWEET   (13)
 };
 
 static int MovePlayer( struct TaskData* pTask , int dx , int dy , int move_flag ) {
@@ -92,7 +92,13 @@ static int MovePlayer( struct TaskData* pTask , int dx , int dy , int move_flag 
         // 横から衝突したら落とす
         if (y > pWTask->y ) {
           int tw = ageRM[ pWTask->Data.object.image ].Width;
-          if ( (x + w/2) < (pWTask->x + tw/2) ) {
+          if (y-dy>pWTask->y+ageRM[ pWTask->Data.object.image ].Height){
+            y = pWTask->y+ageRM[ pWTask->Data.object.image ].Height+(csize.y1-csize.y0)+1;
+            if(pTask->Data.player.jump_power>=0){
+              pTask->Data.player.jump_power = -1;
+            }
+          }
+          else if ( (x + w/2) < (pWTask->x + tw/2) ) {
             // left
             x = pWTask->x - tw/2 + csize.x0 - 1;
           } else {
@@ -113,7 +119,6 @@ static int MovePlayer( struct TaskData* pTask , int dx , int dy , int move_flag 
             y += (pWTask->y - pWTask->Data.object.pre_y);
             break;
         }
-
         isHit = 1;
         break;
       };
@@ -290,20 +295,20 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
           ageSndMgrPlayOneshot( AS_SND_WALK_LEFT , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
         };
       }
-	  else if( PadLvl()&PAD_DOWN ){		//	パッド↓でリツイートモードへ
-		  ageSndMgrPlayOneshot( AS_SND_B05 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
-		  pTask->Data.player.mode = PLAYER_MODE_RETWEET;
-		  pTask->Data.player.count = 0;
-		  {
-			  struct TaskData* pRTTask;
-			  int dx = ( pTask->Data.player.direction == 0 ) ? 20 : -20;
-			  pRTTask = AllocTask();
-			  if (pRTTask != NULL) {
-				  InitTaskRetweet( pRTTask , g_PlayerX, g_PlayerY ,pTask->Data.player.direction);
-				  AddlLink( pRTTask , DISP_LEVEL_BG_FRONT );
-			  };
-		  };
-	  }
+      else if( PadLvl()&PAD_DOWN ){		//	パッド↓でリツイートモードへ
+        ageSndMgrPlayOneshot( AS_SND_B05 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
+        pTask->Data.player.mode = PLAYER_MODE_RETWEET;
+        pTask->Data.player.count = 0;
+        {
+          struct TaskData* pRTTask;
+          int dx = ( pTask->Data.player.direction == 0 ) ? 20 : -20;
+          pRTTask = AllocTask();
+          if (pRTTask != NULL) {
+            InitTaskRetweet( pRTTask , g_PlayerX, g_PlayerY ,pTask->Data.player.direction);
+            AddlLink( pRTTask , DISP_LEVEL_BG_FRONT );
+          };
+        };
+      }
       else {    //　キー入力なし
         if( pTask->Data.player.mode == PLAYER_MODE_WALKSTART ) {    //　走り始めは停止へ。
           pTask->Data.player.mode = PLAYER_MODE_WAIT;
@@ -499,16 +504,16 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
 
       break;
 
-	case PLAYER_MODE_RETWEET:
+    case PLAYER_MODE_RETWEET:
 
       pTask->Data.player.count++;
-	  MovePlayer( pTask , 0 , 0 , 1 );
+      MovePlayer( pTask , 0 , 0 , 1 );
 
       if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode ] ].Frames ) {
         pTask->Data.player.count = 0;
         pTask->Data.player.mode = PLAYER_MODE_WAIT;
       };
-	  break;
+      break;
 
 
     default :
