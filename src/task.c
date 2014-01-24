@@ -34,7 +34,11 @@ struct TaskData* AllocTask( void ) {
 		};
 	};
 
-	return( NULL );
+#ifdef DEBUG
+  _dprintf( "AllocTask() NoTaskNoneError : %d\n" , 0 );
+#endif
+
+  return( NULL );
 }
 
 void AddlLink( struct TaskData* pTask , int DispLevel ) {

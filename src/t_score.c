@@ -11,6 +11,10 @@
 /******************************************************************/
 /*                             ƒXƒRƒA                             */
 /******************************************************************/
+static s32 CalcScore( struct TaskData* pTask , u32 Flag ) {
+	return( 0 );
+}
+
 static s32 DrawScore( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
 	int i;
 	int x,y;
@@ -37,11 +41,13 @@ static s32 DrawScore( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
 }
 
 void InitTaskScore( struct TaskData* pTask , s32 x , s32 y , u32* pScore, u8 digit ) {
+  memset( pTask , 0 , sizeof( *pTask ) );
+
 	pTask->type = TASK_SCORE;
 	pTask->visible = 1;
 	pTask->x = x;
 	pTask->y = y;
-	pTask->Calc = NULL;
+	pTask->Calc = CalcScore;
 	pTask->Draw = DrawScore;
 	pTask->Data.score.pScore = pScore;
 	pTask->Data.score.digit = digit;

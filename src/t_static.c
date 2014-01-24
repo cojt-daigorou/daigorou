@@ -12,6 +12,10 @@
 /******************************************************************/
 /*                              static                            */
 /******************************************************************/
+static s32 CalcStatic( struct TaskData* pTask , u32 Flag ) {
+	return( 0 );
+}
+
 static s32 DrawStatic( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
 	int w, h;
 
@@ -29,6 +33,7 @@ void InitTaskStatic( struct TaskData* pTask , s32 x , s32 y , u16 Image , u8 Alp
 	pTask->visible = 1;
 	pTask->x = x<<2;
 	pTask->y = y<<2;
+	pTask->Calc = CalcStatic;
 	pTask->Draw = DrawStatic;
 	pTask->Data.st.image = Image;
 	pTask->Data.st.alpha_flag = AlphaFlag;

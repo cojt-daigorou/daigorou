@@ -18,12 +18,12 @@
 #include "t_retweet.h"
 #include "t_story.h"
 
-#define TASK_MAX			(128)
+#define TASK_MAX			    (256)
 #define TASK_FLAG_DESTROY	(1)
 
 enum DISP_LEVEL {
   DISP_LEVEL_BG = 0,			//　最下層
-  DISP_LEVEL_OBJECT,		 	//　オブジェクト
+  DISP_LEVEL_OBJECT, 	    //　オブジェクト
   DISP_LEVEL_ITEM,			 	//　オブジェクト
   DISP_LEVEL_ENEMY,		 	  //　オブジェクト
   DISP_LEVEL_PBULLET,     //　自機の弾
@@ -32,8 +32,9 @@ enum DISP_LEVEL {
   DISP_LEVEL_PLAYER,		 	//　自機
   DISP_LEVEL_BG_FRONT,	  //　自機の前の背景
   DISP_LEVEL_FRAME,		 	  //　枠
-  DISP_LEVEL_SCORE,		 	  //　スコア
-  DISP_LEVEL_TOP,			 	  //　スコア
+  DISP_LEVEL_INFO,		 	  //　インジケーター
+  DISP_LEVEL_SCORE,		 	  //　インジケーター
+  DISP_LEVEL_TOP,		      //　トップ
   DISP_LEVEL_MAX,		  
 };
 

@@ -202,8 +202,10 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
 
   // UŒ‚
   if (pTask->Data.player.mode != PLAYER_MODE_GAMEOVER) {
-    if( PadTrg()&PAD_X ) {
+    if( g_Star > 0 && PadTrg()&PAD_X ) {
       int x , y, dx;
+
+      --g_Star;
 
       x = g_PlayerX;
       y = g_PlayerY + BBox[ pTask->Data.player.mode ].y1;
