@@ -22,9 +22,9 @@ static s32 CalcEBullet( struct TaskData* pTask , u32 Flag ) {
 		pTask->flag = TASK_FLAG_DESTROY;
 	};
 
-	if ( (pTask->x - g_PlayerX) * (pTask->x - g_PlayerX) + (pTask->y - g_PlayerY - 100) * (pTask->y - g_PlayerY - 100 ) < 80*80) {
+	if ( (pTask->x - g_PlayerX) * (pTask->x - g_PlayerX) + (pTask->y - g_PlayerY - 50) * (pTask->y - g_PlayerY - 50 ) < 40*40) {
 		//if ( g_pPlayerRect != NULL && HitFrog(pTask, g_pPlayerRect) ) {
-		g_Life = 0;
+    KillPlayer( g_pPlayerTask );
   }
 
 	return( 0 );

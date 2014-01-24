@@ -11,55 +11,51 @@
 #include "rect.h"
 
 /******************************************************************/
-/*                              かえる                            */
+/*                              キャノン                          */
 /******************************************************************/
 static s32 CalcCannon( struct TaskData* pTask , u32 Flag ) {
   switch( pTask->Data.cannon.mode ) {
     default :
     case 0 :		//　通常待機状態
       pTask->Data.cannon.count++;
+
+      if ( pTask->Data.cannon.count == 30 ) {
+        // 弾発射
+        int x , y, dx;
+        x = pTask->x;
+        y = pTask->y;
+
+        if( pTask->Data.cannon.direction == 0 ) {
+          x -= 120;
+          dx = -10;
+        }
+        else {
+          x += 120;
+          dx = 10;
+        };
+
+        {
+          struct TaskData* pBTask;
+          pBTask = AllocTask();
+          if (pBTask != NULL) {
+            InitTaskEBullet( pBTask , x, y - 30, AG_RP_OBJ_EBULLET, dx,0, 0,0 );
+            AddlLink( pBTask , DISP_LEVEL_EBULLET );
+          };
+        };
+      };
+
       if( pTask->Data.cannon.count > 60 ) {
         pTask->Data.cannon.count = 0;
         pTask->Data.cannon.mode = 1;		//　ジャンプ状態
-
-        if (FALSE) {	//弾発射
-          int x , y;
-          x = pTask->x;
-          y = pTask->y;
-
-          if( pTask->Data.cannon.direction == 0 ) {
-            x += 60;
-          }
-          else {
-            x -= 60;
-          };
-
-          {
-            struct TaskData* pBTask;
-            int dx = ( pTask->Data.cannon.direction == 0 ) ? -20 : 20;
-            pBTask = AllocTask();
-            if (pBTask != NULL) {
-              InitTaskEBullet( pBTask , x, y, AG_RP_OBJ_EBULLET, dx,0, 0,0 );
-              AddlLink( pBTask , DISP_LEVEL_EBULLET );
-            };
-          };
-        };
       };
       break;
 
 		case 1 :		//　ジャンプ状態
 			if( pTask->Data.cannon.direction == 0 ) {		//　左向き
-				pTask->x -= 3;
+				pTask->x -= 1;
 			}
 			else {
-				pTask->x += 3;
-			};
-
-			if( pTask->Data.cannon.count < 10 ) {
-				pTask->y -= 5;
-			}
-			else {
-				pTask->y += 5;
+				pTask->x += 1;
 			};
 
 			pTask->Data.cannon.count++;
@@ -120,58 +116,41 @@ static s32 CalcCannon( struct TaskData* pTask , u32 Flag ) {
     }
   }
 
-  // 自機との判定
-  if ( (pTask->x - g_PlayerX) * (pTask->x - g_PlayerX) + (pTask->y - g_PlayerY - 100) * (pTask->y - g_PlayerY - 100 ) < 40*40) {
-  //if ( g_pPlayerRect != NULL && HitCannon(pTask, g_pPlayerRect) ) {
-    KillPlayer( g_pPlayerTask );
-  }
-
 	return( 0 );
 }
 
 static s32 DrawCannon( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
-	int w, h;
-	int a = 255;
+  int w,h;
+  u8 flip = 0;
 
-	if( (pTask->x + 50) > g_OffsetX && (pTask->x - 50) < (g_OffsetX + 1024) ) {
-		u8 flip = 0;
+  if( pTask->Data.frog.direction == 1 ) {
+    flip = 1;
+  };
 
-		if( pTask->Data.cannon.direction == 1 ) {
-			flip = 1;
-		};
+  if( (pTask->x + 100) > g_OffsetX && (pTask->x - 100) < (g_OffsetX + 1024) ) {
+    agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 2 , 1 );
+    ageTransferAAC( pDBuf, AG_CG_OBJ_CANNON, 0, &w, &h );
 
-		agPictureSetBlendMode( pDBuf , 0 , a , 0 , 0 , 2 , 1 );
-
-		if( pTask->Data.cannon.mode == 0 ) {
-			ageTransferAAC( pDBuf, AG_CG_OBJ_CANNON, 0, &w, &h );
-		}
-		else if( pTask->Data.cannon.mode == 1 ) {
-			ageTransferAAC( pDBuf, AG_CG_OBJ_CANNON, 0, &w, &h );
-		}
-		else {
-			ageTransferAAC( pDBuf, AG_CG_OBJ_CANNON, 0, &w, &h );
-		};
-
-		if( flip == 0 ) {
-			agDrawSPRITE( pDBuf, 1, (pTask->x - g_OffsetX - w/2)<<2 , (pTask->y - h)<<2 , (pTask->x - g_OffsetX + w/2)<<2, (pTask->y)<<2 );
-		}
-		else {
-			agDrawSPRITE_UV( pDBuf, (pTask->x - g_OffsetX - w/2)<<2 , (pTask->y - h)<<2 , 0x1000 , 0 , (pTask->x - g_OffsetX + w/2)<<2, (pTask->y)<<2 , 0 , 0x1000 );
-		};
-	};
+    if( flip == 0 ) {
+      agDrawSPRITE( pDBuf, 1, (pTask->x - g_OffsetX - w/2)<<2 , (pTask->y - h)<<2 , (pTask->x - g_OffsetX + w/2)<<2, (pTask->y)<<2 );
+    }
+    else {
+      agDrawSPRITE_UV( pDBuf, (pTask->x - g_OffsetX - w/2)<<2 , (pTask->y - h)<<2 , 0x1000 , 0 , (pTask->x - g_OffsetX + w/2)<<2, (pTask->y)<<2 , 0 , 0x1000 );
+    };
+  };
 }
 
 static s32 HitCannon( struct TaskData* pTask , const struct RECT* pRect ) {
   int w,h;
   struct RECT rect;
 
-  w = 60;
-  h = 60;
+  w = ageRM[ AG_CG_OBJ_CANNON ].Width;
+  h = ageRM[ AG_CG_OBJ_CANNON ].Height;
 
   rect.x0 = pTask->x - w/2;
-  rect.y0 = pTask->y;
+  rect.y0 = pTask->y - h;
   rect.x1 = pTask->x + w/2;
-  rect.y1 = pTask->y + h;
+  rect.y1 = pTask->y;
 
   return( IsHitRect( pRect , &rect ) );
 }

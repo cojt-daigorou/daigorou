@@ -36,6 +36,7 @@ enum {
 enum {
   ENEMY_TYPE_FROG = 0 ,
   ENEMY_TYPE_SNAKE    ,
+  ENEMY_TYPE_CANNON   ,
 };
 
 enum {
@@ -112,7 +113,8 @@ static struct SPos ipos_2[] = {
 };
 
 static struct SPos epos_2[] = {
-  { 820  , 674 , ENEMY_TYPE_FROG  , 300 },
+  //{ 820  , 674 , ENEMY_TYPE_FROG  , 300 },
+  { 1000, GROUND_LINE , ENEMY_TYPE_CANNON  , 300 },
 };
 
 
@@ -455,6 +457,10 @@ void InitTaskSenario1( struct TaskData* pTask ) {
 
       case ENEMY_TYPE_SNAKE :
         InitTaskSnake( pETask , epos[i].x , epos[i].y  , epos[i].image );
+        break;
+
+      case ENEMY_TYPE_CANNON :
+        InitTaskCannon( pETask , epos[i].x , epos[i].y  , epos[i].image , 0 );
         break;
 
       default :

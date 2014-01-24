@@ -68,6 +68,7 @@ static int MovePlayer( struct TaskData* pTask , int dx , int dy , int move_flag 
 
   crect = csize = BBox[ pTask->Data.player.mode ];
   AddRect( &crect , x , y );
+  g_pPlayerRect = &crect;
 
   while( pWTask != NULL ) {
 #if 0
@@ -206,15 +207,10 @@ static s32 CalcPlayerSpeed() {
 
 static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
   struct TaskData* pWTask;
-  struct RECT rect;
-
-  rect = BBox[ pTask->Data.player.mode ];
-  AddRect( &rect , g_PlayerX , g_PlayerY );
-  g_pPlayerRect = &rect;
 
   // UŒ‚
   if (pTask->Data.player.mode != PLAYER_MODE_GAMEOVER) {
-    if( g_Star > 0 && PadTrg()&PAD_X ) {
+    if( g_Star > 0 && !g_isGetKeyItem && PadTrg()&PAD_X ) {
       int x , y, dx;
 
       --g_Star;

@@ -30,7 +30,7 @@ void GotoMode( enum GameMode mode ) {
 
 			g_Score = 0;
 			g_Time = 100;
-			g_Life = 3;
+			g_Life = 30;
 			g_Star = 30;
       g_Stage = 0;
 
