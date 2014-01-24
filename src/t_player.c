@@ -486,8 +486,10 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
 
       if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode ] ].Frames - 1 ) {
         // 最大フレームに達したらカウントを止める
-        if ( g_Life > 0) {
+        if ( !g_isGameOver ) {
           --g_Life;
+        }
+        if ( g_Life > 0) {
           ageSndMgrRelease( g_pSenarioTask->Data.senario.bgm_handle );
           GotoMode( MODE_GAME );
         }

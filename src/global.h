@@ -17,11 +17,11 @@ extern int g_isGameOver;
 extern int g_isStageClear;
 extern int g_isGetKeyItem;
 
-extern u32 g_Score;
-extern u32 g_Time;
-extern u32 g_Life;
-extern u32 g_Star;
-extern u32 g_Stage;
+extern int g_Score;
+extern int g_Time;
+extern int g_Life;
+extern int g_Star;
+extern int g_Stage;
 
 extern struct RECT* g_pPlayerRect;
 extern struct TaskData* g_pPlayerTask;

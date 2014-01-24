@@ -10,11 +10,11 @@ int g_isGameOver = 0;
 int g_isStageClear = 0;
 int g_isGetKeyItem = FALSE;
 
-u32 g_Score = 0;
-u32 g_Time = 0;
-u32 g_Life = 10;
-u32 g_Star = 30;
-u32 g_Stage = 0;
+int g_Score = 0;
+int g_Time = 0;
+int g_Life = 0;
+int g_Star = 0;
+int g_Stage = 0;
 
 struct RECT *g_pPlayerRect = NULL;
 struct TaskData* g_pPlayerTask = NULL;

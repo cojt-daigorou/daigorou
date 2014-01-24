@@ -40,7 +40,7 @@ static s32 CalcFrog( struct TaskData* pTask , u32 Flag ) {
             pBTask = AllocTask();
             if (pBTask != NULL) {
               InitTaskEBullet( pBTask , x, y, AG_RP_OBJ_EBULLET, dx,0, 0,0 );
-              AddlLink( pBTask , DISP_LEVEL_PBULLET );
+              AddlLink( pBTask , DISP_LEVEL_EBULLET );
             };
           };
         };
