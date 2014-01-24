@@ -104,11 +104,15 @@ static s32 DrawStory( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
 
   // TODO: ÉGÉçÉQïóÇ…ëÂå‹òYÇ‚Ç¶ÇËÇΩÇÒÇÃóßäGÇ…ç∑Çµë÷Ç¶ÇÈÅB
 	agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 2 , 1 );
-	ageTransferAAC( pDBuf, AG_CG_TITLE, 0, &w, &h );
-
+  ageTransferAAC( pDBuf, AG_CG_STORY_DAIGOROU, 0, &w, &h );
 	x = (1024-w)/2;
-	y = (768*3/4-h)/2;
-
+	y = (768-h)/2 + 50;
+	agDrawSPRITE( pDBuf, 1, x<<2 , y<<2 , (x+w)<<2 , (y+h)<<2 );
+  
+  agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 2 , 1 );
+  ageTransferAAC( pDBuf, AG_CG_STORY_CLOUD_ERITAN, 0, &w, &h );
+	x = (1024-w)/2 + 170;
+	y = (768-h)/2 - 260;
 	agDrawSPRITE( pDBuf, 1, x<<2 , y<<2 , (x+w)<<2 , (y+h)<<2 );
 
 	//agPictureSetBlendMode( pDBuf , 0 , a , 0 , 0 , 2 , 1 );
