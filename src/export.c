@@ -319,9 +319,9 @@ const AGESoundRomMember ageSRM[] = {
 	{ 1,      993 },		/* AS_SND_GET2 */
 	{ 1,      952 },		/* AS_SND_GET3 */
 	{ 1,      362 },		/* AS_SND_CUT */
-	{ 1,      541 },		/* AS_SND_LANDING */
-	{ 1,      184 },		/* AS_SND_WALK_RIGHT */
-	{ 1,      193 },		/* AS_SND_WALK_LEFT */
+	{ 1,      229 },		/* AS_SND_LANDING */
+	{ 1,       98 },		/* AS_SND_WALK_RIGHT */
+	{ 1,      162 },		/* AS_SND_WALK_LEFT */
 	{ 1,     1256 },		/* AS_SND_DECIDE008 */
 	{ 1,     1433 },		/* AS_SND_A01 */
 	{ 1,     3393 },		/* AS_SND_A02 */
