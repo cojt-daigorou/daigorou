@@ -19,7 +19,8 @@ static s32 CalcRetweet( struct TaskData* pTask , u32 Flag ) {
     pBTask = GetDispLink( DISP_LEVEL_EBULLET );
     while ( pBTask != NULL ) {
       if (pBTask->type == TASK_EBULLET) {
-        if ( (pTask->x - pBTask->x) * (pTask->x - pBTask->x) + (pTask->y - pBTask->y) * (pTask->y - pBTask->y) < 100*100 ) {
+        // 敵の弾が接近したとき、リツイートが発動する。
+        if ( (pTask->x - pBTask->x) * (pTask->x - pBTask->x) + (pTask->y - pBTask->y - 32 ) * (pTask->y - pBTask->y -32 ) < 100*100 ) {
           pTask->Data.retweet.flag = 1;
           pBTask->visible = 0;
           pBTask->flag = TASK_FLAG_DESTROY;
