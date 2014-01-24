@@ -135,9 +135,15 @@ const AGERomMember ageRM[] = {
 	{     225055,          0,  512,  128,  256,  8,      23328, NULL },		/* AG_CG_OBJ_BLOCK4_0 */
 	{     227971,          0,  512,  128,  256,  8,      26944, NULL },		/* AG_CG_OBJ_BLOCK_H4 */
 	{     231339,          0,  128,   32,   64,  8,        800, NULL },		/* AG_CG_OBJ_LIFT */
-	{     265880,          0,  344,  600,  176,  8,      23680, NULL },		/* AG_CG_STORY_DAIGOROU */
-	{     268840,          0,  603,  600,  304,  8,      23136, NULL },		/* AG_CG_STORY_ERITAN */
-	{     271732,          0,  233,  200,  120,  8,      10848, NULL },		/* AG_CG_STORY_CLOUD_ERITAN */
+	{     265880,          0,  344,  600,  176,  8,      21952, NULL },		/* AG_CG_STORY_DAIGOROU */
+	{     268624,          0,  603,  600,  304,  8,      21344, NULL },		/* AG_CG_STORY_ERITAN */
+	{     271292,          0,  233,  200,  120,  8,      10112, NULL },		/* AG_CG_STORY_CLOUD_ERITAN */
+	{     272556,          0,  256,  210,  128,  8,      10464, NULL },		/* AG_CG_ITEM_MERONPAN256 */
+	{     273864,          0,  178,  256,   96,  8,       9632, NULL },		/* AG_CG_ITEM_UNIXSP256 */
+	{     275068,          0,   64,   53,   32,  8,       1696, NULL },		/* AG_CG_ITEM_MERONPAN64 */
+	{     275280,          0,   45,   64,   24,  8,       1600, NULL },		/* AG_CG_ITEM_UNIXSP64 */
+	{     275480,          0,   33,  128,   24,  8,       2688, NULL },		/* AG_CG_ITEM_ERITAN */
+	{     275816,          0,  100,  100,   56,  8,       1888, NULL },		/* AG_CG_DAIGORO_ICON */
 };
 
 /***************************************************************/

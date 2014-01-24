@@ -160,6 +160,12 @@ extern "C" {
 #define AG_CG_STORY_DAIGOROU	(130)
 #define AG_CG_STORY_ERITAN	(131)
 #define AG_CG_STORY_CLOUD_ERITAN	(132)
+#define AG_CG_ITEM_MERONPAN256	(133)
+#define AG_CG_ITEM_UNIXSP256	(134)
+#define AG_CG_ITEM_MERONPAN64	(135)
+#define AG_CG_ITEM_UNIXSP64	(136)
+#define AG_CG_ITEM_ERITAN	(137)
+#define AG_CG_DAIGORO_ICON	(138)
 
 /***************************************************************/
 /*                     RM3 Member Symbol                       */
@@ -228,7 +234,7 @@ extern "C" {
 /***************************************************************/
 /*                          Data Member                        */
 /***************************************************************/
-extern const AGERomMember ageRM[133];
+extern const AGERomMember ageRM[139];
 extern const AGERM3Member ageRM3[19];
 extern const u32 ageReserve[1];
 extern const u32 ageUser[1];
