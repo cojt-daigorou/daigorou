@@ -49,7 +49,7 @@ static s32 CalcStory( struct TaskData* pTask , u32 Flag ) {
     if( pTask->Data.story.count/32 >= 0xa0 ) {
       ageSndMgrRelease( pTask->Data.story.bgm_handle );
 
-      if ( g_Stage == 3) {
+      if ( g_Stage == STAGE_N) {
         GotoMode( MODE_TITLE );
       } else {
         GotoMode( MODE_GAME );
@@ -131,7 +131,7 @@ static s32 DrawStory( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
       daigorou_dx = 150;
       break;
 
-    case 3:
+    case STAGE_N:
       // ‚¦‚è‚½‚ñ
       agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 2 , 1 );
       ageTransferAAC( pDBuf, AG_CG_STORY_ERITAN, 0, &w, &h );
@@ -150,7 +150,7 @@ static s32 DrawStory( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
 	y = (768-h)/2 + 50;
 	agDrawSPRITE( pDBuf, 1, x<<2 , y<<2 , (x+w)<<2 , (y+h)<<2 );
   
-  if ( g_Stage < 3) {
+  if ( g_Stage < STAGE_N) {
     // ‚¦‚è‚½‚ñ‚ðŽv‚¢•‚‚©‚×‚é‰_
     agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 2 , 1 );
     ageTransferAAC( pDBuf, AG_CG_STORY_CLOUD_ERITAN, 0, &w, &h );

@@ -6,6 +6,8 @@
 #define PI (3.14159265359)
 #define GROUND_LINE (668)
 
+#define STAGE_N (3)
+
 extern int g_PlayerX;
 extern int g_PlayerY;
 extern int g_OffsetX;

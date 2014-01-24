@@ -76,13 +76,14 @@ static struct SPos wpos_1[] = {
 };
 
 static struct SPos ipos_1[] = {
-  { 1400 , 680 , ITEM_TYPE_A , 0 },
-  { 2400 , 680 , ITEM_TYPE_B , 0 },
+  { 1400 , GROUND_LINE , ITEM_TYPE_A , 0 },
+  { 2400 , GROUND_LINE , ITEM_TYPE_B , 0 },
   { 2800 , 500 , ITEM_TYPE_C , 0 },
   { 3600 , 100 , ITEM_TYPE_A , 0 },
-  { 6200 , 680 , ITEM_TYPE_B , 0 },
-  { 6500 , 680 , ITEM_TYPE_C , 0 },
+  { 6200 , GROUND_LINE , ITEM_TYPE_B , 0 },
+  { 6500 , GROUND_LINE , ITEM_TYPE_C , 0 },
   { 2800+400*5, 0, ITEM_TYPE_KEY, AG_CG_ITEM_MERONPAN64 },
+  { 400, GROUND_LINE, ITEM_TYPE_KEY, AG_CG_ITEM_MERONPAN64 },
 };
 
 static struct SPos epos_1[] = {
@@ -102,10 +103,10 @@ static struct SPos wpos_2[] = {
 };
 
 static struct SPos ipos_2[] = {
-  { 800+100*0 , 680 , ITEM_TYPE_A , 0 },
-  { 800+100*1 , 680 , ITEM_TYPE_B , 0 },
-  { 800+100*2 , 680 , ITEM_TYPE_C , 0 },
-  { 800+100*3 , 680 , ITEM_TYPE_KEY , AG_CG_ITEM_UNIXSP64 },
+  { 800+100*0 , GROUND_LINE , ITEM_TYPE_A , 0 },
+  { 800+100*1 , GROUND_LINE , ITEM_TYPE_B , 0 },
+  { 800+100*2 , GROUND_LINE , ITEM_TYPE_C , 0 },
+  { 800+100*3 , GROUND_LINE , ITEM_TYPE_KEY , AG_CG_ITEM_UNIXSP64 },
 };
 
 static struct SPos epos_2[] = {
@@ -119,13 +120,16 @@ static struct SPos epos_2[] = {
 
 static struct SPos wpos_3[] = {
   { 2800+400*0 , 500 , OBJECT_TYPE_HIT_H1 , AG_CG_OBJ_LIFT },
+
+  // ‚¦‚è‚½‚ñ
+  { 800+100*3 , GROUND_LINE-128 , OBJECT_TYPE_FRONT , AG_CG_ITEM_ERITAN },
 };
 
 static struct SPos ipos_3[] = {
-  { 800+100*0 , 680 , ITEM_TYPE_A , 0 },
-  { 800+100*1 , 680 , ITEM_TYPE_B , 0 },
-  { 800+100*2 , 680 , ITEM_TYPE_C , 0 },
-  { 800+100*3 , 680 , ITEM_TYPE_KEY , AG_CG_ITEM_ERITAN },
+  { 800+100*0 , GROUND_LINE , ITEM_TYPE_A , 0 },
+  { 800+100*1 , GROUND_LINE , ITEM_TYPE_B , 0 },
+  { 800+100*2 , GROUND_LINE , ITEM_TYPE_C , 0 },
+  { 800+100*3 , GROUND_LINE , ITEM_TYPE_KEY , AG_CG_ITEM_ERITAN },
 };
 
 static struct SPos epos_3[] = {
@@ -285,6 +289,7 @@ void InitTaskSenario1( struct TaskData* pTask ) {
       wn = (sizeof( wpos_2 )/sizeof( wpos_2[0] ));
       fn = (sizeof( ipos_2 )/sizeof( ipos_2[0] ));
       en = (sizeof( epos_2 )/sizeof( epos_2[0] ));
+      break;
 
     case 2:
       wpos = wpos_3;
