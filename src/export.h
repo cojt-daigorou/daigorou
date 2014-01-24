@@ -168,24 +168,25 @@ extern "C" {
 #define AG_CG_OBJ_TOGE4_D	(138)
 #define AG_CG_OBJ_TOGE4_L	(139)
 #define AG_CG_OBJ_TOGE4_R	(140)
-#define AG_CG_OBJ_BLOCK	(141)
-#define AG_CG_OBJ_BLOCK_H	(142)
-#define AG_CG_OBJ_BLOCK4_0	(143)
-#define AG_CG_OBJ_BLOCK_H4	(144)
-#define AG_CG_OBJ_LIFT	(145)
-#define AG_CG_STORY_DAIGOROU	(146)
-#define AG_CG_STORY_ERITAN	(147)
-#define AG_CG_STORY_CLOUD_ERITAN	(148)
-#define AG_CG_ITEM_MERONPAN256	(149)
-#define AG_CG_ITEM_UNIXSP256	(150)
-#define AG_CG_STORY_SHUCHU	(151)
-#define AG_CG_STORY_SHUCHU_SUB	(152)
-#define AG_CG_ITEM_MERONPAN64	(153)
-#define AG_CG_ITEM_UNIXSP64	(154)
-#define AG_CG_ITEM_ERITAN	(155)
-#define AG_CG_ICON_DAIGORO	(156)
-#define AG_CG_ICON_CROSS	(157)
-#define AG_CG_ICON_STAR	(158)
+#define AG_CG_OBJ_CANNON	(141)
+#define AG_CG_OBJ_BLOCK	(142)
+#define AG_CG_OBJ_BLOCK_H	(143)
+#define AG_CG_OBJ_BLOCK4_0	(144)
+#define AG_CG_OBJ_BLOCK_H4	(145)
+#define AG_CG_OBJ_LIFT	(146)
+#define AG_CG_STORY_DAIGOROU	(147)
+#define AG_CG_STORY_ERITAN	(148)
+#define AG_CG_STORY_CLOUD_ERITAN	(149)
+#define AG_CG_ITEM_MERONPAN256	(150)
+#define AG_CG_ITEM_UNIXSP256	(151)
+#define AG_CG_STORY_SHUCHU	(152)
+#define AG_CG_STORY_SHUCHU_SUB	(153)
+#define AG_CG_ITEM_MERONPAN64	(154)
+#define AG_CG_ITEM_UNIXSP64	(155)
+#define AG_CG_ITEM_ERITAN	(156)
+#define AG_CG_ICON_DAIGORO	(157)
+#define AG_CG_ICON_CROSS	(158)
+#define AG_CG_ICON_STAR	(159)
 
 /***************************************************************/
 /*                     RM3 Member Symbol                       */
@@ -254,7 +255,7 @@ extern "C" {
 /***************************************************************/
 /*                          Data Member                        */
 /***************************************************************/
-extern const AGERomMember ageRM[159];
+extern const AGERomMember ageRM[160];
 extern const AGERM3Member ageRM3[19];
 extern const u32 ageReserve[1];
 extern const u32 ageUser[1];
