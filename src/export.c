@@ -141,10 +141,11 @@ const AGERomMember ageRM[] = {
 	{     272556,          0,  256,  210,  128,  8,      10464, NULL },		/* AG_CG_ITEM_MERONPAN256 */
 	{     273864,          0,  178,  256,   96,  8,       9632, NULL },		/* AG_CG_ITEM_UNIXSP256 */
 	{     275068,          0,  512,  512,  256,  8,      87360, NULL },		/* AG_CG_STORY_SHUCHU */
-	{     285988,          0,   64,   53,   32,  8,       1696, NULL },		/* AG_CG_ITEM_MERONPAN64 */
-	{     286200,          0,   45,   64,   24,  8,       1600, NULL },		/* AG_CG_ITEM_UNIXSP64 */
-	{     286400,          0,   33,  128,   24,  8,       2688, NULL },		/* AG_CG_ITEM_ERITAN */
-	{     286736,          0,  100,  100,   56,  8,       1888, NULL },		/* AG_CG_DAIGORO_ICON */
+	{     285988,          0,  512,  512,  256,  8,      42784, NULL },		/* AG_CG_STORY_SHUCHU_SUB */
+	{     291336,          0,   64,   53,   32,  8,       1696, NULL },		/* AG_CG_ITEM_MERONPAN64 */
+	{     291548,          0,   45,   64,   24,  8,       1600, NULL },		/* AG_CG_ITEM_UNIXSP64 */
+	{     291748,          0,   33,  128,   24,  8,       2688, NULL },		/* AG_CG_ITEM_ERITAN */
+	{     292084,          0,  100,  100,   56,  8,       1888, NULL },		/* AG_CG_DAIGORO_ICON */
 };
 
 /***************************************************************/
@@ -319,9 +320,9 @@ const AGESoundRomMember ageSRM[] = {
 	{ 1,      993 },		/* AS_SND_GET2 */
 	{ 1,      952 },		/* AS_SND_GET3 */
 	{ 1,      362 },		/* AS_SND_CUT */
-	{ 1,      541 },		/* AS_SND_LANDING */
-	{ 1,      184 },		/* AS_SND_WALK_RIGHT */
-	{ 1,      193 },		/* AS_SND_WALK_LEFT */
+	{ 1,      229 },		/* AS_SND_LANDING */
+	{ 1,       98 },		/* AS_SND_WALK_RIGHT */
+	{ 1,      162 },		/* AS_SND_WALK_LEFT */
 	{ 1,     1256 },		/* AS_SND_DECIDE008 */
 	{ 1,     1433 },		/* AS_SND_A01 */
 	{ 1,     3393 },		/* AS_SND_A02 */
