@@ -98,7 +98,7 @@ static s32 CalcFrog( struct TaskData* pTask , u32 Flag ) {
   }
 
   // Ž©‹@‚Æ‚Ì”»’è
-  if ( (pTask->x - g_PlayerX) * (pTask->x - g_PlayerX) + (pTask->y - g_PlayerY - 100) * (pTask->y - g_PlayerY - 100 ) < 40*40) {
+  if ( (pTask->x - g_PlayerX) * (pTask->x - g_PlayerX) + (pTask->y - 28 - g_PlayerY ) * (pTask->y - 28 - g_PlayerY ) < 60*60) {
   //if ( g_pPlayerRect != NULL && HitFrog(pTask, g_pPlayerRect) ) {
     KillPlayer( g_pPlayerTask );
   }
