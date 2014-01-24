@@ -9,15 +9,25 @@
 #include "global.h"
 #include "t_bg.h"
 
-#define BG_WIDTH	(2500)
-#define BG_HEIGHT	(2300)
+//#define BG_WIDTH	(2500)
+//#define BG_HEIGHT	(2300)
+#define BG_WIDTH	(256*5)
+#define BG_HEIGHT	(256*4+126)
 
-static const u16 bg_list[5][5] = {
+static const u16 bg_list_[5][5] = {
 	{ AG_CG_BG_0_0 , AG_CG_BG_0_1 , AG_CG_BG_0_2 , AG_CG_BG_0_3 , AG_CG_BG_0_4 },
 	{ AG_CG_BG_1_0 , AG_CG_BG_1_1 , AG_CG_BG_1_2 , AG_CG_BG_1_3 , AG_CG_BG_1_4 },
 	{ AG_CG_BG_2_0 , AG_CG_BG_2_1 , AG_CG_BG_2_2 , AG_CG_BG_2_3 , AG_CG_BG_2_4 },
 	{ AG_CG_BG_3_0 , AG_CG_BG_3_1 , AG_CG_BG_3_2 , AG_CG_BG_3_3 , AG_CG_BG_3_4 },
 	{ AG_CG_BG_4_0 , AG_CG_BG_4_1 , AG_CG_BG_4_2 , AG_CG_BG_4_3 , AG_CG_BG_4_4 },
+};
+
+static const u16 bg_list[5][5] = {
+	{ AG_CG_BG_0_0_0 , AG_CG_BG_0_0_1 , AG_CG_BG_0_0_2 , AG_CG_BG_0_0_3 , AG_CG_BG_0_0_4 },
+	{ AG_CG_BG_0_1_0 , AG_CG_BG_0_1_1 , AG_CG_BG_0_1_2 , AG_CG_BG_0_1_3 , AG_CG_BG_0_1_4 },
+	{ AG_CG_BG_0_2_0 , AG_CG_BG_0_2_1 , AG_CG_BG_0_2_2 , AG_CG_BG_0_2_3 , AG_CG_BG_0_2_4 },
+	{ AG_CG_BG_0_3_0 , AG_CG_BG_0_3_1 , AG_CG_BG_0_3_2 , AG_CG_BG_0_3_3 , AG_CG_BG_0_3_4 },
+	{ AG_CG_BG_0_4_0 , AG_CG_BG_0_4_1 , AG_CG_BG_0_4_2 , AG_CG_BG_0_4_3 , AG_CG_BG_0_4_4 },
 };
 
 /******************************************************************/
