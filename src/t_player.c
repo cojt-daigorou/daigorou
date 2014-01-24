@@ -97,7 +97,7 @@ static int MovePlayer( struct TaskData* pTask , int dx , int dy , int move_flag 
             // ã
             y = pWTask->y + th + (csize.y1 - csize.y0) + 1;
             if ( pTask->Data.player.jump_power >= 0 ){
-              pTask->Data.player.jump_power = -1;
+              pTask->Data.player.jump_power = 0;
             }
           }
           else if ( (x + w/2) < (pWTask->x + tw/2) ) {

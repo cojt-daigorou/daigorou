@@ -9,7 +9,7 @@
 #define STAGE_N (3)
 
 // TODO: リリースの時には外す( dprintf()用 )
-#define DEBUG debug
+//#define DEBUG debug
 
 extern int g_PlayerX;
 extern int g_PlayerY;
