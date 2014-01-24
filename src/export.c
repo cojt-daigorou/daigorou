@@ -145,7 +145,9 @@ const AGERomMember ageRM[] = {
 	{     291336,          0,   64,   53,   32,  8,       1696, NULL },		/* AG_CG_ITEM_MERONPAN64 */
 	{     291548,          0,   45,   64,   24,  8,       1600, NULL },		/* AG_CG_ITEM_UNIXSP64 */
 	{     291748,          0,   33,  128,   24,  8,       2688, NULL },		/* AG_CG_ITEM_ERITAN */
-	{     292084,          0,  100,  100,   56,  8,       1888, NULL },		/* AG_CG_DAIGORO_ICON */
+	{     292084,          0,   32,   32,   16,  6,        120, NULL },		/* AG_CG_ICON_CROSS */
+	{     292099,          0,  100,  100,   56,  8,       1888, NULL },		/* AG_CG_ICON_DAIGORO */
+	{     292335,          0,  128,  122,   64,  8,       3680, NULL },		/* AG_CG_ICON_STAR */
 };
 
 /***************************************************************/
