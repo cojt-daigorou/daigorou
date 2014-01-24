@@ -146,24 +146,25 @@ const AGERomMember ageRM[] = {
 	{     223183,          0,  128,   32,   64,  8,       1344, NULL },		/* AG_CG_OBJ_TOGE4_D */
 	{     223351,          0,   34,  129,   24,  8,       1664, NULL },		/* AG_CG_OBJ_TOGE4_L */
 	{     223559,          0,   34,  129,   24,  8,       1696, NULL },		/* AG_CG_OBJ_TOGE4_R */
-	{     223771,          0,  128,  128,   64,  8,       5952, NULL },		/* AG_CG_OBJ_BLOCK */
-	{     224515,          0,  128,  128,   64,  8,       6848, NULL },		/* AG_CG_OBJ_BLOCK_H */
-	{     225371,          0,  512,  128,  256,  8,      23328, NULL },		/* AG_CG_OBJ_BLOCK4_0 */
-	{     228287,          0,  512,  128,  256,  8,      26944, NULL },		/* AG_CG_OBJ_BLOCK_H4 */
-	{     231655,          0,  128,   32,   64,  8,        800, NULL },		/* AG_CG_OBJ_LIFT */
-	{     266196,          0,  344,  600,  176,  8,      21952, NULL },		/* AG_CG_STORY_DAIGOROU */
-	{     268940,          0,  603,  600,  304,  8,      21344, NULL },		/* AG_CG_STORY_ERITAN */
-	{     271608,          0,  233,  200,  120,  8,      10112, NULL },		/* AG_CG_STORY_CLOUD_ERITAN */
-	{     272872,          0,  256,  210,  128,  8,      10464, NULL },		/* AG_CG_ITEM_MERONPAN256 */
-	{     274180,          0,  178,  256,   96,  8,       9632, NULL },		/* AG_CG_ITEM_UNIXSP256 */
-	{     275384,          0,  512,  512,  256,  8,      87360, NULL },		/* AG_CG_STORY_SHUCHU */
-	{     286304,          0,  512,  512,  256,  8,      42784, NULL },		/* AG_CG_STORY_SHUCHU_SUB */
-	{     291652,          0,   64,   53,   32,  8,       1696, NULL },		/* AG_CG_ITEM_MERONPAN64 */
-	{     291864,          0,   45,   64,   24,  8,       1600, NULL },		/* AG_CG_ITEM_UNIXSP64 */
-	{     292064,          0,   33,  128,   24,  8,       2688, NULL },		/* AG_CG_ITEM_ERITAN */
-	{     292400,          0,  100,  100,   56,  8,       1888, NULL },		/* AG_CG_ICON_DAIGORO */
-	{     292636,          0,   45,   64,   45,  0,      11520, NULL },		/* AG_CG_ICON_CROSS */
-	{     294076,          0,   84,   80,   84,  0,      26880, NULL },		/* AG_CG_ICON_STAR */
+	{     223771,          0,  172,  128,   88,  8,       2784, NULL },		/* AG_CG_OBJ_CANNON */
+	{     224119,          0,  128,  128,   64,  8,       5952, NULL },		/* AG_CG_OBJ_BLOCK */
+	{     224863,          0,  128,  128,   64,  8,       6848, NULL },		/* AG_CG_OBJ_BLOCK_H */
+	{     225719,          0,  512,  128,  256,  8,      23328, NULL },		/* AG_CG_OBJ_BLOCK4_0 */
+	{     228635,          0,  512,  128,  256,  8,      26944, NULL },		/* AG_CG_OBJ_BLOCK_H4 */
+	{     232003,          0,  128,   32,   64,  8,        800, NULL },		/* AG_CG_OBJ_LIFT */
+	{     266544,          0,  344,  600,  176,  8,      21952, NULL },		/* AG_CG_STORY_DAIGOROU */
+	{     269288,          0,  603,  600,  304,  8,      21344, NULL },		/* AG_CG_STORY_ERITAN */
+	{     271956,          0,  233,  200,  120,  8,      10112, NULL },		/* AG_CG_STORY_CLOUD_ERITAN */
+	{     273220,          0,  256,  210,  128,  8,      10464, NULL },		/* AG_CG_ITEM_MERONPAN256 */
+	{     274528,          0,  178,  256,   96,  8,       9632, NULL },		/* AG_CG_ITEM_UNIXSP256 */
+	{     275732,          0,  512,  512,  256,  8,      87360, NULL },		/* AG_CG_STORY_SHUCHU */
+	{     286652,          0,  512,  512,  256,  8,      42784, NULL },		/* AG_CG_STORY_SHUCHU_SUB */
+	{     292000,          0,   64,   53,   32,  8,       1696, NULL },		/* AG_CG_ITEM_MERONPAN64 */
+	{     292212,          0,   45,   64,   24,  8,       1600, NULL },		/* AG_CG_ITEM_UNIXSP64 */
+	{     292412,          0,   33,  128,   24,  8,       2688, NULL },		/* AG_CG_ITEM_ERITAN */
+	{     292748,          0,  100,  100,   56,  8,       1888, NULL },		/* AG_CG_ICON_DAIGORO */
+	{     292984,          0,   45,   64,   24,  8,       1024, NULL },		/* AG_CG_ICON_CROSS */
+	{     293112,          0,   84,   80,   48,  8,       2432, NULL },		/* AG_CG_ICON_STAR */
 };
 
 /***************************************************************/
@@ -273,7 +274,7 @@ const u32 ageRM3Offsets0017[] = {		/* AG_RP_OBJ_PBULLET */
 };
 
 const u32 ageRM3Offsets0018[] = {		/* AG_RP_SIN_MESSAGE */
-	    231775,    237255,    241583,    246415,    251875,    256539,    261995,
+	    232123,    237603,    241931,    246763,    252223,    256887,    262343,
 };
 
 const AGERM3Member ageRM3[] = {
@@ -296,7 +297,7 @@ const AGERM3Member ageRM3[] = {
 	{     191181,  256,  256,   7680,     41, 2, 0, ageRM3Offsets0015, NULL        },		/* AG_RP_EFF_RT */
 	{     213673,   64,   64,   7680,     29, 2, 0, ageRM3Offsets0016, NULL        },		/* AG_RP_OBJ_EBULLET */
 	{     217074,   64,   64,   7680,     30, 2, 0, ageRM3Offsets0017, NULL        },		/* AG_RP_OBJ_PBULLET */
-	{     231755,  944,  408,   7680,      7, 2, 0, ageRM3Offsets0018, NULL        },		/* AG_RP_SIN_MESSAGE */
+	{     232103,  944,  408,   7680,      7, 2, 0, ageRM3Offsets0018, NULL        },		/* AG_RP_SIN_MESSAGE */
 };
 
 /***************************************************************/
