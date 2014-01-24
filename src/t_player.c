@@ -203,22 +203,22 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
   // UŒ‚
   if (pTask->Data.player.mode != PLAYER_MODE_GAMEOVER) {
     if( PadTrg()&PAD_X ) {
-      int x , y;
+      int x , y, dx;
 
       x = g_PlayerX;
       y = g_PlayerY + BBox[ pTask->Data.player.mode ].y1;
 
       if( pTask->Data.player.direction == 0 ) {
         x += 60;
+        dx = 10;
       }
       else {
         x -= 60;
+        dx = -10;
       };
 
       {
         struct TaskData* pBTask;
-        int dx = ( pTask->Data.player.direction == 0 ) ? 10 : -10;
-
         pBTask = AllocTask();
         if (pBTask != NULL) {
           InitTaskPBullet( pBTask , x, y, AG_RP_OBJ_PBULLET, dx,0, 0,0 );
@@ -228,8 +228,6 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
       ageSndMgrPlayOneshot( AS_SND_B03 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
     };
   }
-
-
 
   switch( pTask->Data.player.mode ) {
     //@’n–Ê‚É‚¢‚éê‡
