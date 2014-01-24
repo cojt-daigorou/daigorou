@@ -45,6 +45,8 @@ static s32 CalcRetweet( struct TaskData* pTask , u32 Flag ) {
 				if (pBTask != NULL) {
 					InitTaskPBullet( pBTask ,x , y, AG_RP_OBJ_PBULLET, dx,dy, 0,0 );
 					AddlLink( pBTask , DISP_LEVEL_PBULLET );
+					AddScore( 10 );
+
 				};
 			};
 		};
