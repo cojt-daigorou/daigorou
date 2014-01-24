@@ -89,26 +89,30 @@ static int MovePlayer( struct TaskData* pTask , int dx , int dy , int move_flag 
           KillPlayer( pTask );
         }
 
-        // 横から衝突したら落とす
-        if (y > pWTask->y ) {
+        // 食い込まないように補正を 上→下→左→右 の順番に行う
+        if ( y > pWTask->y ) {
           int tw = ageRM[ pWTask->Data.object.image ].Width;
-          if (y-dy>pWTask->y+ageRM[ pWTask->Data.object.image ].Height){
-            y = pWTask->y+ageRM[ pWTask->Data.object.image ].Height+(csize.y1-csize.y0)+1;
-            if(pTask->Data.player.jump_power>=0){
+          int th = pWTask->y+ageRM[ pWTask->Data.object.image ].Height;
+          if ( (y - dy)  > th ) {
+            // 上
+            y = pWTask->y + th + (csize.y1 - csize.y0) + 1;
+            if ( pTask->Data.player.jump_power >= 0 ){
               pTask->Data.player.jump_power = -1;
             }
           }
           else if ( (x + w/2) < (pWTask->x + tw/2) ) {
-            // left
+            // 左
             x = pWTask->x - tw/2 + csize.x0 - 1;
           } else {
-            // right
+            // 右
             x = pWTask->x + tw/2 + csize.x1;
           }
         } else {
+          // 下
           y = pWTask->y - csize.y1 + 1;
         }
 
+        // 動く床の移動
         switch (pWTask->Data.object.motion) {
           case ObjectMotion_None:
             break;
@@ -119,6 +123,7 @@ static int MovePlayer( struct TaskData* pTask , int dx , int dy , int move_flag 
             y += (pWTask->y - pWTask->Data.object.pre_y);
             break;
         }
+
         isHit = 1;
         break;
       };
