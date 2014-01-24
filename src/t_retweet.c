@@ -11,15 +11,16 @@
 /*                            Retweet                              */
 /******************************************************************/
 static s32 CalcRetweet( struct TaskData* pTask , u32 Flag ) {
-	pTask->Data.retweet.count++;
-	  // Ž©‹@‚Ì’e‚Ì”»’è
+  pTask->Data.retweet.count++;
+
+  // “G‚Ì’e‚Ì”»’è
   {
     struct TaskData* pBTask;
     pBTask = GetDispLink( DISP_LEVEL_EBULLET );
     while ( pBTask != NULL ) {
       if (pBTask->type == TASK_EBULLET) {
-        if ( (pTask->x - pBTask->x) * (pTask->x - pBTask->x) + (pTask->y - pBTask->y) * (pTask->y - pBTask->y) < 50*50) {
-			pTask->Data.retweet.flag = 1;
+        if ( (pTask->x - pBTask->x) * (pTask->x - pBTask->x) + (pTask->y - pBTask->y) * (pTask->y - pBTask->y) < 100*100 ) {
+          pTask->Data.retweet.flag = 1;
           pBTask->visible = 0;
           pBTask->flag = TASK_FLAG_DESTROY;
           break;
