@@ -14,7 +14,7 @@ void AddScore( u32 n ) {
 }
 
 void KillPlayer( struct TaskData* pTask ) {
-  if (pTask->Data.player.mode != PLAYER_MODE_GAMEOVER) {
+  if ( pTask->Data.player.mode != PLAYER_MODE_GAMEOVER && !g_isGetKeyItem ) {
     pTask->Data.player.mode = PLAYER_MODE_GAMEOVER;
     pTask->Data.player.count = 0;
 

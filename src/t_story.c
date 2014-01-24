@@ -33,7 +33,9 @@ static s32 CalcStory( struct TaskData* pTask , u32 Flag ) {
 
     if (pTask->Data.story.count == 10) {
       // ‘O‚Ì‘äŽŒ‚ÌÄ¶‚ðŽ~‚ß‚é
-      ageSndMgrRelease( pTask->Data.story.voice_handle );
+      if ( pTask->Data.story.mode > 0 ) {
+        ageSndMgrRelease( pTask->Data.story.voice_handle );
+      }
 
       // ‘äŽŒ‚ðÄ¶‚·‚é
       if ( pTask->Data.story.mode < stories[g_Stage].n - 1) {

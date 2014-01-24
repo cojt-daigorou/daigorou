@@ -10,9 +10,10 @@
 #include "t_opening.h"
 #include "t_score.h"
 #include "t_frog.h"
+#include "t_snake.h"
+#include "t_cannon.h"
 #include "t_object.h"
 #include "t_attack.h"
-#include "t_snake.h"
 #include "t_pbullet.h"
 #include "t_ebullet.h"
 #include "t_retweet.h"
@@ -88,9 +89,10 @@ struct TaskData {
 		struct TitleData title;
 		struct ScoreData score;
 		struct FrogData frog;
+		struct SnakeData snake;
+		struct CannonData cannon;
 		struct ObjectData object;
 		struct AttackData attack;
-		struct SnakeData snake;
 		struct PBulletData pbullet;
 		struct EBulletData ebullet;
 		struct RetweetData retweet;
