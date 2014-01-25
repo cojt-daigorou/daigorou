@@ -42,10 +42,10 @@ enum {
 };
 
 enum {
-  ITEM_TYPE_A = 0 ,
-  ITEM_TYPE_B     ,
-  ITEM_TYPE_C     ,
-  ITEM_TYPE_KEY
+  ITEM_TYPE_STAR = 0  ,
+  ITEM_TYPE_SCORE_A   ,
+  ITEM_TYPE_SCORE_B   ,
+  ITEM_TYPE_KEY       ,
 };
 
 
@@ -81,12 +81,12 @@ static struct SPos wpos_1[] = {
 };
 
 static struct SPos ipos_1[] = {
-  { 1400 , GROUND_LINE , ITEM_TYPE_A , 0 },
-  { 2400 , GROUND_LINE , ITEM_TYPE_B , 0 },
-  { 2800 , 500 , ITEM_TYPE_C , 0 },
-  { 3600 , 100 , ITEM_TYPE_A , 0 },
-  { 6200 , GROUND_LINE , ITEM_TYPE_B , 0 },
-  { 6500 , GROUND_LINE , ITEM_TYPE_C , 0 },
+  { 1400 , GROUND_LINE , ITEM_TYPE_SCORE_A , 0 },
+  { 2400 , GROUND_LINE , ITEM_TYPE_STAR , 0 },
+  { 2800 , 500 , ITEM_TYPE_SCORE_B , 0 },
+  { 3600 , 100 , ITEM_TYPE_SCORE_A , 0 },
+  { 6200 , GROUND_LINE , ITEM_TYPE_STAR , 0 },
+  { 6500 , GROUND_LINE , ITEM_TYPE_SCORE_B , 0 },
   { 2800+400*5, 0, ITEM_TYPE_KEY, AG_CG_ITEM_MERONPAN64 },
   { 400, GROUND_LINE, ITEM_TYPE_KEY, AG_CG_ITEM_MERONPAN64 },
 };
@@ -144,11 +144,11 @@ static struct SPos wpos_2[] = {
 };
 
 static struct SPos ipos_2[] = {
-  //{ 800+100*0 , GROUND_LINE , ITEM_TYPE_A , 0 },
-  //{ 800+100*1 , GROUND_LINE , ITEM_TYPE_B , 0 },
-  //{ 800+100*2 , GROUND_LINE , ITEM_TYPE_C , 0 },
+  //{ 800+100*0 , GROUND_LINE , ITEM_TYPE_SCORE_A , 0 },
+  //{ 800+100*1 , GROUND_LINE , ITEM_TYPE_STAR , 0 },
+  //{ 800+100*2 , GROUND_LINE , ITEM_TYPE_SCORE_B , 0 },
   { 200 , GROUND_LINE-30 , ITEM_TYPE_KEY , AG_CG_ITEM_UNIXSP64 },
-  { 3100+400*4+200 , 350 , ITEM_TYPE_A ,   0 },
+  { 3100+400*4+200 , 350 , ITEM_TYPE_SCORE_A ,   0 },
   { 3100+400*5 , 000 , ITEM_TYPE_KEY , AG_CG_ITEM_UNIXSP64 },
 };
 
@@ -171,9 +171,9 @@ static struct SPos wpos_3[] = {
 };
 
 static struct SPos ipos_3[] = {
-  { 800+100*0 , GROUND_LINE , ITEM_TYPE_A , 0 },
-  { 800+100*1 , GROUND_LINE , ITEM_TYPE_B , 0 },
-  { 800+100*2 , GROUND_LINE , ITEM_TYPE_C , 0 },
+  { 800+100*0 , GROUND_LINE , ITEM_TYPE_SCORE_A , 0 },
+  { 800+100*1 , GROUND_LINE , ITEM_TYPE_STAR , 0 },
+  { 800+100*2 , GROUND_LINE , ITEM_TYPE_SCORE_B , 0 },
   { 800+100*3 , GROUND_LINE , ITEM_TYPE_KEY , AG_CG_ITEM_ERITAN },
 };
 
@@ -550,21 +550,19 @@ void InitTaskSenario1( struct TaskData* pTask ) {
     u16 is_keyitem = FALSE;
 
     switch ( ipos[i].type ) {
-      case ITEM_TYPE_A:
-        image = AG_CG_ICON_FOOD_ODANGO;
-        score = 10;
-        star = 0;
-        break;
-      case ITEM_TYPE_B:
-        image = AG_CG_ICON_FOOD_ONIGIRI;
-        score = 0;
-        star = 10;
+      case ITEM_TYPE_STAR:
+        image = AG_CG_ICON_STAR;
+        star = 30;
         break;
 
-      case ITEM_TYPE_C:
-        image = AG_CG_ICON_FOOD_SUIKA;
+      case ITEM_TYPE_SCORE_A:
+        image = AG_CG_ICON_FOOD_ODANGO;
         score = 10;
-        star = 10;
+        break;
+
+      case ITEM_TYPE_SCORE_B:
+        image = AG_CG_ICON_FOOD_SUIKA;
+        score = 100;
         break;
 
       case ITEM_TYPE_KEY:
