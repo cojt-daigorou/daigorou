@@ -34,4 +34,11 @@ extern struct RECT* g_pPlayerRect;
 extern struct TaskData* g_pPlayerTask;
 extern struct TaskData* g_pSenarioTask;
 
+// TODO: ゲームのバランス用のパラメータはここに書く
+
+// ボーナススコア計算時の重み
+#define BSCORE_TIME (1)
+#define BSCORE_LIFE (50)
+#define BSCORE_STAR (1)
+
 #endif // __GLOBAL_H__
