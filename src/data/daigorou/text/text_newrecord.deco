@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<Project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <SaveDataVersion>1</SaveDataVersion>
+  <PreviewText>NEW RECORD!!</PreviewText>
+  <TextParam>
+    <Size>54</Size>
+    <Color>#FFFFFFFF</Color>
+    <Weight>900</Weight>
+    <Style>Normal</Style>
+    <Font>Cooper Std</Font>
+    <EdgeWeight>2.79</EdgeWeight>
+    <EdgeColor>#FFFF6700</EdgeColor>
+  </TextParam>
+  <ShadowParam>
+    <Color>#FF000000</Color>
+    <Offset>1</Offset>
+    <Blur>5</Blur>
+  </ShadowParam>
+  <BlurParam>
+    <Color>#FF666666</Color>
+    <Weight>3.48</Weight>
+  </BlurParam>
+  <BackgroundColor>#00FFFFFF</BackgroundColor>
+  <CharSpace>-0.10000000149011612</CharSpace>
+  <StringSpace>0.050000000000000044</StringSpace>
+  <NoShadow>false</NoShadow>
+  <NoBlur>false</NoBlur>
+  <OutputAsPng>true</OutputAsPng>
+  <OutputAsJpg>false</OutputAsJpg>
+  <OutputAsBmp>false</OutputAsBmp>
+  <OutputName>%n_%c</OutputName>
+  <IsCheckOutputOverride>true</IsCheckOutputOverride>
+  <IsCheckScriptOverride>true</IsCheckScriptOverride>
+  <IsCheckPreviewOverride>false</IsCheckPreviewOverride>
+  <Scripts />
+  <IsAutoPreview>true</IsAutoPreview>
+  <OutputPreviewPath>C:\Ameliorate\ag4\rtl\sample_cojt\daigorou\src\data\daigorou\text</OutputPreviewPath>
+  <OutputChars>abcdefghijklmnopqrstuvwxyz
+ABCDEFGHIJKLMNOPQRSTUVWXYZ</OutputChars>
+</Project>

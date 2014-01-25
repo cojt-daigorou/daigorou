@@ -187,6 +187,9 @@ extern "C" {
 #define AG_CG_ICON_DAIGORO	(157)
 #define AG_CG_ICON_CROSS	(158)
 #define AG_CG_ICON_STAR	(159)
+#define AG_CG_TEXT_HIGHSCORE	(160)
+#define AG_CG_TEXT_NEWRECORD	(161)
+#define AG_CG_TEXT_SCORE	(162)
 
 /***************************************************************/
 /*                     RM3 Member Symbol                       */
@@ -255,7 +258,7 @@ extern "C" {
 /***************************************************************/
 /*                          Data Member                        */
 /***************************************************************/
-extern const AGERomMember ageRM[160];
+extern const AGERomMember ageRM[163];
 extern const AGERM3Member ageRM3[19];
 extern const u32 ageReserve[1];
 extern const u32 ageUser[1];
