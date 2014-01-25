@@ -14,14 +14,38 @@
 /*                              ‚©‚ç‚·                            */
 /******************************************************************/
 static s32 CalcCrow( struct TaskData* pTask , u32 Flag ) {
+	int dx = pTask->x - g_PlayerX;
+	int dy = pTask->y - g_PlayerY -g_OffsetY + 275;
+
+
 	pTask->Data.crow.count += 1;
 	if(pTask->Data.crow.count>=120){
+        // ’e”­ŽË
+          struct TaskData* pBTask;
+          pBTask = AllocTask();
+          if (pBTask != NULL) {
+			  InitTaskEBullet( pBTask , pTask->x, pTask->y, AG_RP_OBJ_EBULLET,0, 5, 0,0 );
+            AddlLink( pBTask , DISP_LEVEL_EBULLET );
+        };
 		pTask->Data.crow.count = 0;
+
 	};
 	if(pTask->Data.crow.count % 20 == 0){
 		pTask->Data.crow.mode += 1;
 		pTask->Data.crow.mode %= 3;
 	};
+
+	if(dx*dx>512*512) return 0;	//‰“‚·‚¬‚éê‡‚Í‚·‚®I—¹
+
+	//ˆÚ“®
+	pTask->Data.crow.vx += (int)(-dx*0.01 - pTask->Data.crow.vx*0.04);
+	pTask->Data.crow.vy += (int)(-dy*0.01 - pTask->Data.crow.vy*0.04);
+	if(pTask->Data.crow.vx==0){
+		if(dx>0)pTask->Data.crow.vx = -1;
+		else if(dx<0)pTask->Data.crow.vx = 1;
+	}
+	pTask->x += pTask->Data.crow.vx;
+	pTask->y += pTask->Data.crow.vy;
 
 
   // Ž©‹@‚Ì’e‚Ì”»’è
@@ -62,7 +86,8 @@ static s32 CalcCrow( struct TaskData* pTask , u32 Flag ) {
 }
 
 static s32 DrawCrow( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
-	const float offsetRatio = 0.3f;
+	const float offsetRatioX = 0.3f;
+	const float offsetRatioY = 0.2f;
 	int bw, bh, lw, lh, wofx, wofy;
 	int a = 255;
 	agPictureSetBlendMode( pDBuf , 0 , a , 0 , 0 , 2 , 1 );
@@ -72,7 +97,7 @@ static s32 DrawCrow( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
 		agDrawSPRITE( pDBuf, 1, (pTask->x - g_OffsetX - bw/2)<<2 , (pTask->y - bh/2)<<2 , (pTask->x - g_OffsetX + bw/2)<<2, (pTask->y+bh/2)<<2 );
 		//¶—ƒ
 		ageTransferAAC( pDBuf, AG_CG_OBJ_CROW_WING_L1, 0, &lw, &lh );
-		wofx = (int)(bw*offsetRatio);
+		wofx = (int)(bw*offsetRatioX);
 		agDrawSPRITE( pDBuf, 1, (pTask->x - g_OffsetX + wofx)<<2 , (pTask->y - lh)<<2 , (pTask->x - g_OffsetX + wofx + lw)<<2, (pTask->y)<<2 );
 		ageTransferAAC( pDBuf, AG_CG_OBJ_CROW_WING_R1, 0, &lw, &lh );
 		agDrawSPRITE( pDBuf, 1, (pTask->x - g_OffsetX - wofx - lw)<<2 , (pTask->y - lh)<<2 , (pTask->x - g_OffsetX - wofx)<<2, (pTask->y)<<2 );
@@ -83,10 +108,11 @@ static s32 DrawCrow( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
 		agDrawSPRITE( pDBuf, 1, (pTask->x - g_OffsetX - bw/2)<<2 , (pTask->y - bh/2)<<2 , (pTask->x - g_OffsetX + bw/2)<<2, (pTask->y+bh/2)<<2 );
 		//¶—ƒ
 		ageTransferAAC( pDBuf, AG_CG_OBJ_CROW_WING_L2, 0, &lw, &lh );
-		wofx = (int)(bw*offsetRatio);
-		agDrawSPRITE( pDBuf, 1, (pTask->x - g_OffsetX + wofx)<<2 , (pTask->y - lh/2)<<2 , (pTask->x - g_OffsetX + wofx + lw)<<2, (pTask->y+lh/2)<<2 );
+		wofx = (int)(bw*offsetRatioX);
+		wofy = (int)(bh*offsetRatioY);
+		agDrawSPRITE( pDBuf, 1, (pTask->x - g_OffsetX + wofx)<<2 , (pTask->y +wofy -lh/2)<<2 , (pTask->x - g_OffsetX + wofx + lw)<<2, (pTask->y + wofy +lh/2)<<2 );
 		ageTransferAAC( pDBuf, AG_CG_OBJ_CROW_WING_R2, 0, &lw, &lh );
-		agDrawSPRITE( pDBuf, 1, (pTask->x - g_OffsetX - wofx - lw)<<2 , (pTask->y - lh/2)<<2 , (pTask->x - g_OffsetX - wofx)<<2, (pTask->y+lh/2)<<2 );
+		agDrawSPRITE( pDBuf, 1, (pTask->x - g_OffsetX - wofx - lw)<<2 , (pTask->y +wofy -lh/2)<<2 , (pTask->x - g_OffsetX - wofx)<<2, (pTask->y + wofy +lh/2)<<2 );
 	}
 	else {
 		//‘Ì
@@ -94,7 +120,7 @@ static s32 DrawCrow( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
 		agDrawSPRITE( pDBuf, 1, (pTask->x - g_OffsetX - bw/2)<<2 , (pTask->y - bh/2)<<2 , (pTask->x - g_OffsetX + bw/2)<<2, (pTask->y+bh/2)<<2 );
 		//¶—ƒ
 		ageTransferAAC( pDBuf, AG_CG_OBJ_CROW_WING_L3, 0, &lw, &lh );
-		wofx = (int)(bw*offsetRatio);
+		wofx = (int)(bw*offsetRatioX);
 		agDrawSPRITE( pDBuf, 1, (pTask->x - g_OffsetX + wofx)<<2 , (pTask->y-lh/2)<<2 , (pTask->x - g_OffsetX + wofx + lw)<<2, (pTask->y+lh/2)<<2 );
 		ageTransferAAC( pDBuf, AG_CG_OBJ_CROW_WING_R3, 0, &lw, &lh );
 		agDrawSPRITE( pDBuf, 1, (pTask->x - g_OffsetX - wofx - lw)<<2 , (pTask->y-lh/2)<<2 , (pTask->x - g_OffsetX - wofx)<<2, (pTask->y+lh/2)<<2 );
@@ -127,8 +153,9 @@ void InitTaskCrow( struct TaskData* pTask , s32 x , s32 y , u16 Score , u8 Direc
 	pTask->Calc = CalcCrow;
 	pTask->Draw = DrawCrow;
 	pTask->Data.crow.count = 0;
-	pTask->Data.crow.sub_count = 0;
 	pTask->Data.crow.score = Score;
 	pTask->Data.crow.direction = Direction;
 	pTask->Data.crow.mode = 0;
+	pTask->Data.crow.vx = 0;
+	pTask->Data.crow.vy = 0;
 }
