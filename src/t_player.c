@@ -22,6 +22,7 @@ void KillPlayer( struct TaskData* pTask ) {
   }
 }
 
+// 大五郎が地面に着地しているときのY座標
 #define PLAYER_GROUND_LINE (GROUND_LINE - 64)
 
 // スピード
@@ -284,6 +285,11 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
           AddlLink( pBTask , DISP_LEVEL_PBULLET );
         };
       };
+    };
+
+    //　アイテム取得
+    if( GetItem( pTask ) ) {
+      ageSndMgrPlayOneshot( AS_SND_GET3 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
     };
 
   };// END:大五郎が生存かつゲームクリアでない
@@ -571,11 +577,6 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
 
     default :
       break;
-  };
-
-  //　アイテム取得
-  if( GetItem( pTask ) ) {
-    ageSndMgrPlayOneshot( AS_SND_GET3 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
   };
 
   //　画面オフセット補正
