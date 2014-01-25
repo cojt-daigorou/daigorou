@@ -23,6 +23,7 @@ struct PlayerData {
   u8 count;
   u8 mode;
   s32 jump_power;
+  s32 starMachineGun_count;
 };
 
 void AddScore( u32 n );
