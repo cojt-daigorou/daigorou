@@ -161,9 +161,12 @@ static int GetItem( struct TaskData* pTask ) {
 
       if (pITask->Data.item.is_keyitem) {
         g_isGetKeyItem = TRUE;
-      } else {
-        AddScore( pITask->Data.item.score );
       }
+
+      AddScore( pITask->Data.item.score );
+      g_Star += pITask->Data.item.star;
+      g_Time += pITask->Data.item.time;
+
       isGet++;
     };
 

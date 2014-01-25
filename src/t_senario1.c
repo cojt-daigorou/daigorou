@@ -545,25 +545,26 @@ void InitTaskSenario1( struct TaskData* pTask ) {
 
     int image = 0;
     int score = 0;
+    int star = 0;
     int time = 0;
     u16 is_keyitem = FALSE;
 
     switch ( ipos[i].type ) {
       case ITEM_TYPE_A:
         image = AG_CG_ICON_FOOD_ODANGO;
-        score = 100;
-        time = 0;
+        score = 10;
+        star = 0;
         break;
       case ITEM_TYPE_B:
         image = AG_CG_ICON_FOOD_ONIGIRI;
         score = 0;
-        time = 100;
+        star = 10;
         break;
 
       case ITEM_TYPE_C:
         image = AG_CG_ICON_FOOD_SUIKA;
-        score = 100;
-        time = 100;
+        score = 10;
+        star = 10;
         break;
 
       case ITEM_TYPE_KEY:
@@ -573,7 +574,7 @@ void InitTaskSenario1( struct TaskData* pTask ) {
     }
 
     pITask = AllocTask();
-    InitTaskItem( pITask, ipos[i].x, ipos[i].y, image, time, score, is_keyitem);
+    InitTaskItem( pITask, ipos[i].x, ipos[i].y, image, score, star, time, is_keyitem);
     AddlLink( pITask , DISP_LEVEL_ITEM );
   };
 

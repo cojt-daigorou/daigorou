@@ -29,7 +29,7 @@ static s32 DrawItem( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
 	};
 }
 
-void InitTaskItem( struct TaskData* pTask , s32 x , s32 y , u16 Image , u16 erase_time , u16 Score , u16 is_keyitem) {
+void InitTaskItem( struct TaskData* pTask, s32 x, s32 y, u16 Image, u16 score, u16 star, u16 time, u16 is_keyitem) {
 	memset( pTask , 0 , sizeof( *pTask ) );
 
 	pTask->type = TASK_ITEM;
@@ -38,9 +38,12 @@ void InitTaskItem( struct TaskData* pTask , s32 x , s32 y , u16 Image , u16 eras
 	pTask->y = y;
 	pTask->Calc = CalcItem;
 	pTask->Draw = DrawItem;
-	pTask->Data.item.count = 0;
+
 	pTask->Data.item.image = Image;
-	pTask->Data.item.erase_time = erase_time;
-	pTask->Data.item.score = Score;
+	pTask->Data.item.count = 0;
+
+  pTask->Data.item.score = score;
+  pTask->Data.item.star = star;
+  pTask->Data.item.time = time;
   pTask->Data.item.is_keyitem = is_keyitem;
 }
