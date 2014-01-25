@@ -11,6 +11,7 @@
 #include "t_score.h"
 #include "t_frog.h"
 #include "t_snake.h"
+#include "t_crow.h"
 #include "t_cannon.h"
 #include "t_object.h"
 #include "t_attack.h"
@@ -90,6 +91,7 @@ struct TaskData {
 		struct ScoreData score;
 		struct FrogData frog;
 		struct SnakeData snake;
+		struct CrowData crow;
 		struct CannonData cannon;
 		struct ObjectData object;
 		struct AttackData attack;
