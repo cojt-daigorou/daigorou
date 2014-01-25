@@ -81,6 +81,11 @@ void GotoMode( enum GameMode mode ) {
           break;
       }
 
+      // “ïˆÕ“x‚ğ’á‚­‚·‚é‚½‚ß‚ÉA¯‚ª­‚È‚¢ó‘Ô‚È‚ç‰ñ•œ‚³‚¹‚éB
+      if ( g_Star < 30 ) {
+        g_Star = 30;
+      }
+
 			pTask = AllocTask();
 			InitTaskBg( pTask , AG_CG_BG_0_0 , 0 );
 			AddlLink( pTask , DISP_LEVEL_BG );
