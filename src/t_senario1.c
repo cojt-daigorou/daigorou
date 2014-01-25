@@ -143,6 +143,46 @@ static struct SPos epos_3[] = {
 
 
 
+//
+// ボーナススコア関連
+//
+
+// ボーナススコア計算時の重み
+#define BSCORE_TIME (1)
+#define BSCORE_LIFE (10)
+
+// Time や Life を考慮した BonusScore を計算
+static int CalcBonusScore() {
+  if ( g_Stage < STAGE_N - 1 ) {
+    return g_Score + BSCORE_TIME * g_Time;
+  } else {
+    return g_Score + BSCORE_TIME * g_Time + BSCORE_LIFE * g_Life;
+  }
+}
+
+// Bonus の加算が完了したら、TRUE を返す。
+static int AddBonusScore() {
+  if ( g_Stage < STAGE_N - 1 ) {
+    if ( g_Time > 0) {
+      g_Score += BSCORE_TIME;
+      g_Time -= 1;
+    }
+    return g_Time == 0;
+  } else {
+    if ( g_Time > 0) {
+      g_Score += BSCORE_TIME;
+      g_Time -= 1;
+    }
+    if ( g_Life > 0) {
+      g_Score += BSCORE_LIFE;
+      g_Life -= 1;
+    }
+    return g_Time == 0 && g_Life == 0;
+  }
+}
+
+
+
 static s32 CalcSenario1( struct TaskData* pTask , u32 Flag ) {
   pTask->x++;
 
@@ -163,7 +203,10 @@ static s32 CalcSenario1( struct TaskData* pTask , u32 Flag ) {
 
   if ( g_isStageClear ) {
     pTask->x++;
-    if( pTask->x > 800 ) {
+    if( AddBonusScore() && pTask->x > 800 ) {
+      if ( g_isHighScore ) {
+        g_HighScoreS[ g_Stage ] = g_Score;
+      }
       ageSndMgrRelease( pTask->Data.senario.bgm_handle );
       g_Stage++;
       GotoMode( MODE_STORY );
@@ -238,15 +281,52 @@ static s32 CalcSenario1( struct TaskData* pTask , u32 Flag ) {
 
   if ( g_isGetKeyItem ){
     struct TaskData* pETask;
-    int w,h;
+    int w,h,y;
 
     w = ageRM[ AG_CG_GAMEOVER ].Width;
     h = ageRM[ AG_CG_GAMEOVER ].Height;
 
+    // ステージクリア
     pETask = AllocTask();
     InitTaskStatic( pETask , (1024-w)/2 , (768*3/4-h)/2 , AG_CG_GAMECLEAR , 1 );
     AddlLink( pETask , DISP_LEVEL_TOP );
 
+    y = 400;
+
+    // NEW RECORD
+    if ( CalcBonusScore() > g_HighScoreS[ g_Stage ] ) {
+      g_isHighScore = TRUE;
+
+      pETask = AllocTask();
+      w = ageRM[ AG_CG_TEXT_NEWRECORD ].Width;
+      InitTaskStatic( pETask , (1024-w)/2 , y , AG_CG_TEXT_NEWRECORD , 1 );
+      AddlLink( pETask , DISP_LEVEL_TOP );
+
+      y += 100;
+    }
+
+    // SCORE
+    pETask = AllocTask();
+    InitTaskStatic( pETask , 100 , y , AG_CG_TEXT_SCORE , 1 );
+    AddlLink( pETask , DISP_LEVEL_TOP );
+
+    pETask = AllocTask();
+    InitTaskScore( pETask , 600 , y , &(g_Score), 4 );
+    AddlLink( pETask , DISP_LEVEL_TOP );
+
+    y += 100;
+
+    // HIGH SCORE
+    pETask = AllocTask();
+    InitTaskStatic( pETask , 100 , y , AG_CG_TEXT_HIGHSCORE , 1 );
+    AddlLink( pETask , DISP_LEVEL_TOP );
+
+    pETask = AllocTask();
+    InitTaskScore( pETask , 600 , y , &(g_HighScoreS[ g_Stage ]), 4 );
+    AddlLink( pETask , DISP_LEVEL_TOP );
+
+
+    // BGM
     ageSndMgrRelease( pTask->Data.senario.bgm_handle );
 
     pTask->Data.senario.bgm_handle = ageSndMgrAlloc( AS_SND_GAMECLEAR , 0 , 1 , AGE_SNDMGR_PANMODE_LR12 , 0 );
@@ -277,6 +357,8 @@ void InitTaskSenario1( struct TaskData* pTask ) {
   pTask->Calc = CalcSenario1;
   pTask->x = 0;
   pTask->y = 0;
+
+  g_isHighScore = FALSE;
 
   switch( g_Stage ) {
     case 0:
