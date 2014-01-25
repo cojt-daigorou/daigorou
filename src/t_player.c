@@ -208,12 +208,14 @@ static s32 CalcPlayerSpeed() {
 static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
   struct TaskData* pWTask;
 
-  // 攻撃
-  if (pTask->Data.player.mode != PLAYER_MODE_GAMEOVER) {
-    if( g_Star > 0 && !g_isGetKeyItem && PadTrg()&PAD_X ) {
+  // 大五郎が生存かつゲームクリアでない
+  if (pTask->Data.player.mode != PLAYER_MODE_GAMEOVER && !g_isGetKeyItem ) {
+
+    // 通常攻撃(Star Attack)
+    if( g_Star >= 1 && ( PadTrg()&PAD_X ) ) {
       int x , y, dx;
 
-      --g_Star;
+      g_Star -= 1;
 
       x = g_PlayerX;
       y = g_PlayerY + BBox[ pTask->Data.player.mode ].y1;
@@ -237,7 +239,55 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
       };
       ageSndMgrPlayOneshot( AS_SND_B03 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
     };
-  }
+
+    // 強攻撃(Star Machine Gun) 発動開始
+    if( g_Star >= 10 && ( PadTrg()&PAD_Y ) && !pTask->Data.player.starMachineGun_count ) {
+      g_Star -= 10;
+      pTask->Data.player.starMachineGun_count = 300;
+      ageSndMgrPlayOneshot( AS_SND_B04 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
+    };
+
+    // 強攻撃(Star Machine Gun) 発動中
+    if ( pTask->Data.player.starMachineGun_count > 0) {
+      int interval;
+      pTask->Data.player.starMachineGun_count--;
+
+      if (pTask->Data.player.starMachineGun_count >= 250) {
+        interval = 8;
+      } else if (pTask->Data.player.starMachineGun_count >= 200) {
+        interval = 5;
+      } else if (pTask->Data.player.starMachineGun_count < 50) {
+        interval = 10;
+      } else {
+        interval = 5;
+      }
+
+      if (pTask->Data.player.starMachineGun_count%interval == 0 ) {
+        struct TaskData* pBTask;
+        int x = g_PlayerX;
+        int y = g_PlayerY + BBox[ pTask->Data.player.mode ].y1;
+        int dx, dy;
+        float angle = (double)(rand() % 30) / 30 * 1.0 - 0.5;
+        if( pTask->Data.player.direction == 0 ) {
+          x += 60;
+          angle += 0;
+        }
+        else {
+          x -= 60;
+          angle += PI;
+        };
+        dx = 20 * cosf( angle );
+        dy = 20 * sinf( angle );
+        pBTask = AllocTask();
+        if (pBTask != NULL) {
+          InitTaskPBullet( pBTask , x, y, AG_RP_OBJ_PBULLET, dx,dy, 0,0 );
+          AddlLink( pBTask , DISP_LEVEL_PBULLET );
+        };
+      };
+    };
+
+  };// END:大五郎が生存かつゲームクリアでない
+
 
   switch( pTask->Data.player.mode ) {
     //　地面にいる場合
@@ -298,7 +348,7 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
           ageSndMgrPlayOneshot( AS_SND_WALK_LEFT , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
         };
       }
-      else if( PadLvl()&PAD_DOWN ){		//	パッド↓でリツイートモードへ
+      else if( PadLvl()&PAD_DOWN ){   //  パッド↓でリツイートモードへ
         ageSndMgrPlayOneshot( AS_SND_B05 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
         pTask->Data.player.mode = PLAYER_MODE_RETWEET;
         pTask->Data.player.count = 0;
@@ -601,7 +651,10 @@ void InitTaskPlayer( struct TaskData* pTask ) {
   g_PlayerY = PLAYER_GROUND_LINE;
   pTask->Calc = CalcPlayer;
   pTask->Draw = DrawPlayer;
+
   pTask->Data.player.direction = 0;
   pTask->Data.player.count = 0;
   pTask->Data.player.mode = 0;
+  pTask->Data.player.jump_power = 0;
+  pTask->Data.player.starMachineGun_count = 0;
 }
