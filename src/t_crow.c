@@ -19,7 +19,7 @@ static s32 CalcCrow( struct TaskData* pTask , u32 Flag ) {
 
 
 	pTask->Data.crow.count += 1;
-	if(pTask->Data.crow.count>=120){
+	if(pTask->Data.crow.count>=60){
         // ’e”­ŽË
           struct TaskData* pBTask;
           pBTask = AllocTask();
