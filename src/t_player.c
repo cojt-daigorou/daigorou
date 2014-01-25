@@ -317,6 +317,21 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
         ageSndMgrPlayOneshot( AS_SND_JUMP , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
         ageSndMgrPlayOneshot( AS_SND_B06 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
       }
+      else if( PadTrg()&PAD_DOWN && g_Star >= 3){   //  パッド↓でリツイートモードへ
+		  g_Star -= 3;
+        ageSndMgrPlayOneshot( AS_SND_B05 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
+        pTask->Data.player.mode = PLAYER_MODE_RETWEET;
+        pTask->Data.player.count = 0;
+        {
+          struct TaskData* pRTTask;
+          int dx = ( pTask->Data.player.direction == 0 ) ? 20 : -20;
+          pRTTask = AllocTask();
+          if (pRTTask != NULL) {
+            InitTaskRetweet( pRTTask , g_PlayerX, g_PlayerY ,pTask->Data.player.direction);
+            AddlLink( pRTTask , DISP_LEVEL_BG_FRONT );
+          };
+        };
+      }
       else if( PadLvl()&PAD_RIGHT || PadLvl()&PAD_LEFT ) {
         if( PadLvl()&PAD_RIGHT ) {
           pTask->Data.player.direction = 0;
@@ -352,20 +367,6 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
         }
         else if( (pTask->Data.player.count & 0x1f) == 0x0f ) {
           ageSndMgrPlayOneshot( AS_SND_WALK_LEFT , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
-        };
-      }
-      else if( PadLvl()&PAD_DOWN ){   //  パッド↓でリツイートモードへ
-        ageSndMgrPlayOneshot( AS_SND_B05 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
-        pTask->Data.player.mode = PLAYER_MODE_RETWEET;
-        pTask->Data.player.count = 0;
-        {
-          struct TaskData* pRTTask;
-          int dx = ( pTask->Data.player.direction == 0 ) ? 20 : -20;
-          pRTTask = AllocTask();
-          if (pRTTask != NULL) {
-            InitTaskRetweet( pRTTask , g_PlayerX, g_PlayerY ,pTask->Data.player.direction);
-            AddlLink( pRTTask , DISP_LEVEL_BG_FRONT );
-          };
         };
       }
       else {    //　キー入力なし
@@ -491,6 +492,13 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
         pTask->Data.player.mode = PLAYER_MODE_WAIT;
         ageSndMgrPlayOneshot( AS_SND_LANDING , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
       };
+	  if( PadTrg()&PAD_A ) {   //　ボタンが押された場合はジャンプモードへ。（着キャン）
+        pTask->Data.player.mode = PLAYER_MODE_JUMPSTART;
+        pTask->Data.player.count = 0;
+        pTask->Data.player.jump_power = isRun ? 25 : 20;
+        ageSndMgrPlayOneshot( AS_SND_JUMP , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
+        ageSndMgrPlayOneshot( AS_SND_B06 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
+      }
       break;
 
     case PLAYER_MODE_ATTACK :
@@ -566,8 +574,17 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
     case PLAYER_MODE_RETWEET:
 
       pTask->Data.player.count++;
-      MovePlayer( pTask , 0 , 0 , 1 );
-
+      if( PadLvl()&PAD_RIGHT ) {
+		  int dx = CalcPlayerSpeed()-pTask->Data.player.count/8;
+		  if(dx<0)dx=0;
+        MovePlayer( pTask , dx , 0 , 1 );
+      };
+      if( PadLvl()&PAD_LEFT ) {
+		  int dx = CalcPlayerSpeed()-pTask->Data.player.count/8;
+		  if(dx<0)dx=0;
+        MovePlayer( pTask , -dx , 0 , 1 );
+      };
+	  MovePlayer(pTask,0,0,1);
       if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode ] ].Frames ) {
         pTask->Data.player.count = 0;
         pTask->Data.player.mode = PLAYER_MODE_WAIT;

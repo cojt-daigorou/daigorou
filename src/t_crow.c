@@ -38,15 +38,23 @@ static s32 CalcCrow( struct TaskData* pTask , u32 Flag ) {
 	if(dx*dx>512*512) return 0;	//‰“‚·‚¬‚éê‡‚Í‚·‚®I—¹
 
 	//ˆÚ“®
-	pTask->Data.crow.vx += (int)(-dx*0.01 - pTask->Data.crow.vx*0.04);
-	pTask->Data.crow.vy += (int)(-dy*0.01 - pTask->Data.crow.vy*0.04);
+	{
+		int ax = (int)(-dx*0.01 - pTask->Data.crow.vx*0.04);
+		int ay = (int)(-dy*0.01 - pTask->Data.crow.vy*0.04);
+		if(ax==0){
+			if(dx>0)ax = -1;
+			else if(dx<0)ax = 1;
+		}
+		pTask->Data.crow.vx += ax;
+		pTask->Data.crow.vy += ay;
+	
 	if(pTask->Data.crow.vx==0){
 		if(dx>0)pTask->Data.crow.vx = -1;
 		else if(dx<0)pTask->Data.crow.vx = 1;
 	}
 	pTask->x += pTask->Data.crow.vx;
 	pTask->y += pTask->Data.crow.vy;
-
+	}
 
   // Ž©‹@‚Ì’e‚Ì”»’è
   {

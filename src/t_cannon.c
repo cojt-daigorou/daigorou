@@ -101,8 +101,6 @@ static s32 CalcCannon( struct TaskData* pTask , u32 Flag ) {
           InitTaskAttack( pATask , pTask->x , pTask->y );
           AddlLink( pATask , DISP_LEVEL_ATTACK );
 
-          pTask->visible = 0;
-          pTask->flag = TASK_FLAG_DESTROY;
 
           AddScore( pTask->Data.cannon.score );
 
