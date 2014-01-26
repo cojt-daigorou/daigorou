@@ -102,36 +102,36 @@ static s32 DrawCrow( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
 	if( pTask->Data.crow.mode == 0 ) {
 		//‘Ì
 		ageTransferAAC( pDBuf, AG_CG_OBJ_CROW_BODY1, 0, &bw, &bh );
-		agDrawSPRITE( pDBuf, 1, (pTask->x - g_OffsetX - bw/2)<<2 , (pTask->y - bh/2)<<2 , (pTask->x - g_OffsetX + bw/2)<<2, (pTask->y+bh/2)<<2 );
+		agDrawSPRITE( pDBuf, 1, (pTask->x - g_OffsetX - bw/2)<<2 , (pTask->y-g_OffsetY - bh/2)<<2 , (pTask->x - g_OffsetX + bw/2)<<2, (pTask->y-g_OffsetY+bh/2)<<2 );
 		//¶—ƒ
 		ageTransferAAC( pDBuf, AG_CG_OBJ_CROW_WING_L1, 0, &lw, &lh );
 		wofx = (int)(bw*offsetRatioX);
-		agDrawSPRITE( pDBuf, 1, (pTask->x - g_OffsetX + wofx)<<2 , (pTask->y - lh)<<2 , (pTask->x - g_OffsetX + wofx + lw)<<2, (pTask->y)<<2 );
+		agDrawSPRITE( pDBuf, 1, (pTask->x - g_OffsetX + wofx)<<2 , (pTask->y-g_OffsetY - lh)<<2 , (pTask->x - g_OffsetX + wofx + lw)<<2, (pTask->y-g_OffsetY)<<2 );
 		ageTransferAAC( pDBuf, AG_CG_OBJ_CROW_WING_R1, 0, &lw, &lh );
-		agDrawSPRITE( pDBuf, 1, (pTask->x - g_OffsetX - wofx - lw)<<2 , (pTask->y - lh)<<2 , (pTask->x - g_OffsetX - wofx)<<2, (pTask->y)<<2 );
+		agDrawSPRITE( pDBuf, 1, (pTask->x - g_OffsetX - wofx - lw)<<2 , (pTask->y-g_OffsetY - lh)<<2 , (pTask->x - g_OffsetX - wofx)<<2, (pTask->y-g_OffsetY)<<2 );
 	}
 	else if( pTask->Data.crow.mode == 1 ) {
 		//‘Ì
 		ageTransferAAC( pDBuf, AG_CG_OBJ_CROW_BODY2, 0, &bw, &bh );
-		agDrawSPRITE( pDBuf, 1, (pTask->x - g_OffsetX - bw/2)<<2 , (pTask->y - bh/2)<<2 , (pTask->x - g_OffsetX + bw/2)<<2, (pTask->y+bh/2)<<2 );
+		agDrawSPRITE( pDBuf, 1, (pTask->x - g_OffsetX - bw/2)<<2 , (pTask->y-g_OffsetY - bh/2)<<2 , (pTask->x - g_OffsetX + bw/2)<<2, (pTask->y-g_OffsetY+bh/2)<<2 );
 		//¶—ƒ
 		ageTransferAAC( pDBuf, AG_CG_OBJ_CROW_WING_L2, 0, &lw, &lh );
 		wofx = (int)(bw*offsetRatioX);
 		wofy = (int)(bh*offsetRatioY);
-		agDrawSPRITE( pDBuf, 1, (pTask->x - g_OffsetX + wofx)<<2 , (pTask->y +wofy -lh/2)<<2 , (pTask->x - g_OffsetX + wofx + lw)<<2, (pTask->y + wofy +lh/2)<<2 );
+		agDrawSPRITE( pDBuf, 1, (pTask->x - g_OffsetX + wofx)<<2 , (pTask->y-g_OffsetY +wofy -lh/2)<<2 , (pTask->x - g_OffsetX + wofx + lw)<<2, (pTask->y-g_OffsetY + wofy +lh/2)<<2 );
 		ageTransferAAC( pDBuf, AG_CG_OBJ_CROW_WING_R2, 0, &lw, &lh );
-		agDrawSPRITE( pDBuf, 1, (pTask->x - g_OffsetX - wofx - lw)<<2 , (pTask->y +wofy -lh/2)<<2 , (pTask->x - g_OffsetX - wofx)<<2, (pTask->y + wofy +lh/2)<<2 );
+		agDrawSPRITE( pDBuf, 1, (pTask->x - g_OffsetX - wofx - lw)<<2 , (pTask->y-g_OffsetY +wofy -lh/2)<<2 , (pTask->x - g_OffsetX - wofx)<<2, (pTask->y-g_OffsetY + wofy +lh/2)<<2 );
 	}
 	else {
 		//‘Ì
 		ageTransferAAC( pDBuf, AG_CG_OBJ_CROW_BODY3, 0, &bw, &bh );
-		agDrawSPRITE( pDBuf, 1, (pTask->x - g_OffsetX - bw/2)<<2 , (pTask->y - bh/2)<<2 , (pTask->x - g_OffsetX + bw/2)<<2, (pTask->y+bh/2)<<2 );
+		agDrawSPRITE( pDBuf, 1, (pTask->x - g_OffsetX - bw/2)<<2 , (pTask->y-g_OffsetY - bh/2)<<2 , (pTask->x - g_OffsetX + bw/2)<<2, (pTask->y-g_OffsetY+bh/2)<<2 );
 		//¶—ƒ
 		ageTransferAAC( pDBuf, AG_CG_OBJ_CROW_WING_L3, 0, &lw, &lh );
 		wofx = (int)(bw*offsetRatioX);
-		agDrawSPRITE( pDBuf, 1, (pTask->x - g_OffsetX + wofx)<<2 , (pTask->y-lh/2)<<2 , (pTask->x - g_OffsetX + wofx + lw)<<2, (pTask->y+lh/2)<<2 );
+		agDrawSPRITE( pDBuf, 1, (pTask->x - g_OffsetX + wofx)<<2 , (pTask->y-g_OffsetY-lh/2)<<2 , (pTask->x - g_OffsetX + wofx + lw)<<2, (pTask->y-g_OffsetY+lh/2)<<2 );
 		ageTransferAAC( pDBuf, AG_CG_OBJ_CROW_WING_R3, 0, &lw, &lh );
-		agDrawSPRITE( pDBuf, 1, (pTask->x - g_OffsetX - wofx - lw)<<2 , (pTask->y-lh/2)<<2 , (pTask->x - g_OffsetX - wofx)<<2, (pTask->y+lh/2)<<2 );
+		agDrawSPRITE( pDBuf, 1, (pTask->x - g_OffsetX - wofx - lw)<<2 , (pTask->y-g_OffsetY-lh/2)<<2 , (pTask->x - g_OffsetX - wofx)<<2, (pTask->y-g_OffsetY+lh/2)<<2 );
 	};
 
 }

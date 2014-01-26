@@ -130,10 +130,10 @@ static s32 DrawCannon( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
     ageTransferAAC( pDBuf, AG_CG_OBJ_CANNON, 0, &w, &h );
 
     if( flip == 0 ) {
-      agDrawSPRITE( pDBuf, 1, (pTask->x - g_OffsetX - w/2)<<2 , (pTask->y - h)<<2 , (pTask->x - g_OffsetX + w/2)<<2, (pTask->y)<<2 );
+      agDrawSPRITE( pDBuf, 1, (pTask->x - g_OffsetX - w/2)<<2 , (pTask->y-g_OffsetY - h)<<2 , (pTask->x - g_OffsetX + w/2)<<2, (pTask->y-g_OffsetY)<<2 );
     }
     else {
-      agDrawSPRITE_UV( pDBuf, (pTask->x - g_OffsetX - w/2)<<2 , (pTask->y - h)<<2 , 0x1000 , 0 , (pTask->x - g_OffsetX + w/2)<<2, (pTask->y)<<2 , 0 , 0x1000 );
+      agDrawSPRITE_UV( pDBuf, (pTask->x - g_OffsetX - w/2)<<2 , (pTask->y-g_OffsetY - h)<<2 , 0x1000 , 0 , (pTask->x - g_OffsetX + w/2)<<2, (pTask->y-g_OffsetY)<<2 , 0 , 0x1000 );
     };
   };
 }
