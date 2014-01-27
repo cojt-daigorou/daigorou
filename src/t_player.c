@@ -30,11 +30,11 @@ void KillPlayer( struct TaskData* pTask ) {
 #define PLAYER_RUN_SPEED    (8)
 
 enum{
-	NONE_HIT = 0,
-	TOP_HIT,
-	BOTTOM_HIT,
-	LEFT_HIT,
-	RIGHT_HIT,
+  NONE_HIT = 0,
+  TOP_HIT,
+  BOTTOM_HIT,
+  LEFT_HIT,
+  RIGHT_HIT,
 };
 /******************************************************************/
 /*                                player                          */
@@ -45,9 +45,9 @@ struct RECT BBox[] = {
   { -50/2 , 0,  50/2 , 130/2 },// PLAYER_MODE_WALK      (2)
   { -50/2 , 0,  50/2 , 130/2 },// PLAYER_MODE_WALKEND   (3)
   { -50/2 , 0,  50/2 , 130/2 },// PLAYER_MODE_JUMPSTART (4)
-  { -50/2 , 0,  50/2 , 50/2 },// PLAYER_MODE_JUMP      (5)
+  { -50/2 , 0,  50/2 , 130/2 },// PLAYER_MODE_JUMP      (5)
   { -50/2 , 0,  50/2 , 130/2 },// PLAYER_MODE_JUMPEND   (6)
-  { -50/2 , 0,  50/2 , 50/2 },// PLAYER_MODE_FALL      (7)
+  { -50/2 , 0,  50/2 , 130/2 },// PLAYER_MODE_FALL      (7)
   { -50/2 , 0,  50/2 , 130/2 },// PLAYER_MODE_ATTACK    (8)
   { -50/2 , 0,  50/2 , 130/2 },// PLAYER_MODE_RUNSTART  (1+8)
   { -50/2 , 0,  50/2 , 130/2 },// PLAYER_MODE_RUN       (2+8)
@@ -58,8 +58,6 @@ struct RECT BBox[] = {
 
 static int MovePlayer( struct TaskData* pTask , int dx , int dy , int move_flag ) {
   struct TaskData* pWTask;
-  int w = ageRM[ AG_CG_WORKSTAND ].Width;
-  int h = ageRM[ AG_CG_WORKSTAND ].Height;
   int isHit = NONE_HIT;
   int x,y;
   struct RECT csize;
@@ -104,35 +102,35 @@ static int MovePlayer( struct TaskData* pTask , int dx , int dy , int move_flag 
         if ( y > pWTask->y ) {
           int tw = ageRM[ pWTask->Data.object.image ].Width;
           int th = ageRM[ pWTask->Data.object.image ].Height;
-		  if ( (y - dy)  > pWTask->y + th ){
-			  int xx = x + (pTask->y + th - y)*dx/dy;
-			  if(xx<pWTask->x - tw/2 - w/2 &&dx>0){ //左
-				  x = pWTask->x - tw/2 - w/2 - 1;
-				  isHit = LEFT_HIT;
-			  }
-			  else if(xx>pWTask->x + tw/2 + w/2 && dx<0){ //右
-				  x = pWTask->x + tw/2 + w/2 + 1;
-				  isHit = RIGHT_HIT;
-			  }
-			  else{ // 下
-				  y = pWTask->y + th + 1;
-				  isHit = BOTTOM_HIT;
-			  }
+          if ( (y - dy)  > pWTask->y + th ){
+            int xx = x + (pTask->y + th - y)*dx/dy;
+            if(xx<pWTask->x - tw/2 + csize.x0 &&dx>0){ //左
+              x = pWTask->x - tw/2 + csize.x0 - 1;
+              isHit = LEFT_HIT;
+            }
+            else if(xx>pWTask->x + tw/2 + csize.x1 && dx<0){ //右
+              x = pWTask->x + tw/2 + csize.x1 + 1;
+              isHit = RIGHT_HIT;
+            }
+            else{ // 下
+              y = pWTask->y + th -csize.y0 + 1;
+              isHit = BOTTOM_HIT;
+            }
           }
-          else if ( (x + w/2) < (pWTask->x + tw/2) ) {
+          else if ( (x + csize.x1) < (pWTask->x + tw/2) ) {
             // 左
             x = pWTask->x - tw/2 + csize.x0 - 1;
-			isHit = LEFT_HIT;
+            isHit = LEFT_HIT;
           } 
-		  else if ( (x - w/2) > (pWTask->x - tw/2) ){
+          else if ( (x + csize.x0) > (pWTask->x - tw/2) ){
             // 右
             x = pWTask->x + tw/2 + csize.x1;
-			isHit = RIGHT_HIT;
+            isHit = RIGHT_HIT;
           }
         }else {
           // 上
           y = pWTask->y - csize.y1 + 1;
-		  isHit = TOP_HIT;
+          isHit = TOP_HIT;
         }
 
         // 動く床の移動
@@ -140,14 +138,14 @@ static int MovePlayer( struct TaskData* pTask , int dx , int dy , int move_flag 
           case ObjectMotion_None:
             break;
           case ObjectMotion_Horizon:
-			  if(isHit!=BOTTOM_HIT){
-				  x += (pWTask->x - pWTask->Data.object.pre_x);
-			  }
-			  break;
+            if(isHit!=BOTTOM_HIT){
+              x += (pWTask->x - pWTask->Data.object.pre_x);
+            }
+            break;
           case ObjectMotion_Vertical:
-			  if(isHit==TOP_HIT ||isHit==BOTTOM_HIT){
-				  y += (pWTask->y - pWTask->Data.object.pre_y);
-			  }
+            if(isHit==TOP_HIT ||isHit==BOTTOM_HIT){
+              y += (pWTask->y - pWTask->Data.object.pre_y);
+            }
             break;
         }
 
@@ -232,7 +230,7 @@ static s32 CalcPlayerSpeed() {
 
 static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
   struct TaskData* pWTask;
-	  int mx = 0,my = 0;	//移動量
+    int mx = 0,my = 0;  //移動量
 
   // 大五郎が生存かつゲームクリアでない
   if (pTask->Data.player.mode != PLAYER_MODE_GAMEOVER && !g_isGetKeyItem ) {
@@ -323,21 +321,21 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
   switch( pTask->Data.player.mode ) {
     //　地面にいる場合
     case PLAYER_MODE_WAIT :
-		mx = 0; my = 0;
-	case PLAYER_MODE_WALKSTART :
+    mx = 0; my = 0;
+  case PLAYER_MODE_WALKSTART :
     case PLAYER_MODE_WALK :
     case PLAYER_MODE_WALKEND :
       isRun = (PadLvl()&PAD_B) == PAD_B;
-	  /*
+    /*
       if( g_PlayerY < PLAYER_GROUND_LINE && !MovePlayer( pTask , 0 , 10 , 0 )) {
         //　一番下でなく、足場が無くなった場合は下降モードへ。
         g_PlayerY += BBox[ PLAYER_MODE_WAIT ].y1 - BBox[ PLAYER_MODE_FALL ].y1;
 
         pTask->Data.player.mode = PLAYER_MODE_FALL;
         pTask->Data.player.count = 0;
-		
+    
       }
-	  */
+    */
       if( PadTrg()&PAD_A ) {   //　ボタンが押された場合はジャンプモードへ。
         pTask->Data.player.mode = PLAYER_MODE_JUMPSTART;
         pTask->Data.player.count = 0;
@@ -346,7 +344,7 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
         ageSndMgrPlayOneshot( AS_SND_B06 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
       }
       else if( PadTrg()&PAD_DOWN && g_Star >= 3&& !g_isGetKeyItem){   //  パッド↓でリツイートモードへ
-		  g_Star -= 3;
+      g_Star -= 3;
         ageSndMgrPlayOneshot( AS_SND_B05 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
         pTask->Data.player.mode = PLAYER_MODE_RETWEET;
         pTask->Data.player.count = 0;
@@ -363,13 +361,13 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
       else if( PadLvl()&PAD_RIGHT || PadLvl()&PAD_LEFT ) {
         if( PadLvl()&PAD_RIGHT ) {
           pTask->Data.player.direction = 0;
-		  mx = CalcPlayerSpeed();
+      mx = CalcPlayerSpeed();
         }
         else {
           pTask->Data.player.direction = 1;
-		  mx = -CalcPlayerSpeed();
+      mx = -CalcPlayerSpeed();
         };
-		my = 0;
+    my = 0;
         if( pTask->Data.player.mode == PLAYER_MODE_WAIT ) {   //　止まってたら走り始める
           pTask->Data.player.mode = PLAYER_MODE_WALKSTART;
           pTask->Data.player.count = 0;
@@ -424,13 +422,13 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
     case PLAYER_MODE_JUMPSTART :
       if( PadLvl()&PAD_RIGHT ) {
         pTask->Data.player.direction = 0;
-		mx = CalcPlayerSpeed();
+    mx = CalcPlayerSpeed();
       };
       if( PadLvl()&PAD_LEFT ) {
         pTask->Data.player.direction = 1;
-		mx = -CalcPlayerSpeed();
+    mx = -CalcPlayerSpeed();
       };
-	  my = 0;
+    my = 0;
 
       pTask->Data.player.count++;
 
@@ -444,15 +442,15 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
     case PLAYER_MODE_JUMP :
       if( PadLvl()&PAD_RIGHT ) {
         pTask->Data.player.direction = 0;
-		mx = CalcPlayerSpeed();
+    mx = CalcPlayerSpeed();
       };
       if( PadLvl()&PAD_LEFT ) {
         pTask->Data.player.direction = 1;
-		mx = -CalcPlayerSpeed();
+    mx = -CalcPlayerSpeed();
       };
 
       if( pTask->Data.player.jump_power > 0 ) {
-		  my = -pTask->Data.player.jump_power;
+      my = -pTask->Data.player.jump_power;
         pTask->Data.player.jump_power -= 2;// 重力加速度的な何か
 
         if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode ] ].Frames - 1 ) {
@@ -462,7 +460,7 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
         }
       }
       else {// jump_power が 0 になったら落下モードへ。
-		  my = 0;
+      my = 0;
         pTask->Data.player.mode = PLAYER_MODE_FALL;
         pTask->Data.player.count = 0;
       };
@@ -473,27 +471,27 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
     case PLAYER_MODE_FALL :
       if( PadLvl()&PAD_RIGHT ) {
         pTask->Data.player.direction = 0;
-		mx = CalcPlayerSpeed();
+    mx = CalcPlayerSpeed();
       };
       if( PadLvl()&PAD_LEFT ) {
         pTask->Data.player.direction = 1;
-		mx = -CalcPlayerSpeed();
+    mx = -CalcPlayerSpeed();
       };
-	  my=15;
-	  /*
+    my=15;
+    /*
       if( MovePlayer( pTask , 0 , 15 , 1 ) ) {
         g_PlayerY -= BBox[ PLAYER_MODE_WAIT ].y1 - BBox[ PLAYER_MODE_FALL ].y1;
 
         pTask->Data.player.mode = PLAYER_MODE_JUMPEND;
         pTask->Data.player.count = 0;
       }
-	  
+    
       if( g_PlayerY >= PLAYER_GROUND_LINE ) {
         g_PlayerY = PLAYER_GROUND_LINE;
         pTask->Data.player.mode = PLAYER_MODE_JUMPEND;
         pTask->Data.player.count = 0;
       }
-	  */
+    */
 
         pTask->Data.player.count++;
 
@@ -509,20 +507,20 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
       pTask->Data.player.count++;
       if( PadLvl()&PAD_RIGHT ) {
         pTask->Data.player.direction = 0;
-		mx = CalcPlayerSpeed();
+    mx = CalcPlayerSpeed();
       };
       if( PadLvl()&PAD_LEFT ) {
         pTask->Data.player.direction = 1;
-		mx = -CalcPlayerSpeed();
+    mx = -CalcPlayerSpeed();
       };
-	  my = 0;
+    my = 0;
 
       if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode ] ].Frames ) {
         pTask->Data.player.count = 0;
         pTask->Data.player.mode = PLAYER_MODE_WAIT;
         ageSndMgrPlayOneshot( AS_SND_LANDING , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
       };
-	  if( PadTrg()&PAD_A ) {   //　ボタンが押された場合はジャンプモードへ。（着キャン）
+    if( PadTrg()&PAD_A ) {   //　ボタンが押された場合はジャンプモードへ。（着キャン）
         pTask->Data.player.mode = PLAYER_MODE_JUMPSTART;
         pTask->Data.player.count = 0;
         pTask->Data.player.jump_power = isRun ? 25 : 20;
@@ -581,12 +579,12 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
       break;
 
     case PLAYER_MODE_GAMEOVER :
-		/*
+    /*
       if( !MovePlayer( pTask , 0 , 15 , 1 ) && g_PlayerY >= PLAYER_GROUND_LINE ) {
         g_PlayerY = PLAYER_GROUND_LINE;
       }
-	  */
-		my = 15;
+    */
+    my = 15;
       if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode ] ].Frames - 1 ) {
         // 最大フレームに達したらカウントを止める
         if ( !g_isGameOver ) {
@@ -606,14 +604,14 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
 
       pTask->Data.player.count++;
       if( PadLvl()&PAD_RIGHT ) {
-		  mx = CalcPlayerSpeed()-pTask->Data.player.count/8;
-		  if(mx<0)mx=0;
+      mx = CalcPlayerSpeed()-pTask->Data.player.count/8;
+      if(mx<0)mx=0;
       };
       if( PadLvl()&PAD_LEFT ) {
-		  mx = -CalcPlayerSpeed()+pTask->Data.player.count/8;
-		  if(mx>0)mx=0;
+      mx = -CalcPlayerSpeed()+pTask->Data.player.count/8;
+      if(mx>0)mx=0;
       };
-	  my = 0;
+    my = 0;
       if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode ] ].Frames ) {
         pTask->Data.player.count = 0;
         pTask->Data.player.mode = PLAYER_MODE_WAIT;
@@ -625,42 +623,42 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
       break;
   };
   {
-	  int m = pTask->Data.player.mode;
-  switch( MovePlayer( pTask , mx , my , 1 ) ) {
-  case NONE_HIT:
-	  if( g_PlayerY < PLAYER_GROUND_LINE){
-		  switch(m){
-		  case PLAYER_MODE_WAIT :
-		  case PLAYER_MODE_WALKSTART :
-		  case PLAYER_MODE_WALK :
-		  case PLAYER_MODE_WALKEND :
-			  pTask->Data.player.mode = PLAYER_MODE_FALL;
-			  pTask->Data.player.count = 0;
-			  break;
-		  }
-	  }
-	  else{
-		  g_PlayerY = PLAYER_GROUND_LINE;
-		  if(m==PLAYER_MODE_FALL){
-			  pTask->Data.player.mode = PLAYER_MODE_JUMPEND;
-			  pTask->Data.player.count = 0;
-		  }
-	  };
-	  break;
-  case TOP_HIT:
-	  if(m==PLAYER_MODE_FALL){
-		  pTask->Data.player.mode = PLAYER_MODE_JUMPEND;
-		  pTask->Data.player.count = 0;
-	  };
-	  break;
-  case BOTTOM_HIT:
-	  pTask->Data.player.jump_power = 0;
-	  if(g_PlayerY > PLAYER_GROUND_LINE){
-		  MovePlayer( pTask , -1 , 0 , 1 );
-		  g_PlayerY = PLAYER_GROUND_LINE;
-	  }
-	  break;
-  };
+    int m = pTask->Data.player.mode;
+    switch( MovePlayer( pTask , mx , my , 1 ) ) {
+      case NONE_HIT:
+        if( g_PlayerY < PLAYER_GROUND_LINE){
+          switch(m){
+            case PLAYER_MODE_WAIT :
+            case PLAYER_MODE_WALKSTART :
+            case PLAYER_MODE_WALK :
+            case PLAYER_MODE_WALKEND :
+              pTask->Data.player.mode = PLAYER_MODE_FALL;
+              pTask->Data.player.count = 0;
+              break;
+          }
+        }
+        else{
+          g_PlayerY = PLAYER_GROUND_LINE;
+          if(m==PLAYER_MODE_FALL){
+            pTask->Data.player.mode = PLAYER_MODE_JUMPEND;
+            pTask->Data.player.count = 0;
+          }
+        };
+        break;
+      case TOP_HIT:
+        if(m==PLAYER_MODE_FALL){
+          pTask->Data.player.mode = PLAYER_MODE_JUMPEND;
+          pTask->Data.player.count = 0;
+        };
+        break;
+      case BOTTOM_HIT:
+        pTask->Data.player.jump_power = 0;
+        if(g_PlayerY > PLAYER_GROUND_LINE){
+          MovePlayer( pTask , -1 , 0 , 1 );
+          g_PlayerY = PLAYER_GROUND_LINE;
+        }
+        break;
+    };
   };
 
   //　画面オフセット補正
