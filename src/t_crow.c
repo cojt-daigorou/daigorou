@@ -18,6 +18,9 @@ static s32 CalcCrow( struct TaskData* pTask , u32 Flag ) {
 	int dy = pTask->y - g_PlayerY -g_OffsetY + 275;
 
 
+
+	if(dx*dx>512*512) return 0;	//‰“‚·‚¬‚éê‡‚Í‚·‚®I—¹
+
 	pTask->Data.crow.count += 1;
 	if(pTask->Data.crow.count>=60){
         // ’e”­ŽË
@@ -28,15 +31,13 @@ static s32 CalcCrow( struct TaskData* pTask , u32 Flag ) {
             AddlLink( pBTask , DISP_LEVEL_EBULLET );
         };
 		pTask->Data.crow.count = 0;
+		ageSndMgrPlayOneshot( AS_SND_CROW , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
 
 	};
 	if(pTask->Data.crow.count % 20 == 0){
 		pTask->Data.crow.mode += 1;
 		pTask->Data.crow.mode %= 3;
 	};
-
-	if(dx*dx>512*512) return 0;	//‰“‚·‚¬‚éê‡‚Í‚·‚®I—¹
-
 	//ˆÚ“®
 	{
 		int ax = (int)(-dx*0.01 - pTask->Data.crow.vx*0.04);

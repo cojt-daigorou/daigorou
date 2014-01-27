@@ -586,7 +586,7 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
         g_PlayerY = PLAYER_GROUND_LINE;
       }
 	  */
-
+		my = 15;
       if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode ] ].Frames - 1 ) {
         // 最大フレームに達したらカウントを止める
         if ( !g_isGameOver ) {
