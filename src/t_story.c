@@ -226,7 +226,7 @@ void InitTaskStory( struct TaskData* pTask ) {
 	pTask->Data.story.mode = 0;
 	pTask->Data.story.count = 0;
 
-	pTask->Data.story.bgm_handle = ageSndMgrAlloc( AS_SND_TITLE , 0 , 1 , AGE_SNDMGR_PANMODE_LR12 , 0 );
+	pTask->Data.story.bgm_handle = ageSndMgrAlloc( AS_SND_TITLE_1 , 0 , 1 , AGE_SNDMGR_PANMODE_LR12 , 0 );
 	pTask->Data.story.voice_handle = 0;
 
 	ageSndMgrPlay( pTask->Data.story.bgm_handle );

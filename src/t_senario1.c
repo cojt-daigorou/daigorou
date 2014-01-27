@@ -267,6 +267,7 @@ static s32 CalcSenario1( struct TaskData* pTask , u32 Flag ) {
     if( g_Time == 30 ) {
       ageSndMgrRelease( pTask->Data.senario.bgm_handle );
 
+      // TODO: AS_SND_BGM_FAST ‚ğ·‚µ‘Ö‚¦‚é‚©”p~‚·‚é‚©‚·‚éB
       pTask->Data.senario.bgm_handle = ageSndMgrAlloc( AS_SND_BGM_FAST , 0 , 1 , AGE_SNDMGR_PANMODE_LR12 , 0 );
 
       ageSndMgrPlay( pTask->Data.senario.bgm_handle );
@@ -604,7 +605,7 @@ void InitTaskSenario1( struct TaskData* pTask ) {
     AddlLink( pETask , DISP_LEVEL_ENEMY );
   };
 
-  pTask->Data.senario.bgm_handle = ageSndMgrAlloc( AS_SND_BGM , 0 , 1 , AGE_SNDMGR_PANMODE_LR12 , 0 );
+  pTask->Data.senario.bgm_handle = ageSndMgrAlloc( AS_SND_BGM_1 , 0 , 1 , AGE_SNDMGR_PANMODE_LR12 , 0 );
 
   ageSndMgrPlay( pTask->Data.senario.bgm_handle );
   ageSndMgrSetVolume( pTask->Data.senario.bgm_handle , 0xa0 );

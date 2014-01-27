@@ -92,7 +92,7 @@ void InitTaskOpening( struct TaskData* pTask ) {
 	pTask->Data.title.count = 0;
 	pTask->Data.title.mode = 0;
 
-	pTask->Data.title.bgm_handle = ageSndMgrAlloc( AS_SND_TITLE , 0 , 1 , AGE_SNDMGR_PANMODE_LR12 , 0 );
+	pTask->Data.title.bgm_handle = ageSndMgrAlloc( AS_SND_TITLE_1 , 0 , 1 , AGE_SNDMGR_PANMODE_LR12 , 0 );
 
 	ageSndMgrPlay( pTask->Data.title.bgm_handle );
 	ageSndMgrSetVolume( pTask->Data.title.bgm_handle , 0xa0 );

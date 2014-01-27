@@ -1,0 +1,35 @@
+BGMのファイルのソースをメモしておく。
+
+
+# 基本情報。
+
+- ROMに追加できるのは、サンプリング周波数が32k, 44.1k, 48k のwavのみのよう。
+
+
+# 1次候補。
+
+http://www.hmix.net/music_gallery/image/cute.htm
+
+mp3形式なので、wavに変換する必要がある。
+[Switch 音声ファイル変換ソフト](http://www.nch.com.au/switch/jp/)で変換できた。
+
+|: ファイル名   :|: 元タイトル   :|
+| snd_bgm_1      | ハンター見習い |
+| snd_title_1    | 街へ行こう     |
+
+
+# 2次候補。
+
+ループしている。
+http://www.senses-circuit.com/material/loop_pretty.html
+
+wav形式で配布しているが、サンプリング周波数が32k, 44.1k, 48k でないため、ROMに追加できなかった。
+
+BGM
+#11：Loop#42
+
+TITLE
+#28：Loop#137
+
+END
+#09：Loop#33
