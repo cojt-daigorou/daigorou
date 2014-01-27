@@ -22,12 +22,12 @@ enum {
   OBJECT_TYPE_HIT = 0 ,
   OBJECT_TYPE_BREAKABLE ,
   OBJECT_TYPE_NOHIT   ,
-  OBJECT_TYPE_FRONT	  ,
+  OBJECT_TYPE_FRONT   ,
   OBJECT_TYPE_HIT_H1  ,
   OBJECT_TYPE_HIT_V1  ,
   OBJECT_TYPE_HIT_H2  ,
   OBJECT_TYPE_HIT_V2  ,
-  OBJECT_TYPE_TOGE	  ,
+  OBJECT_TYPE_TOGE    ,
   OBJECT_TYPE_TOGE_H1 ,
   OBJECT_TYPE_TOGE_V1 ,
   OBJECT_TYPE_TOGE_H2 ,
@@ -59,18 +59,12 @@ static struct SPos wpos_1[] = {
 
   { 800, 500, OBJECT_TYPE_HIT_V1, AG_CG_OBJ_LIFT },
 
-  { 1024,     541,              OBJECT_TYPE_BREAKABLE,  AG_CG_OBJ_BLOCK },
-  { 1024+128, GROUND_LINE - 32, OBJECT_TYPE_TOGE,       AG_CG_OBJ_TOGE },
+  { 1024,     GROUND_LINE-128,  OBJECT_TYPE_BREAKABLE,  AG_CG_OBJ_BLOCK },
+  { 1024+128, GROUND_LINE-32,   OBJECT_TYPE_TOGE,       AG_CG_OBJ_TOGE },
 
-  { 2000, GROUND_LINE-32*1, OBJECT_TYPE_HIT, AG_CG_OBJ_TAKE4 },
-  { 2000, GROUND_LINE-32*2, OBJECT_TYPE_HIT, AG_CG_OBJ_TAKE3 },
-  { 2000, GROUND_LINE-32*3, OBJECT_TYPE_HIT, AG_CG_OBJ_TAKE2 },
-  { 2000, GROUND_LINE-32*4, OBJECT_TYPE_HIT, AG_CG_OBJ_TAKE1 },
+  { 2000, GROUND_LINE-128, OBJECT_TYPE_HIT, AG_CG_OBJ_BLOCK_H },
 
-  { 3000, GROUND_LINE-32*1, OBJECT_TYPE_HIT, AG_CG_OBJ_TAKE4 },
-  { 3000, GROUND_LINE-32*2, OBJECT_TYPE_HIT, AG_CG_OBJ_TAKE3 },
-  { 3000, GROUND_LINE-32*3, OBJECT_TYPE_HIT, AG_CG_OBJ_TAKE2 },
-  { 3000, GROUND_LINE-32*4, OBJECT_TYPE_HIT, AG_CG_OBJ_TAKE1 },
+  { 3000, GROUND_LINE-128, OBJECT_TYPE_HIT, AG_CG_OBJ_BLOCK_H },
 
   { 3500+400*0, GROUND_LINE-100*1 , OBJECT_TYPE_HIT_H1, AG_CG_OBJ_LIFT },
   { 3500+400*1, GROUND_LINE-100*2 , OBJECT_TYPE_HIT_H2, AG_CG_OBJ_LIFT },
@@ -148,7 +142,7 @@ static struct SPos wpos_2[] = {
   { 5800-80  ,GROUND_LINE-128*5, OBJECT_TYPE_HIT,AG_CG_OBJ_TOGE4_L},
   { 5800-80  ,GROUND_LINE-128*6, OBJECT_TYPE_HIT,AG_CG_OBJ_TOGE4_L},
   { 5800-80  ,GROUND_LINE-128*7, OBJECT_TYPE_HIT,AG_CG_OBJ_TOGE4_L},
-  
+
 };
 
 static struct SPos ipos_2[] = {
@@ -300,7 +294,7 @@ static s32 CalcSenario1( struct TaskData* pTask , u32 Flag ) {
       ageSndMgrSetVolume( pTask->Data.senario.bgm_handle , 0xa0 );
       ageSndMgrSetPanMode( pTask->Data.senario.bgm_handle , 0 );
       ageSndMgrSetPan( pTask->Data.senario.bgm_handle , 0x8080 );
-      
+
       --g_Life;
       KillPlayer( g_pPlayerTask );
     };
@@ -463,10 +457,10 @@ void InitTaskSenario1( struct TaskData* pTask ) {
         break;
 
       case OBJECT_TYPE_BREAKABLE:
-		  is_breakable = TRUE;
+        is_breakable = TRUE;
         break;
 
-	  case OBJECT_TYPE_NOHIT:
+      case OBJECT_TYPE_NOHIT:
         is_hit = FALSE;
         break;
 
@@ -515,7 +509,7 @@ void InitTaskSenario1( struct TaskData* pTask ) {
         amplitude = 100;
         break;
 
-      case OBJECT_TYPE_TOGE_V1:	
+      case OBJECT_TYPE_TOGE_V1: 
         is_harmful = TRUE;
         motion = ObjectMotion_Vertical;
         phase = 0.0;
@@ -523,7 +517,7 @@ void InitTaskSenario1( struct TaskData* pTask ) {
         amplitude = 100;
         break;
 
-      case OBJECT_TYPE_TOGE_H2:	
+      case OBJECT_TYPE_TOGE_H2: 
         is_harmful = TRUE;
         motion = ObjectMotion_Horizon;
         phase = PI;
@@ -531,7 +525,7 @@ void InitTaskSenario1( struct TaskData* pTask ) {
         amplitude = 100;
         break;
 
-      case OBJECT_TYPE_TOGE_V2:	
+      case OBJECT_TYPE_TOGE_V2: 
         is_harmful = TRUE;
         motion = ObjectMotion_Vertical;
         phase = PI;
@@ -601,9 +595,9 @@ void InitTaskSenario1( struct TaskData* pTask ) {
       case ENEMY_TYPE_CANNON :
         InitTaskCannon( pETask , epos[i].x , epos[i].y  , epos[i].image , 0 );
         break;
-	  case ENEMY_TYPE_CROW :
-		  InitTaskCrow( pETask , epos[i].x , epos[i].y  , epos[i].image , 0 );
-		  break;
+      case ENEMY_TYPE_CROW :
+        InitTaskCrow( pETask , epos[i].x , epos[i].y  , epos[i].image , 0 );
+        break;
       default :
         break;
     };
