@@ -77,6 +77,14 @@ static s32 DrawObject( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
         (pTask->x - w/2 - g_OffsetX)<<2 , (pTask->y - g_OffsetY)<<2 ,
         (pTask->x + w/2 - g_OffsetX)<<2, (pTask->y - g_OffsetY + h)<<2 );
   };
+#if 0
+  agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 0 , 1 );
+  agDrawSETFCOLOR( pDBuf , 0xff000000);
+  agDrawSPRITE( pDBuf, 0, (pTask->x-4- g_OffsetX)<<2 , (pTask->y-4- g_OffsetY)<<2 ,(pTask->x+4- g_OffsetX)<<2 , (pTask->y+4- g_OffsetY)<<2 );
+
+  agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 2 , 1 );
+  agDrawSETFCOLOR( pDBuf , 0xffffffff);
+# endif
 }
 
 static s32 HitObject( struct TaskData* pTask , const struct RECT* pRect ) {

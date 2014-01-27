@@ -15,10 +15,10 @@ int IsHitRect( const struct RECT* pRect0 , const struct RECT* pRect1 ) {
 	if( pRect0->y0 < pRect1->y0 && pRect0->y1 < pRect1->y0 ) {
 		return( 0 );
 	};
-	if( pRect0->x0 >= pRect1->x1 && pRect0->x1 >= pRect1->x1 ) {
+	if( pRect0->x0 > pRect1->x1 && pRect0->x1 > pRect1->x1 ) {
 		return( 0 );
 	};
-	if( pRect0->y0 >= pRect1->y1 && pRect0->y1 >= pRect1->y1 ) {
+	if( pRect0->y0 > pRect1->y1 && pRect0->y1 > pRect1->y1 ) {
 		return( 0 );
 	};
 

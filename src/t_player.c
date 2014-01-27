@@ -29,6 +29,13 @@ void KillPlayer( struct TaskData* pTask ) {
 #define PLAYER_WALK_SPEED   (4)
 #define PLAYER_RUN_SPEED    (8)
 
+enum{
+	NONE_HIT = 0,
+	TOP_HIT,
+	BOTTOM_HIT,
+	LEFT_HIT,
+	RIGHT_HIT,
+};
 /******************************************************************/
 /*                                player                          */
 /******************************************************************/
@@ -53,7 +60,7 @@ static int MovePlayer( struct TaskData* pTask , int dx , int dy , int move_flag 
   struct TaskData* pWTask;
   int w = ageRM[ AG_CG_WORKSTAND ].Width;
   int h = ageRM[ AG_CG_WORKSTAND ].Height;
-  int isHit = 0;
+  int isHit = NONE_HIT;
   int x,y;
   struct RECT csize;
   struct RECT crect;
@@ -96,24 +103,36 @@ static int MovePlayer( struct TaskData* pTask , int dx , int dy , int move_flag 
         // 食い込まないように補正を 上→下→左→右 の順番に行う
         if ( y > pWTask->y ) {
           int tw = ageRM[ pWTask->Data.object.image ].Width;
-          int th = pWTask->y+ageRM[ pWTask->Data.object.image ].Height;
-          if ( (y - dy)  > th ) {
-            // 上
-            y = pWTask->y + th + (csize.y1 - csize.y0) + 1;
-            if ( pTask->Data.player.jump_power >= 0 ){
-              pTask->Data.player.jump_power = 0;
-            }
+          int th = ageRM[ pWTask->Data.object.image ].Height;
+		  if ( (y - dy)  > pWTask->y + th ){
+			  int xx = x + (pTask->y + th - y)*dx/dy;
+			  if(xx<pWTask->x - tw/2 - w/2 &&dx>0){ //左
+				  x = pWTask->x - tw/2 - w/2 - 1;
+				  isHit = LEFT_HIT;
+			  }
+			  else if(xx>pWTask->x + tw/2 + w/2 && dx<0){ //右
+				  x = pWTask->x + tw/2 + w/2 + 1;
+				  isHit = RIGHT_HIT;
+			  }
+			  else{ // 下
+				  y = pWTask->y + th + 1;
+				  isHit = BOTTOM_HIT;
+			  }
           }
           else if ( (x + w/2) < (pWTask->x + tw/2) ) {
             // 左
             x = pWTask->x - tw/2 + csize.x0 - 1;
-          } else {
+			isHit = LEFT_HIT;
+          } 
+		  else if ( (x - w/2) > (pWTask->x - tw/2) ){
             // 右
             x = pWTask->x + tw/2 + csize.x1;
+			isHit = RIGHT_HIT;
           }
-        } else {
-          // 下
+        }else {
+          // 上
           y = pWTask->y - csize.y1 + 1;
+		  isHit = TOP_HIT;
         }
 
         // 動く床の移動
@@ -121,14 +140,17 @@ static int MovePlayer( struct TaskData* pTask , int dx , int dy , int move_flag 
           case ObjectMotion_None:
             break;
           case ObjectMotion_Horizon:
-            x += (pWTask->x - pWTask->Data.object.pre_x);
-            break;
+			  if(isHit!=BOTTOM_HIT){
+				  x += (pWTask->x - pWTask->Data.object.pre_x);
+			  }
+			  break;
           case ObjectMotion_Vertical:
-            y += (pWTask->y - pWTask->Data.object.pre_y);
+			  if(isHit==TOP_HIT ||isHit==BOTTOM_HIT){
+				  y += (pWTask->y - pWTask->Data.object.pre_y);
+			  }
             break;
         }
 
-        isHit = 1;
         break;
       };
     };
@@ -140,7 +162,6 @@ static int MovePlayer( struct TaskData* pTask , int dx , int dy , int move_flag 
     g_PlayerX = x;
     g_PlayerY = y;
   };
-
   return( isHit );
 }
 
@@ -211,6 +232,7 @@ static s32 CalcPlayerSpeed() {
 
 static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
   struct TaskData* pWTask;
+	  int mx = 0,my = 0;	//移動量
 
   // 大五郎が生存かつゲームクリアでない
   if (pTask->Data.player.mode != PLAYER_MODE_GAMEOVER && !g_isGetKeyItem ) {
@@ -301,26 +323,29 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
   switch( pTask->Data.player.mode ) {
     //　地面にいる場合
     case PLAYER_MODE_WAIT :
-      MovePlayer( pTask, 0, 0, 1 );
-    case PLAYER_MODE_WALKSTART :
+		mx = 0; my = 0;
+	case PLAYER_MODE_WALKSTART :
     case PLAYER_MODE_WALK :
     case PLAYER_MODE_WALKEND :
       isRun = (PadLvl()&PAD_B) == PAD_B;
+	  /*
       if( g_PlayerY < PLAYER_GROUND_LINE && !MovePlayer( pTask , 0 , 10 , 0 )) {
         //　一番下でなく、足場が無くなった場合は下降モードへ。
         g_PlayerY += BBox[ PLAYER_MODE_WAIT ].y1 - BBox[ PLAYER_MODE_FALL ].y1;
 
         pTask->Data.player.mode = PLAYER_MODE_FALL;
         pTask->Data.player.count = 0;
+		
       }
-      else if( PadTrg()&PAD_A ) {   //　ボタンが押された場合はジャンプモードへ。
+	  */
+      if( PadTrg()&PAD_A ) {   //　ボタンが押された場合はジャンプモードへ。
         pTask->Data.player.mode = PLAYER_MODE_JUMPSTART;
         pTask->Data.player.count = 0;
         pTask->Data.player.jump_power = isRun ? 25 : 20;
         ageSndMgrPlayOneshot( AS_SND_JUMP , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
         ageSndMgrPlayOneshot( AS_SND_B06 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
       }
-      else if( PadTrg()&PAD_DOWN && g_Star >= 3){   //  パッド↓でリツイートモードへ
+      else if( PadTrg()&PAD_DOWN && g_Star >= 3&& !g_isGetKeyItem){   //  パッド↓でリツイートモードへ
 		  g_Star -= 3;
         ageSndMgrPlayOneshot( AS_SND_B05 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
         pTask->Data.player.mode = PLAYER_MODE_RETWEET;
@@ -338,13 +363,13 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
       else if( PadLvl()&PAD_RIGHT || PadLvl()&PAD_LEFT ) {
         if( PadLvl()&PAD_RIGHT ) {
           pTask->Data.player.direction = 0;
-          MovePlayer( pTask , CalcPlayerSpeed() , 0 , 1 );
+		  mx = CalcPlayerSpeed();
         }
         else {
           pTask->Data.player.direction = 1;
-          MovePlayer( pTask , -CalcPlayerSpeed() , 0 , 1 );
+		  mx = -CalcPlayerSpeed();
         };
-
+		my = 0;
         if( pTask->Data.player.mode == PLAYER_MODE_WAIT ) {   //　止まってたら走り始める
           pTask->Data.player.mode = PLAYER_MODE_WALKSTART;
           pTask->Data.player.count = 0;
@@ -399,12 +424,13 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
     case PLAYER_MODE_JUMPSTART :
       if( PadLvl()&PAD_RIGHT ) {
         pTask->Data.player.direction = 0;
-        MovePlayer( pTask , CalcPlayerSpeed() , 0 , 1 );
+		mx = CalcPlayerSpeed();
       };
       if( PadLvl()&PAD_LEFT ) {
         pTask->Data.player.direction = 1;
-        MovePlayer( pTask , -CalcPlayerSpeed() , 0 , 1 );
+		mx = -CalcPlayerSpeed();
       };
+	  my = 0;
 
       pTask->Data.player.count++;
 
@@ -418,15 +444,15 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
     case PLAYER_MODE_JUMP :
       if( PadLvl()&PAD_RIGHT ) {
         pTask->Data.player.direction = 0;
-        MovePlayer( pTask , CalcPlayerSpeed() , 0 , 1 );
+		mx = CalcPlayerSpeed();
       };
       if( PadLvl()&PAD_LEFT ) {
         pTask->Data.player.direction = 1;
-        MovePlayer( pTask , -CalcPlayerSpeed() , 0 , 1 );
+		mx = -CalcPlayerSpeed();
       };
 
       if( pTask->Data.player.jump_power > 0 ) {
-        MovePlayer( pTask , 0 , -pTask->Data.player.jump_power , 1 );
+		  my = -pTask->Data.player.jump_power;
         pTask->Data.player.jump_power -= 2;// 重力加速度的な何か
 
         if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode ] ].Frames - 1 ) {
@@ -436,6 +462,7 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
         }
       }
       else {// jump_power が 0 になったら落下モードへ。
+		  my = 0;
         pTask->Data.player.mode = PLAYER_MODE_FALL;
         pTask->Data.player.count = 0;
       };
@@ -446,49 +473,49 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
     case PLAYER_MODE_FALL :
       if( PadLvl()&PAD_RIGHT ) {
         pTask->Data.player.direction = 0;
-        MovePlayer( pTask , CalcPlayerSpeed() , 0 , 1 );
+		mx = CalcPlayerSpeed();
       };
       if( PadLvl()&PAD_LEFT ) {
         pTask->Data.player.direction = 1;
-        MovePlayer( pTask , -CalcPlayerSpeed() , 0 , 1 );
+		mx = -CalcPlayerSpeed();
       };
-
+	  my=15;
+	  /*
       if( MovePlayer( pTask , 0 , 15 , 1 ) ) {
         g_PlayerY -= BBox[ PLAYER_MODE_WAIT ].y1 - BBox[ PLAYER_MODE_FALL ].y1;
 
         pTask->Data.player.mode = PLAYER_MODE_JUMPEND;
         pTask->Data.player.count = 0;
       }
-
-      else if( g_PlayerY >= PLAYER_GROUND_LINE ) {
+	  
+      if( g_PlayerY >= PLAYER_GROUND_LINE ) {
         g_PlayerY = PLAYER_GROUND_LINE;
         pTask->Data.player.mode = PLAYER_MODE_JUMPEND;
         pTask->Data.player.count = 0;
       }
+	  */
 
-
-      else {
         pTask->Data.player.count++;
 
         if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode ] ].Frames ) {
           pTask->Data.player.count = 0;
         };
-      };
 
 
       break;
 
     case PLAYER_MODE_JUMPEND :
+
+      pTask->Data.player.count++;
       if( PadLvl()&PAD_RIGHT ) {
         pTask->Data.player.direction = 0;
-        MovePlayer( pTask , CalcPlayerSpeed() , 0 , 1 );
+		mx = CalcPlayerSpeed();
       };
       if( PadLvl()&PAD_LEFT ) {
         pTask->Data.player.direction = 1;
-        MovePlayer( pTask , -CalcPlayerSpeed() , 0 , 1 );
+		mx = -CalcPlayerSpeed();
       };
-
-      pTask->Data.player.count++;
+	  my = 0;
 
       if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode ] ].Frames ) {
         pTask->Data.player.count = 0;
@@ -554,10 +581,11 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
       break;
 
     case PLAYER_MODE_GAMEOVER :
-
+		/*
       if( !MovePlayer( pTask , 0 , 15 , 1 ) && g_PlayerY >= PLAYER_GROUND_LINE ) {
         g_PlayerY = PLAYER_GROUND_LINE;
       }
+	  */
 
       if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode ] ].Frames - 1 ) {
         // 最大フレームに達したらカウントを止める
@@ -578,16 +606,14 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
 
       pTask->Data.player.count++;
       if( PadLvl()&PAD_RIGHT ) {
-		  int dx = CalcPlayerSpeed()-pTask->Data.player.count/8;
-		  if(dx<0)dx=0;
-        MovePlayer( pTask , dx , 0 , 1 );
+		  mx = CalcPlayerSpeed()-pTask->Data.player.count/8;
+		  if(mx<0)mx=0;
       };
       if( PadLvl()&PAD_LEFT ) {
-		  int dx = CalcPlayerSpeed()-pTask->Data.player.count/8;
-		  if(dx<0)dx=0;
-        MovePlayer( pTask , -dx , 0 , 1 );
+		  mx = -CalcPlayerSpeed()+pTask->Data.player.count/8;
+		  if(mx>0)mx=0;
       };
-	  MovePlayer(pTask,0,0,1);
+	  my = 0;
       if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode ] ].Frames ) {
         pTask->Data.player.count = 0;
         pTask->Data.player.mode = PLAYER_MODE_WAIT;
@@ -597,6 +623,44 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
 
     default :
       break;
+  };
+  {
+	  int m = pTask->Data.player.mode;
+  switch( MovePlayer( pTask , mx , my , 1 ) ) {
+  case NONE_HIT:
+	  if( g_PlayerY < PLAYER_GROUND_LINE){
+		  switch(m){
+		  case PLAYER_MODE_WAIT :
+		  case PLAYER_MODE_WALKSTART :
+		  case PLAYER_MODE_WALK :
+		  case PLAYER_MODE_WALKEND :
+			  pTask->Data.player.mode = PLAYER_MODE_FALL;
+			  pTask->Data.player.count = 0;
+			  break;
+		  }
+	  }
+	  else{
+		  g_PlayerY = PLAYER_GROUND_LINE;
+		  if(m==PLAYER_MODE_FALL){
+			  pTask->Data.player.mode = PLAYER_MODE_JUMPEND;
+			  pTask->Data.player.count = 0;
+		  }
+	  };
+	  break;
+  case TOP_HIT:
+	  if(m==PLAYER_MODE_FALL){
+		  pTask->Data.player.mode = PLAYER_MODE_JUMPEND;
+		  pTask->Data.player.count = 0;
+	  };
+	  break;
+  case BOTTOM_HIT:
+	  pTask->Data.player.jump_power = 0;
+	  if(g_PlayerY > PLAYER_GROUND_LINE){
+		  MovePlayer( pTask , -1 , 0 , 1 );
+		  g_PlayerY = PLAYER_GROUND_LINE;
+	  }
+	  break;
+  };
   };
 
   //　画面オフセット補正
@@ -633,8 +697,6 @@ static s32 DrawPlayer( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
   int x, y;
   int isRun2 = isRun;
 
-  agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 2 , 1 );
-
   pat = pTask->Data.player.count >> 1;
 
   if( pTask->Data.player.direction == 0 ) {
@@ -649,6 +711,8 @@ static s32 DrawPlayer( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
   }
   ageTransferAAC_RM3( pDBuf, MotionMap[ pTask->Data.player.mode + isRun2*8 ] , 0, &w, &h , pat );
 
+  agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 2 , 1 );
+
   x = g_PlayerX - g_OffsetX;
   y = g_PlayerY - g_OffsetY;
   if( flip == 0 ) {
@@ -657,6 +721,21 @@ static s32 DrawPlayer( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
   else {
     agDrawSPRITE_UV( pDBuf, (x-w/2)<<2 , (y-h/2)<<2 , 0x1000 , 0 , (x+w/2)<<2, (y+h/2)<<2 , 0 , 0x1000 );
   };
+
+#if 0
+  agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 0 , 1 );
+  agDrawSETFCOLOR( pDBuf , ARGB( 0x80 , 0xff , 0xff , 0xff ) );
+  agDrawSPRITE( pDBuf, 0, (x-w/2)<<2 , (y-h/2)<<2 , (x+w/2)<<2, (y+h/2)<<2 );
+
+  agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 0 , 1 );
+  agDrawSETFCOLOR( pDBuf , 0xff000000);
+  agDrawSPRITE( pDBuf, 0, (x-4)<<2 , (y-4)<<2 ,(x+4)<<2 , (y+4)<<2 );
+
+  agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 2 , 1 );
+  agDrawSETFCOLOR( pDBuf , 0xffffffff);
+
+#endif
+
 
   return( 0 );
 }
