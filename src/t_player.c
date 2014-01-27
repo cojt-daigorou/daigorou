@@ -230,7 +230,7 @@ static s32 CalcPlayerSpeed() {
 
 static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
   struct TaskData* pWTask;
-    int mx = 0,my = 0;  //移動量
+  int mx = 0,my = 0;  //移動量
 
   // 大五郎が生存かつゲームクリアでない
   if (pTask->Data.player.mode != PLAYER_MODE_GAMEOVER && !g_isGetKeyItem ) {
@@ -321,21 +321,21 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
   switch( pTask->Data.player.mode ) {
     //　地面にいる場合
     case PLAYER_MODE_WAIT :
-    mx = 0; my = 0;
-  case PLAYER_MODE_WALKSTART :
+      mx = 0; my = 0;
+    case PLAYER_MODE_WALKSTART :
     case PLAYER_MODE_WALK :
     case PLAYER_MODE_WALKEND :
       isRun = (PadLvl()&PAD_B) == PAD_B;
-    /*
-      if( g_PlayerY < PLAYER_GROUND_LINE && !MovePlayer( pTask , 0 , 10 , 0 )) {
-        //　一番下でなく、足場が無くなった場合は下降モードへ。
-        g_PlayerY += BBox[ PLAYER_MODE_WAIT ].y1 - BBox[ PLAYER_MODE_FALL ].y1;
+      /*
+         if( g_PlayerY < PLAYER_GROUND_LINE && !MovePlayer( pTask , 0 , 10 , 0 )) {
+      //　一番下でなく、足場が無くなった場合は下降モードへ。
+      g_PlayerY += BBox[ PLAYER_MODE_WAIT ].y1 - BBox[ PLAYER_MODE_FALL ].y1;
 
-        pTask->Data.player.mode = PLAYER_MODE_FALL;
-        pTask->Data.player.count = 0;
-    
+      pTask->Data.player.mode = PLAYER_MODE_FALL;
+      pTask->Data.player.count = 0;
+
       }
-    */
+      */
       if( PadTrg()&PAD_A ) {   //　ボタンが押された場合はジャンプモードへ。
         pTask->Data.player.mode = PLAYER_MODE_JUMPSTART;
         pTask->Data.player.count = 0;
@@ -344,7 +344,7 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
         ageSndMgrPlayOneshot( AS_SND_B06 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
       }
       else if( PadTrg()&PAD_DOWN && g_Star >= 3&& !g_isGetKeyItem){   //  パッド↓でリツイートモードへ
-      g_Star -= 3;
+        g_Star -= 3;
         ageSndMgrPlayOneshot( AS_SND_B05 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
         pTask->Data.player.mode = PLAYER_MODE_RETWEET;
         pTask->Data.player.count = 0;
@@ -361,13 +361,13 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
       else if( PadLvl()&PAD_RIGHT || PadLvl()&PAD_LEFT ) {
         if( PadLvl()&PAD_RIGHT ) {
           pTask->Data.player.direction = 0;
-      mx = CalcPlayerSpeed();
+          mx = CalcPlayerSpeed();
         }
         else {
           pTask->Data.player.direction = 1;
-      mx = -CalcPlayerSpeed();
+          mx = -CalcPlayerSpeed();
         };
-    my = 0;
+        my = 0;
         if( pTask->Data.player.mode == PLAYER_MODE_WAIT ) {   //　止まってたら走り始める
           pTask->Data.player.mode = PLAYER_MODE_WALKSTART;
           pTask->Data.player.count = 0;
@@ -422,13 +422,13 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
     case PLAYER_MODE_JUMPSTART :
       if( PadLvl()&PAD_RIGHT ) {
         pTask->Data.player.direction = 0;
-    mx = CalcPlayerSpeed();
+        mx = CalcPlayerSpeed();
       };
       if( PadLvl()&PAD_LEFT ) {
         pTask->Data.player.direction = 1;
-    mx = -CalcPlayerSpeed();
+        mx = -CalcPlayerSpeed();
       };
-    my = 0;
+      my = 0;
 
       pTask->Data.player.count++;
 
@@ -442,15 +442,15 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
     case PLAYER_MODE_JUMP :
       if( PadLvl()&PAD_RIGHT ) {
         pTask->Data.player.direction = 0;
-    mx = CalcPlayerSpeed();
+        mx = CalcPlayerSpeed();
       };
       if( PadLvl()&PAD_LEFT ) {
         pTask->Data.player.direction = 1;
-    mx = -CalcPlayerSpeed();
+        mx = -CalcPlayerSpeed();
       };
 
       if( pTask->Data.player.jump_power > 0 ) {
-      my = -pTask->Data.player.jump_power;
+        my = -pTask->Data.player.jump_power;
         pTask->Data.player.jump_power -= 2;// 重力加速度的な何か
 
         if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode ] ].Frames - 1 ) {
@@ -460,7 +460,7 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
         }
       }
       else {// jump_power が 0 になったら落下モードへ。
-      my = 0;
+        my = 0;
         pTask->Data.player.mode = PLAYER_MODE_FALL;
         pTask->Data.player.count = 0;
       };
@@ -471,33 +471,33 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
     case PLAYER_MODE_FALL :
       if( PadLvl()&PAD_RIGHT ) {
         pTask->Data.player.direction = 0;
-    mx = CalcPlayerSpeed();
+        mx = CalcPlayerSpeed();
       };
       if( PadLvl()&PAD_LEFT ) {
         pTask->Data.player.direction = 1;
-    mx = -CalcPlayerSpeed();
+        mx = -CalcPlayerSpeed();
       };
-    my=15;
-    /*
-      if( MovePlayer( pTask , 0 , 15 , 1 ) ) {
-        g_PlayerY -= BBox[ PLAYER_MODE_WAIT ].y1 - BBox[ PLAYER_MODE_FALL ].y1;
+      my=15;
+      /*
+         if( MovePlayer( pTask , 0 , 15 , 1 ) ) {
+         g_PlayerY -= BBox[ PLAYER_MODE_WAIT ].y1 - BBox[ PLAYER_MODE_FALL ].y1;
 
-        pTask->Data.player.mode = PLAYER_MODE_JUMPEND;
+         pTask->Data.player.mode = PLAYER_MODE_JUMPEND;
+         pTask->Data.player.count = 0;
+         }
+
+         if( g_PlayerY >= PLAYER_GROUND_LINE ) {
+         g_PlayerY = PLAYER_GROUND_LINE;
+         pTask->Data.player.mode = PLAYER_MODE_JUMPEND;
+         pTask->Data.player.count = 0;
+         }
+         */
+
+      pTask->Data.player.count++;
+
+      if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode ] ].Frames ) {
         pTask->Data.player.count = 0;
-      }
-    
-      if( g_PlayerY >= PLAYER_GROUND_LINE ) {
-        g_PlayerY = PLAYER_GROUND_LINE;
-        pTask->Data.player.mode = PLAYER_MODE_JUMPEND;
-        pTask->Data.player.count = 0;
-      }
-    */
-
-        pTask->Data.player.count++;
-
-        if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode ] ].Frames ) {
-          pTask->Data.player.count = 0;
-        };
+      };
 
 
       break;
@@ -507,20 +507,20 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
       pTask->Data.player.count++;
       if( PadLvl()&PAD_RIGHT ) {
         pTask->Data.player.direction = 0;
-    mx = CalcPlayerSpeed();
+        mx = CalcPlayerSpeed();
       };
       if( PadLvl()&PAD_LEFT ) {
         pTask->Data.player.direction = 1;
-    mx = -CalcPlayerSpeed();
+        mx = -CalcPlayerSpeed();
       };
-    my = 0;
+      my = 0;
 
       if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode ] ].Frames ) {
         pTask->Data.player.count = 0;
         pTask->Data.player.mode = PLAYER_MODE_WAIT;
         ageSndMgrPlayOneshot( AS_SND_LANDING , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
       };
-    if( PadTrg()&PAD_A ) {   //　ボタンが押された場合はジャンプモードへ。（着キャン）
+      if( PadTrg()&PAD_A ) {   //　ボタンが押された場合はジャンプモードへ。（着キャン）
         pTask->Data.player.mode = PLAYER_MODE_JUMPSTART;
         pTask->Data.player.count = 0;
         pTask->Data.player.jump_power = isRun ? 25 : 20;
@@ -579,12 +579,12 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
       break;
 
     case PLAYER_MODE_GAMEOVER :
-    /*
-      if( !MovePlayer( pTask , 0 , 15 , 1 ) && g_PlayerY >= PLAYER_GROUND_LINE ) {
-        g_PlayerY = PLAYER_GROUND_LINE;
-      }
-    */
-    my = 15;
+      /*
+         if( !MovePlayer( pTask , 0 , 15 , 1 ) && g_PlayerY >= PLAYER_GROUND_LINE ) {
+         g_PlayerY = PLAYER_GROUND_LINE;
+         }
+         */
+      my = 15;
       if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode ] ].Frames - 1 ) {
         // 最大フレームに達したらカウントを止める
         if ( !g_isGameOver ) {
@@ -604,14 +604,14 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
 
       pTask->Data.player.count++;
       if( PadLvl()&PAD_RIGHT ) {
-      mx = CalcPlayerSpeed()-pTask->Data.player.count/8;
-      if(mx<0)mx=0;
+        mx = CalcPlayerSpeed()-pTask->Data.player.count/8;
+        if(mx<0)mx=0;
       };
       if( PadLvl()&PAD_LEFT ) {
-      mx = -CalcPlayerSpeed()+pTask->Data.player.count/8;
-      if(mx>0)mx=0;
+        mx = -CalcPlayerSpeed()+pTask->Data.player.count/8;
+        if(mx>0)mx=0;
       };
-    my = 0;
+      my = 0;
       if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode ] ].Frames ) {
         pTask->Data.player.count = 0;
         pTask->Data.player.mode = PLAYER_MODE_WAIT;
