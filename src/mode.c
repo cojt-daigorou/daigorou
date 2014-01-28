@@ -32,8 +32,8 @@ void GotoMode( enum GameMode mode ) {
       g_Time = 100;
       g_Life = 30;
       g_Star = 30;
-      g_Stage = 0;
-      //g_Stage = 2;
+      //g_Stage = 0;
+      g_Stage = 2;
 
       pTask = AllocTask();
       InitTaskBg( pTask , AG_CG_BG_0_0 , 0 );
