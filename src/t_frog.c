@@ -21,6 +21,10 @@ static s32 CalcFrog( struct TaskData* pTask , u32 Flag ) {
       if( pTask->Data.frog.count > 60 ) {
         pTask->Data.frog.count = 0;
         pTask->Data.frog.mode = 1;		//@ƒWƒƒƒ“ƒvó‘Ô
+        if((pTask->x-g_PlayerX)*(pTask->x-g_PlayerX)<512*512){
+          ageSndMgrPlayOneshot( AS_SND_FROG , 0 , 0xff , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
+        };
+
       };
       break;
 
