@@ -31,10 +31,10 @@ void KillPlayer( struct TaskData* pTask ) {
 
 enum{
   NONE_HIT = 0,
-  TOP_HIT,
-  BOTTOM_HIT,
-  LEFT_HIT,
-  RIGHT_HIT,
+  TOP_HIT = 0x1,
+  BOTTOM_HIT = 0x2,
+  LEFT_HIT = 0x4,
+  RIGHT_HIT = 0x8,
 };
 /******************************************************************/
 /*                                player                          */
@@ -58,7 +58,13 @@ struct RECT BBox[] = {
 
 static int MovePlayer( struct TaskData* pTask , int dx , int dy , int move_flag ) {
   struct TaskData* pWTask;
-  int isHit = NONE_HIT;
+  struct TaskData* pTTask=NULL; //ã‚©‚ç“–‚½‚Á‚Ä‚¢‚éobject
+  struct TaskData* pBTask=NULL; //‰º‚©‚ç“–‚½‚Á‚Ä‚¢‚éobject
+  struct TaskData* pLTask=NULL; //¶‚©‚ç“–‚½‚Á‚Ä‚¢‚éobject
+  struct TaskData* pRTask=NULL; //‰E‚©‚ç“–‚½‚Á‚Ä‚¢‚éobject
+
+
+  u8 isHit = NONE_HIT;
   int x,y;
   struct RECT csize;
   struct RECT crect;
@@ -77,6 +83,7 @@ static int MovePlayer( struct TaskData* pTask , int dx , int dy , int move_flag 
   g_pPlayerRect = &crect;
 
   while( pWTask != NULL ) {
+    u8 thisHit = NONE_HIT;
 #if 0
     struct RECT wrect;
 
@@ -93,7 +100,6 @@ static int MovePlayer( struct TaskData* pTask , int dx , int dy , int move_flag 
 
     if( pWTask->Hit != NULL ) {
       if( pWTask->Hit( pWTask , &crect ) ) {
-
         if ( pWTask->Data.object.is_harmful ) {
           KillPlayer( pTask );
         }
@@ -105,57 +111,96 @@ static int MovePlayer( struct TaskData* pTask , int dx , int dy , int move_flag 
           if ( (y - dy)  > pWTask->y + th ){
             int xx = x + (pTask->y + th - y)*dx/dy;
             if(xx<pWTask->x - tw/2 + csize.x0 &&dx>0){ //¶
-              x = pWTask->x - tw/2 + csize.x0 - 1;
-              isHit = LEFT_HIT;
+              pLTask = pWTask;
+              thisHit = LEFT_HIT;
             }
             else if(xx>pWTask->x + tw/2 + csize.x1 && dx<0){ //‰E
-              x = pWTask->x + tw/2 + csize.x1 + 1;
-              isHit = RIGHT_HIT;
+              pRTask = pWTask;
+              thisHit = RIGHT_HIT;
             }
             else{ // ‰º
-              y = pWTask->y + th -csize.y0 + 1;
-              isHit = BOTTOM_HIT;
-            }
+              pBTask = pWTask;
+              thisHit = BOTTOM_HIT;
+            };
           }
-          else if ( (x + csize.x1) < (pWTask->x + tw/2) ) {
+          else if ( (x-dx + csize.x1) < (pWTask->x - tw/2) && (x + csize.x1) > (pWTask->x - tw/2)) {
             // ¶
-            x = pWTask->x - tw/2 + csize.x0 - 1;
-            isHit = LEFT_HIT;
+            pLTask = pWTask;
+            thisHit = LEFT_HIT;
           } 
-          else if ( (x + csize.x0) > (pWTask->x - tw/2) ){
+          else if ( (x-dx + csize.x0) > (pWTask->x + tw/2) && (x + csize.x0) < (pWTask->x + tw/2)){
             // ‰E
-            x = pWTask->x + tw/2 + csize.x1;
-            isHit = RIGHT_HIT;
+            pRTask = pWTask;
+            //x = pWTask->x + tw/2 + csize.x1 + 1;
+            thisHit = RIGHT_HIT;
           }
         }else {
           // ã
-          y = pWTask->y - csize.y1 + 1;
-          isHit = TOP_HIT;
+          pTTask = pWTask;
+          //y = pWTask->y - csize.y1 + 1;
+          thisHit = TOP_HIT;
         }
-
-        // “®‚­°‚ÌˆÚ“®
+        isHit = isHit | thisHit;
+      };
+    };  
+    pWTask = pWTask->Next;
+  };
+  switch(pTask->Data.player.mode){
+  case PLAYER_MODE_JUMP:
+  case PLAYER_MODE_JUMPSTART:
+  case PLAYER_MODE_FALL:
+    if(isHit&LEFT_HIT){
+      x = pLTask->x - ageRM[ pLTask->Data.object.image ].Width/2 + csize.x0 - 1;
+      isHit = LEFT_HIT;
+    }else if(isHit&RIGHT_HIT){
+      x = pRTask->x + ageRM[ pRTask->Data.object.image ].Width/2 + csize.x1 + 1;
+      isHit = RIGHT_HIT;
+    }else if(isHit==(TOP_HIT|BOTTOM_HIT)){
+      if(x-dx<=pBTask->x){x = pBTask->x - ageRM[ pBTask->Data.object.image ].Width/2 + csize.x0 - 1;isHit = LEFT_HIT;}
+      else{x = pBTask->x + ageRM[ pBTask->Data.object.image ].Width/2 + csize.x1 + 1;isHit = RIGHT_HIT;}
+    }else if(isHit&TOP_HIT){
+      y = pTTask->y - csize.y1 + 1;
+      isHit = TOP_HIT;
+    }else if(isHit&BOTTOM_HIT){
+      y = pBTask->y +  ageRM[ pBTask->Data.object.image ].Height -csize.y0 - 1;
+      isHit = BOTTOM_HIT;
+    };
+    break;
+  default:
+    if(isHit&LEFT_HIT){
+      x = pLTask->x - ageRM[ pLTask->Data.object.image ].Width/2 + csize.x0 - 1;
+    }else if(isHit&RIGHT_HIT){
+      x = pRTask->x + ageRM[ pRTask->Data.object.image ].Width/2 + csize.x1 + 1;
+    };
+    if(isHit&TOP_HIT){
+      y = pTTask->y*2 - csize.y1 + 1 - pTTask->Data.object.pre_y;
+      if(pTTask->Data.object.motion==ObjectMotion_Horizon){
+        int objM = pTTask->x - pTTask->Data.object.pre_x;
+        if((objM>0&&!(isHit&RIGHT_HIT))||(objM<0&&!(isHit&LEFT_HIT))){
+          x += objM;
+        }
+      };
+      isHit = TOP_HIT;
+    } else if(isHit&BOTTOM_HIT){
+      y = pBTask->y +  ageRM[ pBTask->Data.object.image ].Height -csize.y0 + 1;
+      isHit = BOTTOM_HIT;
+    }
+  }
+          /*/ “®‚­°‚ÌˆÚ“®
         switch (pWTask->Data.object.motion) {
           case ObjectMotion_None:
             break;
           case ObjectMotion_Horizon:
-            if(isHit!=BOTTOM_HIT){
+            if(thisHit!=BOTTOM_HIT){
               x += (pWTask->x - pWTask->Data.object.pre_x);
             }
             break;
           case ObjectMotion_Vertical:
-            if(isHit==TOP_HIT ||isHit==BOTTOM_HIT){
+            if(thisHit==TOP_HIT ||thisHit==BOTTOM_HIT){
               y += (pWTask->y - pWTask->Data.object.pre_y);
             }
             break;
-        }
-
-        break;
-      };
-    };
-
-    pWTask = pWTask->Next;
-  };
-
+        }*/
   if( move_flag) {
     g_PlayerX = x;
     g_PlayerY = y;
@@ -654,10 +699,30 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
       case BOTTOM_HIT:
         pTask->Data.player.jump_power = 0;
         if(g_PlayerY > PLAYER_GROUND_LINE){
-          MovePlayer( pTask , -1 , 0 , 1 );
+          g_PlayerX -= mx;
           g_PlayerY = PLAYER_GROUND_LINE;
         }
         break;
+      case LEFT_HIT:
+        if(g_PlayerY>PLAYER_GROUND_LINE){
+          g_PlayerY = PLAYER_GROUND_LINE;
+          g_PlayerX -=1;
+          if(m==PLAYER_MODE_FALL){
+            pTask->Data.player.mode = PLAYER_MODE_JUMPEND;
+            pTask->Data.player.count = 0;
+          }
+        }
+        break;
+      case RIGHT_HIT:
+        if(g_PlayerY>PLAYER_GROUND_LINE){
+          g_PlayerY = PLAYER_GROUND_LINE;
+          g_PlayerX +=1;
+          if(m==PLAYER_MODE_FALL){
+            pTask->Data.player.mode = PLAYER_MODE_JUMPEND;
+            pTask->Data.player.count = 0;
+          }
+        }
+                    
     };
   };
 
