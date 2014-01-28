@@ -221,9 +221,9 @@ extern "C" {
 /***************************************************************/
 /*                       Sound Member Symbol                   */
 /***************************************************************/
-#define AS_SND_BGM_1	(0)
-#define AS_SND_TITLE_1	(1)
-#define AS_SND_BGM_FAST	(2)
+#define AS_SND_BGM_2_441	(0)
+#define AS_SND_BGM_2_441_HU	(1)
+#define AS_SND_TITLE_1	(2)
 #define AS_SND_GAMEOVER	(3)
 #define AS_SND_GAMECLEAR	(4)
 #define AS_SND_JUMP	(5)

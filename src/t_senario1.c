@@ -135,13 +135,13 @@ static struct SPos wpos_2[] = {
   { 5800 , GROUND_LINE-128*5 , OBJECT_TYPE_HIT ,   AG_CG_OBJ_BLOCK_H },
   { 5800 , GROUND_LINE-128*6 , OBJECT_TYPE_HIT ,   AG_CG_OBJ_BLOCK_H },
   { 5800 , GROUND_LINE-128*7 , OBJECT_TYPE_HIT ,   AG_CG_OBJ_BLOCK_H },
-  { 5800-80  ,GROUND_LINE-128*1, OBJECT_TYPE_HIT,AG_CG_OBJ_TOGE4_L},
-  { 5800-80  ,GROUND_LINE-128*2, OBJECT_TYPE_HIT,AG_CG_OBJ_TOGE4_L},
-  { 5800-80  ,GROUND_LINE-128*3, OBJECT_TYPE_HIT,AG_CG_OBJ_TOGE4_L},
-  { 5800-80  ,GROUND_LINE-128*4, OBJECT_TYPE_HIT,AG_CG_OBJ_TOGE4_L},
-  { 5800-80  ,GROUND_LINE-128*5, OBJECT_TYPE_HIT,AG_CG_OBJ_TOGE4_L},
-  { 5800-80  ,GROUND_LINE-128*6, OBJECT_TYPE_HIT,AG_CG_OBJ_TOGE4_L},
-  { 5800-80  ,GROUND_LINE-128*7, OBJECT_TYPE_HIT,AG_CG_OBJ_TOGE4_L},
+  { 5800-80  ,GROUND_LINE-128*1, OBJECT_TYPE_TOGE , AG_CG_OBJ_TOGE4_L},
+  { 5800-80  ,GROUND_LINE-128*2, OBJECT_TYPE_TOGE , AG_CG_OBJ_TOGE4_L},
+  { 5800-80  ,GROUND_LINE-128*3, OBJECT_TYPE_TOGE , AG_CG_OBJ_TOGE4_L},
+  { 5800-80  ,GROUND_LINE-128*4, OBJECT_TYPE_TOGE , AG_CG_OBJ_TOGE4_L},
+  { 5800-80  ,GROUND_LINE-128*5, OBJECT_TYPE_TOGE , AG_CG_OBJ_TOGE4_L},
+  { 5800-80  ,GROUND_LINE-128*6, OBJECT_TYPE_TOGE , AG_CG_OBJ_TOGE4_L},
+  { 5800-80  ,GROUND_LINE-128*7, OBJECT_TYPE_TOGE , AG_CG_OBJ_TOGE4_L},
 
 };
 
@@ -268,7 +268,7 @@ static s32 CalcSenario1( struct TaskData* pTask , u32 Flag ) {
       ageSndMgrRelease( pTask->Data.senario.bgm_handle );
 
       // TODO: AS_SND_BGM_FAST ‚ğ·‚µ‘Ö‚¦‚é‚©”p~‚·‚é‚©‚·‚éB
-      pTask->Data.senario.bgm_handle = ageSndMgrAlloc( AS_SND_BGM_FAST , 0 , 1 , AGE_SNDMGR_PANMODE_LR12 , 0 );
+      pTask->Data.senario.bgm_handle = ageSndMgrAlloc( AS_SND_BGM_2_441_HU , 0 , 1 , AGE_SNDMGR_PANMODE_LR12 , 0 );
 
       ageSndMgrPlay( pTask->Data.senario.bgm_handle );
       ageSndMgrSetVolume( pTask->Data.senario.bgm_handle , 0xa0 );
@@ -605,7 +605,7 @@ void InitTaskSenario1( struct TaskData* pTask ) {
     AddlLink( pETask , DISP_LEVEL_ENEMY );
   };
 
-  pTask->Data.senario.bgm_handle = ageSndMgrAlloc( AS_SND_BGM_1 , 0 , 1 , AGE_SNDMGR_PANMODE_LR12 , 0 );
+  pTask->Data.senario.bgm_handle = ageSndMgrAlloc( AS_SND_BGM_2_441 , 0 , 1 , AGE_SNDMGR_PANMODE_LR12 , 0 );
 
   ageSndMgrPlay( pTask->Data.senario.bgm_handle );
   ageSndMgrSetVolume( pTask->Data.senario.bgm_handle , 0xa0 );

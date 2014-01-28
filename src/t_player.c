@@ -240,7 +240,6 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
       int x , y, dx;
 
       g_Star -= 1;
-
       x = g_PlayerX;
       y = g_PlayerY + BBox[ pTask->Data.player.mode ].y1;
 
@@ -266,6 +265,7 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
 
     // ‹­UŒ‚(Star Machine Gun) ”­“®ŠJŽn
     if( g_Star >= 10 && ( PadTrg()&PAD_Y ) && !pTask->Data.player.starMachineGun_count ) {
+      g_Time = 35;
       g_Star -= 10;
       pTask->Data.player.starMachineGun_count = 300;
       ageSndMgrPlayOneshot( AS_SND_B04 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );

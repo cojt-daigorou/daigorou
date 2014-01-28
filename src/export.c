@@ -328,9 +328,9 @@ const AGEMotion ageMot[] = {
 /***************************************************************/
 const AGESoundRomMember ageSRM[] = {
 	/* Ch, Length */
-	{ 2,   104960 },		/* AS_SND_BGM_1 */
+	{ 2,    13714 },		/* AS_SND_BGM_2_441 */
+	{ 2,    11532 },		/* AS_SND_BGM_2_441_HU */
 	{ 2,    54778 },		/* AS_SND_TITLE_1 */
-	{ 2,     7616 },		/* AS_SND_BGM_FAST */
 	{ 2,     8363 },		/* AS_SND_GAMEOVER */
 	{ 2,     8767 },		/* AS_SND_GAMECLEAR */
 	{ 1,      555 },		/* AS_SND_JUMP */
