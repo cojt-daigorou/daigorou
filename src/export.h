@@ -239,23 +239,24 @@ extern "C" {
 #define AS_SND_WALK_RIGHT	(15)
 #define AS_SND_WALK_LEFT	(16)
 #define AS_SND_DECIDE008	(17)
-#define AS_SND_CROW	(18)
-#define AS_SND_FROG	(19)
-#define AS_SND_A01	(20)
-#define AS_SND_A02	(21)
-#define AS_SND_A03	(22)
-#define AS_SND_A04	(23)
-#define AS_SND_B01	(24)
-#define AS_SND_B02	(25)
-#define AS_SND_B03	(26)
-#define AS_SND_B04	(27)
-#define AS_SND_B05	(28)
-#define AS_SND_B06	(29)
-#define AS_SND_B07	(30)
-#define AS_SND_B08	(31)
-#define AS_SND_B09	(32)
-#define AS_SND_B10	(33)
-#define AS_SND_B11	(34)
+#define AS_SND_CANNON	(18)
+#define AS_SND_CROW	(19)
+#define AS_SND_FROG	(20)
+#define AS_SND_A01	(21)
+#define AS_SND_A02	(22)
+#define AS_SND_A03	(23)
+#define AS_SND_A04	(24)
+#define AS_SND_B01	(25)
+#define AS_SND_B02	(26)
+#define AS_SND_B03	(27)
+#define AS_SND_B04	(28)
+#define AS_SND_B05	(29)
+#define AS_SND_B06	(30)
+#define AS_SND_B07	(31)
+#define AS_SND_B08	(32)
+#define AS_SND_B09	(33)
+#define AS_SND_B10	(34)
+#define AS_SND_B11	(35)
 
 /***************************************************************/
 /*                          Data Member                        */
@@ -265,7 +266,7 @@ extern const AGERM3Member ageRM3[19];
 extern const u32 ageReserve[1];
 extern const u32 ageUser[1];
 extern const s16 ageVGCnt;
-extern const AGESoundRomMember ageSRM[35];
+extern const AGESoundRomMember ageSRM[36];
 
 #ifdef __cplusplus
 }
