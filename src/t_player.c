@@ -305,8 +305,8 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
     };
 
     // ‹­UŒ‚(Star Machine Gun) ”­“®ŠJŽn
-    if( g_Star >= 10 && ( PadTrg()&PAD_Y ) && !pTask->Data.player.starMachineGun_count ) {
-      g_Star -= 10;
+    if( g_Star >= 5 && ( PadTrg()&PAD_Y ) && !pTask->Data.player.starMachineGun_count ) {
+      g_Star -= 5;
       pTask->Data.player.starMachineGun_count = 300;
       ageSndMgrPlayOneshot( AS_SND_B04 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
     };

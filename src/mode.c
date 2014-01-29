@@ -32,7 +32,7 @@ void GotoMode( enum GameMode mode ) {
       g_ScoreInitial = 0;
       g_Time = 100;
       g_Life = 30;
-      g_Star = 30;
+      g_Star = 20;
       g_Stage = 0;
       //g_Stage = 2;
 
@@ -76,7 +76,7 @@ void GotoMode( enum GameMode mode ) {
           break;
 
         case 1:
-          g_Time = 300;
+          g_Time = 200;
           break;
 
         case 2:
@@ -88,8 +88,8 @@ void GotoMode( enum GameMode mode ) {
       }
 
       // “ïˆÕ“x‚ğ’á‚­‚·‚é‚½‚ß‚ÉA¯‚ª­‚È‚¢ó‘Ô‚È‚ç‰ñ•œ‚³‚¹‚éB
-      if ( g_Star < 30 ) {
-        g_Star = 30;
+      if ( g_Star < 20 ) {
+        g_Star = 20;
       }
 
       pTask = AllocTask();
