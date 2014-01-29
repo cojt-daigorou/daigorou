@@ -36,7 +36,9 @@ void  main( void ) {
 		ageSndMgrSetChannelVolume( i , 0xc0 );
 	};
 
+#ifdef BEBUG
 	InitWorkMeter( FB_WIDTH , FB_HEIGHT , 1 );
+#endif
 
 	PadInit();
 	ClearAllTask();
@@ -51,7 +53,9 @@ void  main( void ) {
 
 		CalcTask( 0 );
 
+#ifdef BEBUG
 		ClearWorkMeter();
+#endif
 
 		// ディスプレイリストの作成
 		agDrawBufferInit( &DBuf , DrawBuffer );
@@ -66,12 +70,16 @@ void  main( void ) {
 		// ディスプレイリスト生成終了
 		agDrawEODL( &DBuf );
 
+#ifdef BEBUG
 		SetWorkMeter( ARGB( 255 , 255 , 0 , 0 ) );
+#endif
 
 		// ディスプレイリストを転送して描画終了を待つ
 		agTransferDrawDMA( &DBuf );
 
+#ifdef BEBUG
 		SetWorkMeter( ARGB( 255 , 0 , 255 , 0 ) );
+#endif
 
 					//　ワークメーター描画
 		agDrawBufferInit( &DBuf , DrawBuffer );
@@ -79,7 +87,9 @@ void  main( void ) {
 		agDrawSETDAVR( &DBuf , 0 , 0 , aglGetDrawFrame() , 0 , 0 );
 		agDrawSETDAVF( &DBuf , 0 , 0 , FB_WIDTH<<2 , FB_HEIGHT<<2 );
 
+#ifdef BEBUG
 		DrawWorkMeter( &DBuf );
+#endif
 		agDrawEODL( &DBuf );
 
 		agTransferDrawDMA( &DBuf );
