@@ -11,6 +11,9 @@
 
 void AddScore( u32 n ) {
   g_Score += n;
+  if (g_Score > 9999) {
+    g_Score = 9999;
+  }
 }
 
 void KillPlayer( struct TaskData* pTask ) {
@@ -228,8 +231,16 @@ static int GetItem( struct TaskData* pTask ) {
       }
 
       AddScore( pITask->Data.item.score );
+
       g_Star += pITask->Data.item.star;
+      if (g_Star > 99) {
+        g_Star = 99;
+      }
+
       g_Time += pITask->Data.item.time;
+      if (g_Time > 999) {
+        g_Time = 999;
+      }
 
       isGet++;
     };
