@@ -92,11 +92,11 @@ static struct SPos ipos_1[] = {
 };
 
 static struct SPos epos_1[] = {
-  { 1500, GROUND_LINE,      ENEMY_TYPE_FROG  , 30 },
-  { 2000, GROUND_LINE-32*4, ENEMY_TYPE_SNAKE , 30 },
-  { 4000, GROUND_LINE,      ENEMY_TYPE_FROG  , 30 },
-  { 5500, GROUND_LINE,      ENEMY_TYPE_FROG  , 30 },
-  { 7500, GROUND_LINE,      ENEMY_TYPE_FROG  , 30 },
+  { 1500, GROUND_LINE,      ENEMY_TYPE_FROG  , 0 },
+  { 2000, GROUND_LINE-32*4, ENEMY_TYPE_SNAKE , 0 },
+  { 4000, GROUND_LINE,      ENEMY_TYPE_FROG  , 0 },
+  { 5500, GROUND_LINE,      ENEMY_TYPE_FROG  , 0 },
+  { 7500, GROUND_LINE,      ENEMY_TYPE_FROG  , 0 },
 
 };
 
@@ -155,9 +155,9 @@ static struct SPos ipos_2[] = {
 };
 
 static struct SPos epos_2[] = {
-  //{ 820  , 674 , ENEMY_TYPE_FROG  , 300 },
-  { 3000, GROUND_LINE , ENEMY_TYPE_CANNON  , 300 },
-  { 4200 , 0 , ENEMY_TYPE_CROW , 300 },
+  //{ 820  , 674 , ENEMY_TYPE_FROG  , 30 },
+  { 3000, GROUND_LINE , ENEMY_TYPE_CANNON  , 0 },
+  { 4200 , 0 , ENEMY_TYPE_CROW , 0 },
 };
 
 
@@ -268,22 +268,22 @@ static struct SPos ipos_3[] = {
 };
 
 static struct SPos epos_3[] = {
-  { 700  , 674 , ENEMY_TYPE_FROG  , 300 },
-  { 1501  , 674 , ENEMY_TYPE_CANNON  , 300 },
-  { 2000  , 0 , ENEMY_TYPE_CROW  , 300 },
-  { 2150+20*1  , 0 , ENEMY_TYPE_CROW  , 300 },
-  { 2150+20*2  , -30 , ENEMY_TYPE_CROW  , 300 },
-  { 2150+20*3  , -60 , ENEMY_TYPE_CROW  , 300 },
-  { 2150+20*4  , -90 , ENEMY_TYPE_CROW  , 300 },
-  { 2150+20*5  , -120 , ENEMY_TYPE_CROW  , 300 },
-  { 2150+20*6  , -150 , ENEMY_TYPE_CROW  , 300 },
-  { 2150  , 0 , ENEMY_TYPE_CROW  , 300 },
-  { 2150+20*1  , 0 , ENEMY_TYPE_CROW  , 300 },
-  { 2150+20*2  , GROUND_LINE+20 , ENEMY_TYPE_CROW  , 300 },
-  { 2150+20*3  , GROUND_LINE+40 , ENEMY_TYPE_CROW  , 300 },
-  { 2150+20*4  , GROUND_LINE+60 , ENEMY_TYPE_CROW  , 300 },
-  { 2150+20*5  , GROUND_LINE+80 , ENEMY_TYPE_CROW  , 300 },
-  { 2150+20*6  , GROUND_LINE+100 , ENEMY_TYPE_CROW  , 300 },
+  { 700  , 674 , ENEMY_TYPE_FROG  , 0 },
+  { 1501  , 674 , ENEMY_TYPE_CANNON  , 0 },
+  { 2000  , 0 , ENEMY_TYPE_CROW  , 0 },
+  { 2150+20*1  , 0 , ENEMY_TYPE_CROW  , 0 },
+  { 2150+20*2  , -30 , ENEMY_TYPE_CROW  , 0 },
+  { 2150+20*3  , -60 , ENEMY_TYPE_CROW  , 0 },
+  { 2150+20*4  , -90 , ENEMY_TYPE_CROW  , 0 },
+  { 2150+20*5  , -120 , ENEMY_TYPE_CROW  , 0 },
+  { 2150+20*6  , -150 , ENEMY_TYPE_CROW  , 0 },
+  { 2150  , 0 , ENEMY_TYPE_CROW  , 0 },
+  { 2150+20*1  , 0 , ENEMY_TYPE_CROW  , 0 },
+  { 2150+20*2  , GROUND_LINE+20 , ENEMY_TYPE_CROW  , 0 },
+  { 2150+20*3  , GROUND_LINE+40 , ENEMY_TYPE_CROW  , 0 },
+  { 2150+20*4  , GROUND_LINE+60 , ENEMY_TYPE_CROW  , 0 },
+  { 2150+20*5  , GROUND_LINE+80 , ENEMY_TYPE_CROW  , 0 },
+  { 2150+20*6  , GROUND_LINE+100 , ENEMY_TYPE_CROW  , 0 },
 };
 
 
@@ -663,7 +663,7 @@ void InitTaskSenario1( struct TaskData* pTask ) {
     switch ( ipos[i].type ) {
       case ITEM_TYPE_STAR:
         image = AG_CG_ICON_STAR;
-        star = 30;
+        star = 20;
         break;
 
       case ITEM_TYPE_SCORE_A:
@@ -673,7 +673,7 @@ void InitTaskSenario1( struct TaskData* pTask ) {
 
       case ITEM_TYPE_SCORE_B:
         image = AG_CG_ICON_FOOD_SUIKA;
-        score = 100;
+        score = 50;
         break;
 
       case ITEM_TYPE_KEY:
@@ -694,18 +694,18 @@ void InitTaskSenario1( struct TaskData* pTask ) {
     pETask = AllocTask();
     switch( epos[i].type ) {
       case ENEMY_TYPE_FROG :
-        InitTaskFrog( pETask , epos[i].x , epos[i].y  , epos[i].image , 0 );
+        InitTaskFrog( pETask, epos[i].x, epos[i].y, 10, 0 );
         break;
 
       case ENEMY_TYPE_SNAKE :
-        InitTaskSnake( pETask , epos[i].x , epos[i].y  , epos[i].image );
+        InitTaskSnake( pETask, epos[i].x, epos[i].y, 20 );
         break;
 
       case ENEMY_TYPE_CANNON :
-        InitTaskCannon( pETask , epos[i].x , epos[i].y  , epos[i].image, epos[i].x%2 );
+        InitTaskCannon( pETask, epos[i].x, epos[i].y, 30, epos[i].x%2 );
         break;
       case ENEMY_TYPE_CROW :
-        InitTaskCrow( pETask , epos[i].x , epos[i].y  , epos[i].image , 0 );
+        InitTaskCrow( pETask, epos[i].x, epos[i].y, 30, 0 );
         break;
       default :
         break;
