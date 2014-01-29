@@ -36,13 +36,14 @@ void AddScore( u32 n ) {
 void AddStar( u32 n ) {
   g_Star += n;
   if ( g_Star > STAR_MAX ) {
+    g_Score += ( g_Star - STAR_MAX );
     g_Star = STAR_MAX;
-  }
-}
+  }}
 
 void AddTime( u32 n ) {
   g_Time += n;
   if ( g_Time > TIME_MAX ) {
+    g_Score += ( g_Time - TIME_MAX );
     g_Time = TIME_MAX;
   }
 }
