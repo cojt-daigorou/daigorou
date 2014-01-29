@@ -185,9 +185,9 @@ static struct SPos wpos_3[] = {
   { 3000, GROUND_LINE-128*4, OBJECT_TYPE_HIT, AG_CG_OBJ_BLOCK_H },
 
   //{ 3000-64-16, GROUND_LINE-128*1, OBJECT_TYPE_TOGE, AG_CG_OBJ_TOGE4_L },
-  { 3000-64-16, GROUND_LINE-128*2, OBJECT_TYPE_TOGE, AG_CG_OBJ_TOGE4_L },
+  { 3000-64-16, GROUND_LINE-128*2+32, OBJECT_TYPE_TOGE, AG_CG_OBJ_TOGE4_L },
   //{ 3000-64-16, GROUND_LINE-128*3, OBJECT_TYPE_TOGE, AG_CG_OBJ_TOGE4_L },
-  { 3000-64-16, GROUND_LINE-128*4, OBJECT_TYPE_TOGE, AG_CG_OBJ_TOGE4_L },
+  { 3000-64-16, GROUND_LINE-128*4+32, OBJECT_TYPE_TOGE, AG_CG_OBJ_TOGE4_L },
 
   //{3000+64+16, GROUND_LINE-128*4, OBJECT_TYPE_TOGE, AG_CG_OBJ_TOGE4_R },
   { 3000+64+16, GROUND_LINE-128*3, OBJECT_TYPE_TOGE, AG_CG_OBJ_TOGE4_R },
@@ -269,20 +269,21 @@ static struct SPos ipos_3[] = {
 
 static struct SPos epos_3[] = {
   { 700  , 674 , ENEMY_TYPE_FROG  , 300 },
+  { 1501  , 674 , ENEMY_TYPE_CANNON  , 300 },
   { 2000  , 0 , ENEMY_TYPE_CROW  , 300 },
-  { 2000+20*1  , 0 , ENEMY_TYPE_CROW  , 300 },
-  { 2000+20*2  , -30 , ENEMY_TYPE_CROW  , 300 },
-  { 2000+20*3  , -60 , ENEMY_TYPE_CROW  , 300 },
-  { 2000+20*4  , -90 , ENEMY_TYPE_CROW  , 300 },
-  { 2000+20*5  , -120 , ENEMY_TYPE_CROW  , 300 },
-  { 2000+20*6  , -150 , ENEMY_TYPE_CROW  , 300 },
-  { 2000  , 0 , ENEMY_TYPE_CROW  , 300 },
-  { 2000+20*1  , 0 , ENEMY_TYPE_CROW  , 300 },
-  { 2000+20*2  , GROUND_LINE+20 , ENEMY_TYPE_CROW  , 300 },
-  { 2000+20*3  , GROUND_LINE+40 , ENEMY_TYPE_CROW  , 300 },
-  { 2000+20*4  , GROUND_LINE+60 , ENEMY_TYPE_CROW  , 300 },
-  { 2000+20*5  , GROUND_LINE+80 , ENEMY_TYPE_CROW  , 300 },
-  { 2000+20*6  , GROUND_LINE+100 , ENEMY_TYPE_CROW  , 300 },
+  { 2150+20*1  , 0 , ENEMY_TYPE_CROW  , 300 },
+  { 2150+20*2  , -30 , ENEMY_TYPE_CROW  , 300 },
+  { 2150+20*3  , -60 , ENEMY_TYPE_CROW  , 300 },
+  { 2150+20*4  , -90 , ENEMY_TYPE_CROW  , 300 },
+  { 2150+20*5  , -120 , ENEMY_TYPE_CROW  , 300 },
+  { 2150+20*6  , -150 , ENEMY_TYPE_CROW  , 300 },
+  { 2150  , 0 , ENEMY_TYPE_CROW  , 300 },
+  { 2150+20*1  , 0 , ENEMY_TYPE_CROW  , 300 },
+  { 2150+20*2  , GROUND_LINE+20 , ENEMY_TYPE_CROW  , 300 },
+  { 2150+20*3  , GROUND_LINE+40 , ENEMY_TYPE_CROW  , 300 },
+  { 2150+20*4  , GROUND_LINE+60 , ENEMY_TYPE_CROW  , 300 },
+  { 2150+20*5  , GROUND_LINE+80 , ENEMY_TYPE_CROW  , 300 },
+  { 2150+20*6  , GROUND_LINE+100 , ENEMY_TYPE_CROW  , 300 },
 };
 
 
@@ -696,7 +697,7 @@ void InitTaskSenario1( struct TaskData* pTask ) {
         break;
 
       case ENEMY_TYPE_CANNON :
-        InitTaskCannon( pETask , epos[i].x , epos[i].y  , epos[i].image , 0 );
+        InitTaskCannon( pETask , epos[i].x , epos[i].y  , epos[i].image, epos[i].x%2 );
         break;
       case ENEMY_TYPE_CROW :
         InitTaskCrow( pETask , epos[i].x , epos[i].y  , epos[i].image , 0 );
