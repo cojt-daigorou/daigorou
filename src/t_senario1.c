@@ -297,12 +297,16 @@ static struct SPos epos_3[] = {
 #define BSCORE_LIFE (50)
 #define BSCORE_STAR (1)
 
+static int scoreMax(int score) {
+  return score > 9999 ? 9999 : score;
+}
+
 // Time ‚â Life ‚ğl—¶‚µ‚½ BonusScore ‚ğŒvZ
 static int CalcBonusScore() {
   if ( g_Stage < STAGE_N - 1 ) {
-    return g_Score + BSCORE_TIME * g_Time;
+    return scoreMax( g_Score + BSCORE_TIME * g_Time );
   } else {
-    return g_Score + BSCORE_TIME * g_Time + BSCORE_LIFE * g_Life + BSCORE_STAR * g_Star;
+    return scoreMax( g_Score + BSCORE_TIME * g_Time + BSCORE_LIFE * g_Life + BSCORE_STAR * g_Star );
   }
 }
 
@@ -327,6 +331,8 @@ static int AddBonusScore() {
       g_Score += BSCORE_STAR;
       g_Star--;
     }
+
+    g_Score = scoreMax( g_Score );
     return g_Time == 0 && g_Life == 0 && g_Star == 0;
   }
 }
@@ -370,7 +376,6 @@ static s32 CalcSenario1( struct TaskData* pTask , u32 Flag ) {
     if( g_Time == 30 ) {
       ageSndMgrRelease( pTask->Data.senario.bgm_handle );
 
-      // TODO: AS_SND_BGM_FAST ‚ğ·‚µ‘Ö‚¦‚é‚©”p~‚·‚é‚©‚·‚éB
       pTask->Data.senario.bgm_handle = ageSndMgrAlloc( AS_SND_BGM_2_441_HU , 0 , 1 , AGE_SNDMGR_PANMODE_LR12 , 0 );
 
       ageSndMgrPlay( pTask->Data.senario.bgm_handle );
