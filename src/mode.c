@@ -29,6 +29,7 @@ void GotoMode( enum GameMode mode ) {
       g_isGetKeyItem = FALSE;
 
       g_Score = 0;
+      g_ScoreInitial = 0;
       g_Time = 100;
       g_Life = 30;
       g_Star = 30;
@@ -45,6 +46,8 @@ void GotoMode( enum GameMode mode ) {
       break;
 
     case MODE_STORY:
+
+      g_ScoreInitial = g_Score;
 
       pTask = AllocTask();
       InitTaskBg( pTask , AG_CG_BG_0_0 , 0 );
@@ -64,6 +67,8 @@ void GotoMode( enum GameMode mode ) {
       g_isGameOver = 0;
       g_isStageClear = FALSE;
       g_isGetKeyItem = FALSE;
+
+      g_Score = g_ScoreInitial;
 
       switch (g_Stage) {
         case 0: 

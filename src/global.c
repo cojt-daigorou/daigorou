@@ -11,6 +11,7 @@ int g_isStageClear = 0;
 int g_isGetKeyItem = FALSE;
 
 int g_Score = 0;
+int g_ScoreInitial = 0;
 int g_HighScoreS[STAGE_N] = {0};
 int g_isHighScore = FALSE;
 

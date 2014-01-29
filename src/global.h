@@ -21,8 +21,8 @@ extern int g_isStageClear;
 extern int g_isGetKeyItem;
 
 extern int g_Score;
-// 各ステージのクリア時のハイスコア
-extern int g_HighScoreS[STAGE_N];
+extern int g_ScoreInitial;// ステージ開始時のスコア
+extern int g_HighScoreS[STAGE_N];// 各ステージのクリア時のハイスコア
 extern int g_isHighScore;
 
 extern int g_Time;
