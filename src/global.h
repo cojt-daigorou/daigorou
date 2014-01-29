@@ -34,11 +34,27 @@ extern struct RECT* g_pPlayerRect;
 extern struct TaskData* g_pPlayerTask;
 extern struct TaskData* g_pSenarioTask;
 
-// TODO: ゲームのバランス用のパラメータはここに書く
+// スコア関連
 
 // ボーナススコア計算時の重み
 #define BSCORE_TIME (1)
 #define BSCORE_LIFE (50)
 #define BSCORE_STAR (1)
+
+// カンスト用
+#define SCORE_MAX (9999)
+#define STAR_MAX  (99)
+#define TIME_MAX  (999)
+
+extern void AddScore( u32 n );
+extern void AddStar( u32 n );
+extern void AddTime( u32 n );
+
+
+// 数学
+
+extern s32 max(int a, int b);
+extern s32 min(int a, int b);
+extern float ease_out(float t);
 
 #endif // __GLOBAL_H__

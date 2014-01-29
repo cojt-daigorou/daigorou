@@ -9,13 +9,6 @@
 #include "global.h"
 #include "t_player.h"
 
-void AddScore( u32 n ) {
-  g_Score += n;
-  if (g_Score > 9999) {
-    g_Score = 9999;
-  }
-}
-
 void KillPlayer( struct TaskData* pTask ) {
   if ( pTask->Data.player.mode != PLAYER_MODE_GAMEOVER && !g_isGetKeyItem ) {
     pTask->Data.player.mode = PLAYER_MODE_GAMEOVER;
@@ -149,61 +142,61 @@ static int MovePlayer( struct TaskData* pTask , int dx , int dy , int move_flag 
     pWTask = pWTask->Next;
   };
   switch(pTask->Data.player.mode){
-  case PLAYER_MODE_JUMP:
-  case PLAYER_MODE_JUMPSTART:
-  case PLAYER_MODE_FALL:
-    if(isHit&LEFT_HIT){
-      x = pLTask->x - ageRM[ pLTask->Data.object.image ].Width/2 + csize.x0 - 1;
-      isHit = LEFT_HIT;
-    }else if(isHit&RIGHT_HIT){
-      x = pRTask->x + ageRM[ pRTask->Data.object.image ].Width/2 + csize.x1 + 1;
-      isHit = RIGHT_HIT;
-    }else if(isHit==(TOP_HIT|BOTTOM_HIT)){
-      if(x-dx<=pBTask->x){x = pBTask->x - ageRM[ pBTask->Data.object.image ].Width/2 + csize.x0 - 1;isHit = LEFT_HIT;}
-      else{x = pBTask->x + ageRM[ pBTask->Data.object.image ].Width/2 + csize.x1 + 1;isHit = RIGHT_HIT;}
-    }else if(isHit&TOP_HIT){
-      y = pTTask->y - csize.y1 + 1;
-      isHit = TOP_HIT;
-    }else if(isHit&BOTTOM_HIT){
-      y = pBTask->y +  ageRM[ pBTask->Data.object.image ].Height -csize.y0 - 1;
-      isHit = BOTTOM_HIT;
-    };
-    break;
-  default:
-    if(isHit&LEFT_HIT){
-      x = pLTask->x - ageRM[ pLTask->Data.object.image ].Width/2 + csize.x0 - 1;
-    }else if(isHit&RIGHT_HIT){
-      x = pRTask->x + ageRM[ pRTask->Data.object.image ].Width/2 + csize.x1 + 1;
-    };
-    if(isHit&TOP_HIT){
-      y = pTTask->y*2 - csize.y1 + 1 - pTTask->Data.object.pre_y;
-      if(pTTask->Data.object.motion==ObjectMotion_Horizon){
-        int objM = pTTask->x - pTTask->Data.object.pre_x;
-        if((objM>0&&!(isHit&RIGHT_HIT))||(objM<0&&!(isHit&LEFT_HIT))){
-          x += objM;
-        }
+    case PLAYER_MODE_JUMP:
+    case PLAYER_MODE_JUMPSTART:
+    case PLAYER_MODE_FALL:
+      if(isHit&LEFT_HIT){
+        x = pLTask->x - ageRM[ pLTask->Data.object.image ].Width/2 + csize.x0 - 1;
+        isHit = LEFT_HIT;
+      }else if(isHit&RIGHT_HIT){
+        x = pRTask->x + ageRM[ pRTask->Data.object.image ].Width/2 + csize.x1 + 1;
+        isHit = RIGHT_HIT;
+      }else if(isHit==(TOP_HIT|BOTTOM_HIT)){
+        if(x-dx<=pBTask->x){x = pBTask->x - ageRM[ pBTask->Data.object.image ].Width/2 + csize.x0 - 1;isHit = LEFT_HIT;}
+        else{x = pBTask->x + ageRM[ pBTask->Data.object.image ].Width/2 + csize.x1 + 1;isHit = RIGHT_HIT;}
+      }else if(isHit&TOP_HIT){
+        y = pTTask->y - csize.y1 + 1;
+        isHit = TOP_HIT;
+      }else if(isHit&BOTTOM_HIT){
+        y = pBTask->y +  ageRM[ pBTask->Data.object.image ].Height -csize.y0 - 1;
+        isHit = BOTTOM_HIT;
       };
-      isHit = TOP_HIT;
-    } else if(isHit&BOTTOM_HIT){
-      y = pBTask->y +  ageRM[ pBTask->Data.object.image ].Height -csize.y0 + 1;
-      isHit = BOTTOM_HIT;
-    }
+      break;
+    default:
+      if(isHit&LEFT_HIT){
+        x = pLTask->x - ageRM[ pLTask->Data.object.image ].Width/2 + csize.x0 - 1;
+      }else if(isHit&RIGHT_HIT){
+        x = pRTask->x + ageRM[ pRTask->Data.object.image ].Width/2 + csize.x1 + 1;
+      };
+      if(isHit&TOP_HIT){
+        y = pTTask->y*2 - csize.y1 + 1 - pTTask->Data.object.pre_y;
+        if(pTTask->Data.object.motion==ObjectMotion_Horizon){
+          int objM = pTTask->x - pTTask->Data.object.pre_x;
+          if((objM>0&&!(isHit&RIGHT_HIT))||(objM<0&&!(isHit&LEFT_HIT))){
+            x += objM;
+          }
+        };
+        isHit = TOP_HIT;
+      } else if(isHit&BOTTOM_HIT){
+        y = pBTask->y +  ageRM[ pBTask->Data.object.image ].Height -csize.y0 + 1;
+        isHit = BOTTOM_HIT;
+      }
   }
-          /*/ “®‚­°‚ÌˆÚ“®
-        switch (pWTask->Data.object.motion) {
-          case ObjectMotion_None:
-            break;
-          case ObjectMotion_Horizon:
-            if(thisHit!=BOTTOM_HIT){
-              x += (pWTask->x - pWTask->Data.object.pre_x);
-            }
-            break;
-          case ObjectMotion_Vertical:
-            if(thisHit==TOP_HIT ||thisHit==BOTTOM_HIT){
-              y += (pWTask->y - pWTask->Data.object.pre_y);
-            }
-            break;
-        }*/
+  /*/ “®‚­°‚ÌˆÚ“®
+    switch (pWTask->Data.object.motion) {
+    case ObjectMotion_None:
+    break;
+    case ObjectMotion_Horizon:
+    if(thisHit!=BOTTOM_HIT){
+    x += (pWTask->x - pWTask->Data.object.pre_x);
+    }
+    break;
+    case ObjectMotion_Vertical:
+    if(thisHit==TOP_HIT ||thisHit==BOTTOM_HIT){
+    y += (pWTask->y - pWTask->Data.object.pre_y);
+    }
+    break;
+    }*/
   if( move_flag) {
     g_PlayerX = x;
     g_PlayerY = y;
@@ -231,16 +224,8 @@ static int GetItem( struct TaskData* pTask ) {
       }
 
       AddScore( pITask->Data.item.score );
-
-      g_Star += pITask->Data.item.star;
-      if (g_Star > 99) {
-        g_Star = 99;
-      }
-
-      g_Time += pITask->Data.item.time;
-      if (g_Time > 999) {
-        g_Time = 999;
-      }
+      AddStar( pITask->Data.item.star );
+      AddTime( pITask->Data.item.time );
 
       isGet++;
     };
@@ -732,7 +717,7 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
             pTask->Data.player.count = 0;
           }
         }
-                    
+
     };
   };
 

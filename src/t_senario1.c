@@ -314,21 +314,12 @@ static struct SPos epos_3[] = {
 // ボーナススコア関連
 //
 
-// ボーナススコア計算時の重み
-#define BSCORE_TIME (1)
-#define BSCORE_LIFE (50)
-#define BSCORE_STAR (1)
-
-static int scoreMax(int score) {
-  return score > 9999 ? 9999 : score;
-}
-
 // Time や Life を考慮した BonusScore を計算
 static int CalcBonusScore() {
   if ( g_Stage < STAGE_N - 1 ) {
-    return scoreMax( g_Score + BSCORE_TIME * g_Time );
+    return min( g_Score + BSCORE_TIME * g_Time, SCORE_MAX );
   } else {
-    return scoreMax( g_Score + BSCORE_TIME * g_Time + BSCORE_LIFE * g_Life + BSCORE_STAR * g_Star );
+    return min( g_Score + BSCORE_TIME * g_Time + BSCORE_LIFE * g_Life + BSCORE_STAR * g_Star, SCORE_MAX );
   }
 }
 
@@ -354,7 +345,7 @@ static int AddBonusScore() {
       g_Star--;
     }
 
-    g_Score = scoreMax( g_Score );
+    g_Score = min( g_Score, SCORE_MAX );
     return g_Time == 0 && g_Life == 0 && g_Star == 0;
   }
 }

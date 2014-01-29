@@ -79,18 +79,6 @@ static s32 CalcStory( struct TaskData* pTask , u32 Flag ) {
 	return( 0 );
 }
 
-static s32 max(int a, int b) {
-  return a > b ? a : b;
-}
-
-static s32 min(int a, int b) {
-  return a < b ? a : b;
-}
-
-static float ease_out(float t) {
-  return 1 - expf( -6.0 * t );
-}
-
 static void DrawMessage( struct TaskData* pTask , AGDrawBuffer* pDBuf, int frame, float t ) {
   int w,h;
 	int x,y;
