@@ -41,7 +41,7 @@ static s32 CalcCannon( struct TaskData* pTask , u32 Flag ) {
           if (pBTask != NULL) {
             InitTaskEBullet( pBTask , x, y - 30, AG_RP_OBJ_EBULLET, dx,0, 0,0 );
             AddlLink( pBTask , DISP_LEVEL_EBULLET );
-            if( (g_PlayerX-pTask->x)*(g_PlayerX-pTask->x)<1024*1024){
+            if( (g_PlayerX-pTask->x)*(g_PlayerX-pTask->x)<1280*1280){
               ageSndMgrPlayOneshot( AS_SND_CANNON , 0 , 0xff , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
             };
           };
