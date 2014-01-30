@@ -204,6 +204,7 @@ static s32 DrawStory( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
 }
 
 void InitTaskStory( struct TaskData* pTask ) {
+  struct TaskData* pBTask;
 	memset( pTask , 0 , sizeof( *pTask ) );
 
 	pTask->type = TASK_STORY;
@@ -216,6 +217,12 @@ void InitTaskStory( struct TaskData* pTask ) {
 
 	pTask->Data.story.bgm_handle = ageSndMgrAlloc( AS_SND_TITLE_1 , 0 , 1 , AGE_SNDMGR_PANMODE_LR12 , 0 );
 	pTask->Data.story.voice_handle = 0;
+
+  pBTask = AllocTask();
+  pTask->Data.story.pButtonTask = pBTask;
+  InitTaskStatic2( pBTask, 800, 650, AG_CG_STORY_A_BUTTON, Static2Type_Blink, 0 );
+  AddlLink( pBTask , DISP_LEVEL_TOP );
+  
 
 	ageSndMgrPlay( pTask->Data.story.bgm_handle );
 	ageSndMgrSetVolume( pTask->Data.story.bgm_handle , 0xa0 );
