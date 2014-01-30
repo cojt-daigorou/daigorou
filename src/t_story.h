@@ -8,6 +8,7 @@ struct StoryData {
 	s32 voice_handle;
   u16 mode;
   u16 count;
+  struct TaskData *pButtonTask;
 };
 
 void InitTaskStory( struct TaskData* pTask );
