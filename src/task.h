@@ -5,6 +5,7 @@
 #include "t_player.h"
 #include "t_bg.h"
 #include "t_static.h"
+#include "t_static2.h"
 #include "t_item.h"
 #include "t_senario1.h"
 #include "t_opening.h"
@@ -84,6 +85,7 @@ struct TaskData {
 		struct PlayerData player;
 		struct BgData bg;
 		struct StaticData st;
+		struct Static2Data st2;
     struct StoryData story;
 		struct ItemData item;
 		struct SenarioData senario;
