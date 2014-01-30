@@ -37,7 +37,7 @@ void GotoMode( enum GameMode mode ) {
       //g_Stage = 2;
 
       pTask = AllocTask();
-      InitTaskBg( pTask , AG_CG_BG_0_0 , 0 );
+      InitTaskBg( pTask , AG_CG_BG_0_0_0 , 0 );
       AddlLink( pTask , DISP_LEVEL_BG );
 
       pTask = AllocTask();
@@ -50,7 +50,7 @@ void GotoMode( enum GameMode mode ) {
       g_ScoreInitial = g_Score;
 
       pTask = AllocTask();
-      InitTaskBg( pTask , AG_CG_BG_0_0 , 0 );
+      InitTaskBg( pTask , AG_CG_BG_0_0_0 , 0 );
       AddlLink( pTask , DISP_LEVEL_BG );
 
       pTask = AllocTask();
@@ -93,7 +93,7 @@ void GotoMode( enum GameMode mode ) {
       }
 
       pTask = AllocTask();
-      InitTaskBg( pTask , AG_CG_BG_0_0 , 0 );
+      InitTaskBg( pTask , AG_CG_BG_0_0_0 , 0 );
       AddlLink( pTask , DISP_LEVEL_BG );
 
       pTask = AllocTask();
