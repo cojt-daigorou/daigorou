@@ -452,7 +452,7 @@ static s32 CalcSenario1( struct TaskData* pTask , u32 Flag ) {
       ageSndMgrSetPan( pTask->Data.senario.bgm_handle , 0x8080 );
     };
 
-    if( g_Time == 0) {
+    if( g_Time == 0 && g_Life > 1 ) {
       struct TaskData* pETask;
       int w,h;
 
