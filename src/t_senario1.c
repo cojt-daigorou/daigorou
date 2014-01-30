@@ -691,12 +691,12 @@ void InitTaskSenario1( struct TaskData* pTask ) {
         break;
 
       case ITEM_TYPE_SCORE_A:
-        image = AG_CG_ICON_FOOD_ODANGO;
+        image = AG_CG_ITEM_BONE_AG;
         score = 10;
         break;
 
       case ITEM_TYPE_SCORE_B:
-        image = AG_CG_ICON_FOOD_SUIKA;
+        image = AG_CG_ITEM_BONE_AU;
         score = 50;
         break;
 
