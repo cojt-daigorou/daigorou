@@ -25,6 +25,9 @@ void KillPlayer( struct TaskData* pTask ) {
 #define PLAYER_WALK_SPEED   (4)
 #define PLAYER_RUN_SPEED    (8)
 
+// 歩きに対して、走りのモーションマップのインデックスのパディング
+#define MOTION_PADDING_WALK_TO_RUN (PLAYER_MODE_RUN - PLAYER_MODE_WALK)
+
 enum{
   NONE_HIT = 0,
   TOP_HIT = 0x1,
@@ -241,14 +244,13 @@ const static u16 MotionMap[] = {
   AG_RP_DAIGOROU_WALKSTART,
   AG_RP_DAIGOROU_WALK,
   AG_RP_DAIGOROU_WALKEND,
+  AG_RP_DAIGOROU_RUNSTART,
+  AG_RP_DAIGOROU_RUN,
+  AG_RP_DAIGOROU_RUNEND,
   AG_RP_DAIGOROU_JUMPSTART,
   AG_RP_DAIGOROU_JUMP,
   AG_RP_DAIGOROU_JUMPEND,
   AG_RP_DAIGOROU_JUMP,
-  0,
-  AG_RP_DAIGOROU_RUNSTART,
-  AG_RP_DAIGOROU_RUN,
-  AG_RP_DAIGOROU_RUNEND,
   AG_RP_DAIGOROU_GAMEOVER,
   AG_RP_DAIGOROU_RT,
 };
@@ -419,7 +421,7 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
         else {
           pTask->Data.player.count++;
 
-          if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode + isRun*8 ] ].Frames ) {
+          if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode + isRun * MOTION_PADDING_WALK_TO_RUN ] ].Frames ) {
             pTask->Data.player.count = 0;
 
             if( pTask->Data.player.mode == PLAYER_MODE_WALKSTART ) {    //　走り始めが終わったら走りモードへ。
@@ -448,7 +450,7 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
         else {    //　止まってるか走り終わり
           pTask->Data.player.count++;
 
-          if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode + isRun*8 ] ].Frames ) {
+          if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode + isRun * MOTION_PADDING_WALK_TO_RUN ] ].Frames ) {
             pTask->Data.player.count = 0;
 
             if( pTask->Data.player.mode == PLAYER_MODE_WALKEND ) {
@@ -567,55 +569,6 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
         ageSndMgrPlayOneshot( AS_SND_JUMP , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
         ageSndMgrPlayOneshot( AS_SND_B06 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
       }
-      break;
-
-    case PLAYER_MODE_ATTACK :
-
-      // スターマシンガン用のMODE
-
-      ///*<s01151238>攻撃中の左右移動*/
-      //if( PadLvl()&PAD_RIGHT ) {
-      //  pTask->Data.player.direction = 0;
-      //  MovePlayer( pTask , CalcPlayerSpeed() , 0 , 1 );
-      //};
-      //if( PadLvl()&PAD_LEFT ) {
-      //  pTask->Data.player.direction = 1;
-      //  MovePlayer( pTask , -CalcPlayerSpeed() , 0 , 1 );
-      //};
-      //pTask->Data.player.count++;
-
-      //if( pTask->Data.player.count > 10 ) {
-      //  int x , y;
-      //  struct TaskData* pFTask;
-
-      //  pFTask = GetDispLink( DISP_LEVEL_ENEMY );
-
-      //  x = g_PlayerX;
-      //  y = g_PlayerY + BBox[ pTask->Data.player.mode ].y1;
-
-      //  if( pTask->Data.player.direction == 0 ) {
-      //    x += 120;
-      //  }
-      //  else {
-      //    x -= 120;
-      //  };
-
-      //  if (pTask->Data.player.count == 11){
-      //    struct TaskData* pBTask;
-      //    int dx = ( pTask->Data.player.direction == 0 ) ? 20 : -20;
-
-      //    pBTask = AllocTask();
-      //    if (pBTask != NULL) {
-      //      InitTaskPBullet( pBTask , x, y, 1, dx,0, 0,0 );
-      //      AddlLink( pBTask , DISP_LEVEL_PBULLET );
-      //    }
-      //  };
-      //};
-
-      //if( (pTask->Data.player.count>>1) >= ageRM3[ MotionMap[ pTask->Data.player.mode ] ].Frames ) {
-      //  pTask->Data.player.count = 0;
-      //  pTask->Data.player.mode = PLAYER_MODE_WAIT;
-      //};
       break;
 
     case PLAYER_MODE_GAMEOVER :
@@ -767,7 +720,7 @@ static s32 DrawPlayer( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
   if (pTask->Data.player.mode < PLAYER_MODE_WALKSTART || pTask->Data.player.mode > PLAYER_MODE_WALKEND) {
     isRun2 = 0;
   }
-  ageTransferAAC_RM3( pDBuf, MotionMap[ pTask->Data.player.mode + isRun2*8 ] , 0, &w, &h , pat );
+  ageTransferAAC_RM3( pDBuf, MotionMap[ pTask->Data.player.mode + isRun2 * MOTION_PADDING_WALK_TO_RUN ] , 0, &w, &h , pat );
 
   agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 2 , 1 );
 
