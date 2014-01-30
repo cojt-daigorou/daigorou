@@ -106,6 +106,10 @@ static struct SPos ipos_1[] = {
 
   { 3500+400*5, GROUND_LINE-90*6, ITEM_TYPE_KEY,     AG_CG_ITEM_MERONPAN64 },
 
+#ifdef IS_DEBUG
+  { 300, GROUND_LINE, ITEM_TYPE_KEY, AG_CG_ITEM_MERONPAN64 },
+#endif
+
 };
 
 static struct SPos epos_1[] = {
@@ -169,7 +173,7 @@ static struct SPos ipos_2[] = {
   { 3100+400*4-200 , 350 , ITEM_TYPE_SCORE_B ,   0 },
   { 3100+400*4+200 , 350 , ITEM_TYPE_SCORE_B ,   0 },
 
-#ifdef BEBUG
+#ifdef IS_DEBUG
   { 200 , GROUND_LINE-30 , ITEM_TYPE_KEY , AG_CG_ITEM_UNIXSP64 },
 #endif
 
@@ -268,7 +272,7 @@ static struct SPos wpos_3[] = {
   { 4000+128*5, GROUND_LINE-128*3, OBJECT_TYPE_BREAKABLE, AG_CG_OBJ_BLOCK },
 
   // えりたん
-#ifdef BEBUG
+#ifdef IS_DEBUG
   { 200 , GROUND_LINE-128 , OBJECT_TYPE_FRONT , AG_CG_ITEM_ERITAN },
 #endif
 
@@ -289,7 +293,7 @@ static struct SPos ipos_3[] = {
   { 4000+128*5, GROUND_LINE-128*4-128*0, ITEM_TYPE_SCORE_B, 0 },
 
   // えりたん
-#ifdef BEBUG
+#ifdef IS_DEBUG
   { 200 ,GROUND_LINE , ITEM_TYPE_KEY , AG_CG_ITEM_ERITAN },
 #endif
 
@@ -464,7 +468,7 @@ static s32 CalcSenario1( struct TaskData* pTask , u32 Flag ) {
 
     // ステージクリア
     pETask = AllocTask();
-    InitTaskStatic( pETask , (1024-w)/2 , (768*3/4-h)/2 , AG_CG_GAMECLEAR , 1 );
+    InitTaskStatic2( pETask, (1024-w)/2, (768*3/4-h)/2, AG_CG_GAMECLEAR, Static2Type_MoveVertical, 0 );
     AddlLink( pETask , DISP_LEVEL_TOP );
 
     y = 400;
@@ -475,7 +479,7 @@ static s32 CalcSenario1( struct TaskData* pTask , u32 Flag ) {
 
       pETask = AllocTask();
       w = ageRM[ AG_CG_TEXT_NEWRECORD ].Width;
-      InitTaskStatic( pETask , (1024-w)/2 , y , AG_CG_TEXT_NEWRECORD , 1 );
+      InitTaskStatic2( pETask , (1024-w)/2 , y , AG_CG_TEXT_NEWRECORD , Static2Type_Blink, 0 );
       AddlLink( pETask , DISP_LEVEL_TOP );
 
       y += 100;
@@ -483,7 +487,7 @@ static s32 CalcSenario1( struct TaskData* pTask , u32 Flag ) {
 
     // SCORE
     pETask = AllocTask();
-    InitTaskStatic( pETask , 100 , y , AG_CG_TEXT_SCORE , 1 );
+    InitTaskStatic2( pETask, 100, y, AG_CG_TEXT_SCORE, Static2Type_MoveHorizon, 40 );
     AddlLink( pETask , DISP_LEVEL_TOP );
 
     pETask = AllocTask();
@@ -494,7 +498,7 @@ static s32 CalcSenario1( struct TaskData* pTask , u32 Flag ) {
 
     // HIGH SCORE
     pETask = AllocTask();
-    InitTaskStatic( pETask , 100 , y , AG_CG_TEXT_HIGHSCORE , 1 );
+    InitTaskStatic2( pETask, 100, y, AG_CG_TEXT_HIGHSCORE, Static2Type_MoveHorizon, 80 );
     AddlLink( pETask , DISP_LEVEL_TOP );
 
     pETask = AllocTask();

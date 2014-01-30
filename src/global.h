@@ -8,8 +8,8 @@
 
 #define STAGE_N (3)
 
-// TODO: リリースの時には外す( dprintf()用 )
-//#define DEBUG debug
+// TODO: リリースの時にはコメントアウトする。( dprintf()用 )
+//#define IS_DEBUG (1)
 
 extern int g_PlayerX;
 extern int g_PlayerY;
