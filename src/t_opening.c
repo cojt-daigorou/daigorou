@@ -20,7 +20,7 @@ static s32 CalcOpening( struct TaskData* pTask , u32 Flag ) {
       ageSndMgrPlayOneshot( AS_SND_A01 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
     }
 
-		if( PadTrg()&PAD_A || PadTrg()&PAD_B || (PadTrg()&PAD_LEFT && PadTrg()&PAD_RIGHT) ) {
+		if( PadTrg()&PAD_A || PadTrg()&PAD_B ) {
 			pTask->Data.title.mode = 1;
 			pTask->Data.title.count = 0;
 
