@@ -19,7 +19,8 @@ static s32 CalcCannon( struct TaskData* pTask , u32 Flag ) {
     case 0 :		//@’Êí‘Ò‹@ó‘Ô
       pTask->Data.cannon.count++;
 
-      if ( pTask->Data.cannon.count == 30 ) {
+      if ( pTask->Data.cannon.count == 30  &&((g_PlayerX<pTask->x&&pTask->Data.cannon.direction==0)
+              ||(g_PlayerX>pTask->x&&pTask->Data.cannon.direction!=0))) {
         // ’e”­ŽË
         int x , y, dx;
         x = pTask->x;
@@ -40,9 +41,7 @@ static s32 CalcCannon( struct TaskData* pTask , u32 Flag ) {
           if (pBTask != NULL) {
             InitTaskEBullet( pBTask , x, y - 30, AG_RP_OBJ_EBULLET, dx,0, 0,0 );
             AddlLink( pBTask , DISP_LEVEL_EBULLET );
-            if( (g_PlayerX-pTask->x)*(g_PlayerX-pTask->x)<1024*1024
-              ||(g_PlayerX<pTask->x&&pTask->Data.cannon.direction==0)
-              ||(g_PlayerX>pTask->x&&pTask->Data.cannon.direction!=0)){
+            if( (g_PlayerX-pTask->x)*(g_PlayerX-pTask->x)<1024*1024){
               ageSndMgrPlayOneshot( AS_SND_CANNON , 0 , 0xff , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
             };
           };

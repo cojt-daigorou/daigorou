@@ -16,7 +16,9 @@ static s32 CalcEBullet( struct TaskData* pTask , u32 Flag ) {
 
 	pTask->y += pTask->Data.ebullet.dy;
 	pTask->x += pTask->Data.ebullet.dx;
-
+  if( pTask->Data.ebullet.count> 80){
+    pTask->Data.ebullet.dy += 1;
+  }
 	if( pTask->Data.ebullet.count > 100 ) {
 		pTask->visible = 0;
 		pTask->flag = TASK_FLAG_DESTROY;
