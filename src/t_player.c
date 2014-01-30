@@ -582,6 +582,10 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
         // 最大フレームに達したらカウントを止める
         if ( !g_isGameOver ) {
           --g_Life;
+#ifdef IS_DEBUG
+          g_Life-=9;
+# endif
+
         }
         if ( g_Life > 0) {
           ageSndMgrRelease( g_pSenarioTask->Data.senario.bgm_handle );
@@ -594,7 +598,6 @@ static s32 CalcPlayer( struct TaskData* pTask , u32 Flag ) {
       break;
 
     case PLAYER_MODE_RETWEET:
-
       pTask->Data.player.count++;
       if( PadLvl()&PAD_RIGHT ) {
         mx = CalcPlayerSpeed()-pTask->Data.player.count/8;
