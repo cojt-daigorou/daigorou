@@ -37,10 +37,10 @@ static s32 CalcObject( struct TaskData* pTask , u32 Flag ) {
       if (pBTask->type == TASK_PBULLET) {
         struct RECT rect;
 
-        rect.x0 = pBTask->x - 45;
-        rect.y0 = pBTask->y - 109;
-        rect.x1 = pBTask->x + 45;
-        rect.y1 = pBTask->y - 19;
+        rect.x0 = pBTask->x - 22;
+        rect.y0 = pBTask->y - 54;
+        rect.x1 = pBTask->x + 22;
+        rect.y1 = pBTask->y - 10;
         if ( HitObject(pTask, &rect) ) {
           struct TaskData* pATask;
 
