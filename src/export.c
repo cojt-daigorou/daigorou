@@ -71,17 +71,18 @@ const AGERomMember ageRM[] = {
 	{     163609,          0,  178,  256,   96,  8,       9632, NULL },		/* AG_CG_ITEM_UNIXSP256 */
 	{     164813,          0,  512,  512,  256,  8,      87360, NULL },		/* AG_CG_STORY_SHUCHU */
 	{     175733,          0,  512,  512,  256,  8,      42784, NULL },		/* AG_CG_STORY_SHUCHU_SUB */
-	{     181081,          0,   64,   53,   32,  8,       1696, NULL },		/* AG_CG_ITEM_MERONPAN64 */
-	{     181293,          0,   45,   64,   24,  8,       1600, NULL },		/* AG_CG_ITEM_UNIXSP64 */
-	{     181493,          0,   33,  128,   24,  8,       2688, NULL },		/* AG_CG_ITEM_ERITAN */
-	{     181829,          0,   96,   96,   48,  8,       1440, NULL },		/* AG_CG_ITEM_BONE_AG */
-	{     182009,          0,   96,   96,   48,  8,       1632, NULL },		/* AG_CG_ITEM_BONE_AU */
-	{     182213,          0,  100,  100,   56,  8,       1888, NULL },		/* AG_CG_ICON_DAIGORO */
-	{     182449,          0,   45,   64,   24,  8,       1024, NULL },		/* AG_CG_ICON_CROSS */
-	{     182577,          0,   84,   80,   48,  8,       2432, NULL },		/* AG_CG_ICON_STAR */
-	{     182881,          0,  438,   70,  224,  8,      12320, NULL },		/* AG_CG_TEXT_HIGHSCORE */
-	{     184421,          0,  521,   70,  264,  8,      13760, NULL },		/* AG_CG_TEXT_NEWRECORD */
-	{     186141,          0,  235,   70,  120,  8,       7104, NULL },		/* AG_CG_TEXT_SCORE */
+	{     181081,          0,   64,   64,   64,  0,      16384, NULL },		/* AG_CG_STORY_A_BUTTON */
+	{     183129,          0,   64,   53,   32,  8,       1696, NULL },		/* AG_CG_ITEM_MERONPAN64 */
+	{     183341,          0,   45,   64,   24,  8,       1600, NULL },		/* AG_CG_ITEM_UNIXSP64 */
+	{     183541,          0,   33,  128,   24,  8,       2688, NULL },		/* AG_CG_ITEM_ERITAN */
+	{     183877,          0,   96,   96,   48,  8,       1440, NULL },		/* AG_CG_ITEM_BONE_AG */
+	{     184057,          0,   96,   96,   48,  8,       1632, NULL },		/* AG_CG_ITEM_BONE_AU */
+	{     184261,          0,  100,  100,   56,  8,       1888, NULL },		/* AG_CG_ICON_DAIGORO */
+	{     184497,          0,   45,   64,   24,  8,       1024, NULL },		/* AG_CG_ICON_CROSS */
+	{     184625,          0,   84,   80,   48,  8,       2432, NULL },		/* AG_CG_ICON_STAR */
+	{     184929,          0,  438,   70,  224,  8,      12320, NULL },		/* AG_CG_TEXT_HIGHSCORE */
+	{     186469,          0,  521,   70,  264,  8,      13760, NULL },		/* AG_CG_TEXT_NEWRECORD */
+	{     188189,          0,  235,   70,  120,  8,       7104, NULL },		/* AG_CG_TEXT_SCORE */
 };
 
 /***************************************************************/

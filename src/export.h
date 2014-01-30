@@ -93,17 +93,18 @@ extern "C" {
 #define AG_CG_ITEM_UNIXSP256	(63)
 #define AG_CG_STORY_SHUCHU	(64)
 #define AG_CG_STORY_SHUCHU_SUB	(65)
-#define AG_CG_ITEM_MERONPAN64	(66)
-#define AG_CG_ITEM_UNIXSP64	(67)
-#define AG_CG_ITEM_ERITAN	(68)
-#define AG_CG_ITEM_BONE_AG	(69)
-#define AG_CG_ITEM_BONE_AU	(70)
-#define AG_CG_ICON_DAIGORO	(71)
-#define AG_CG_ICON_CROSS	(72)
-#define AG_CG_ICON_STAR	(73)
-#define AG_CG_TEXT_HIGHSCORE	(74)
-#define AG_CG_TEXT_NEWRECORD	(75)
-#define AG_CG_TEXT_SCORE	(76)
+#define AG_CG_STORY_A_BUTTON	(66)
+#define AG_CG_ITEM_MERONPAN64	(67)
+#define AG_CG_ITEM_UNIXSP64	(68)
+#define AG_CG_ITEM_ERITAN	(69)
+#define AG_CG_ITEM_BONE_AG	(70)
+#define AG_CG_ITEM_BONE_AU	(71)
+#define AG_CG_ICON_DAIGORO	(72)
+#define AG_CG_ICON_CROSS	(73)
+#define AG_CG_ICON_STAR	(74)
+#define AG_CG_TEXT_HIGHSCORE	(75)
+#define AG_CG_TEXT_NEWRECORD	(76)
+#define AG_CG_TEXT_SCORE	(77)
 
 /***************************************************************/
 /*                     RM3 Member Symbol                       */
@@ -172,7 +173,7 @@ extern "C" {
 /***************************************************************/
 /*                          Data Member                        */
 /***************************************************************/
-extern const AGERomMember ageRM[77];
+extern const AGERomMember ageRM[78];
 extern const AGERM3Member ageRM3[16];
 extern const u32 ageReserve[1];
 extern const u32 ageUser[1];

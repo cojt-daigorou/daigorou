@@ -28,6 +28,12 @@ static struct SStory stories[] = {
 
 static s32 CalcStory( struct TaskData* pTask , u32 Flag ) {
 
+  //　ソフトリセット
+  if( PadTrg()&PAD_UP && PadTrg()&PAD_DOWN ) {
+    ageSndMgrRelease( pTask->Data.senario.bgm_handle );
+    GotoMode( MODE_TITLE );
+  };
+
   if ( pTask->Data.story.mode < stories[g_Stage].n ) {
     pTask->Data.story.count++;
 
@@ -53,9 +59,14 @@ static s32 CalcStory( struct TaskData* pTask , u32 Flag ) {
       }
     }
 
-    if( PadTrg()&PAD_A || PadTrg()&PAD_B || (PadTrg()&PAD_LEFT && PadTrg()&PAD_RIGHT) ) {
+    if ( pTask->Data.story.count == 50 ) {
+      pTask->Data.story.pButtonTask->visible = TRUE;
+    }
+
+    if( PadTrg()&PAD_A || PadTrg()&PAD_B ) {
       pTask->Data.story.mode++;
       pTask->Data.story.count = 0;
+      pTask->Data.story.pButtonTask->visible = FALSE;
 
       ageSndMgrPlayOneshot( AS_SND_DECIDE008 , 0 , 0x80 , AGE_SNDMGR_PANMODE_LR12 , 0x80 , 0 );
     };
@@ -76,12 +87,12 @@ static s32 CalcStory( struct TaskData* pTask , u32 Flag ) {
     };
   };
 
-	return( 0 );
+  return( 0 );
 }
 
 static void DrawMessage( struct TaskData* pTask , AGDrawBuffer* pDBuf, int frame, float t ) {
   int w,h;
-	int x,y;
+  int x,y;
 
   agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 2 , 1 );
   ageTransferAAC_RM3( pDBuf, AG_RP_SIN_MESSAGE, 0, &w, &h, frame );
@@ -97,25 +108,23 @@ static void DrawMessage( struct TaskData* pTask , AGDrawBuffer* pDBuf, int frame
 }
 
 static s32 DrawStory( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
-	int w, h;
-	int a;
-	int x,y;
+  int w, h;
+  int a;
+  int x,y;
   float t;
   int daigorou_dx = 0;
 
-	if( pTask->Data.story.mode == 0 ) {
-		a = abs( (pTask->Data.story.count%256) - 128 ) + 127;
-	}
-	else {
-		a = abs( (pTask->Data.story.count%510) - 255 );
-	};
-
-  //g_Stage = 3;
+  if( pTask->Data.story.mode == 0 ) {
+    a = abs( (pTask->Data.story.count%256) - 128 ) + 127;
+  }
+  else {
+    a = abs( (pTask->Data.story.count%510) - 255 );
+  };
 
   if (g_Stage > 0) {
     // 集中線
-		int a = abs( ((pTask->Data.story.count * 8)%256) - 128 ) + 127;
-		int b = (pTask->Data.story.count / 10) % 2;
+    int a = abs( ((pTask->Data.story.count * 8)%256) - 128 ) + 127;
+    int b = (pTask->Data.story.count / 10) % 2;
     agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 2 , 1 );
     ageTransferAAC( pDBuf, AG_CG_STORY_SHUCHU + b, 0, &w, &h );
     x = 280;
@@ -166,12 +175,12 @@ static s32 DrawStory( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
   }
 
   // 大五郎
-	agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 2 , 1 );
+  agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 2 , 1 );
   ageTransferAAC( pDBuf, AG_CG_STORY_DAIGOROU, 0, &w, &h );
-	x = (1024-w)/2 + daigorou_dx;
-	y = (768-h)/2 + 50;
-	agDrawSPRITE( pDBuf, 1, x<<2 , y<<2 , (x+w)<<2 , (y+h)<<2 );
-  
+  x = (1024-w)/2 + daigorou_dx;
+  y = (768-h)/2 + 50;
+  agDrawSPRITE( pDBuf, 1, x<<2 , y<<2 , (x+w)<<2 , (y+h)<<2 );
+
   if ( g_Stage < STAGE_N) {
     // えりたんを思い浮かべる雲
     agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 2 , 1 );
@@ -183,7 +192,7 @@ static s32 DrawStory( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
 
   if ( pTask->Data.story.mode < stories[g_Stage].n ) {
     // message
-    t = (float)min(pTask->Data.story.count, 50) / 50;
+    t = pTask->Data.story.count / 50.0;
     DrawMessage( pTask, pDBuf, stories[g_Stage].pages[pTask->Data.story.mode], t );
   } else {
     // start
@@ -197,35 +206,35 @@ static s32 DrawStory( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
     };
   };
 
-	g_OffsetX++;
+  g_OffsetX++;
 
-
-	return( 0 );
+  return( 0 );
 }
 
 void InitTaskStory( struct TaskData* pTask ) {
   struct TaskData* pBTask;
-	memset( pTask , 0 , sizeof( *pTask ) );
+  memset( pTask , 0 , sizeof( *pTask ) );
 
-	pTask->type = TASK_STORY;
-	pTask->visible = 1;
-	pTask->Calc = CalcStory;
-	pTask->Draw = DrawStory;
+  pTask->type = TASK_STORY;
+  pTask->visible = 1;
+  pTask->Calc = CalcStory;
+  pTask->Draw = DrawStory;
 
-	pTask->Data.story.mode = 0;
-	pTask->Data.story.count = 0;
+  pTask->Data.story.mode = 0;
+  pTask->Data.story.count = 0;
 
-	pTask->Data.story.bgm_handle = ageSndMgrAlloc( AS_SND_TITLE_1 , 0 , 1 , AGE_SNDMGR_PANMODE_LR12 , 0 );
-	pTask->Data.story.voice_handle = 0;
+  pTask->Data.story.bgm_handle = ageSndMgrAlloc( AS_SND_TITLE_1 , 0 , 1 , AGE_SNDMGR_PANMODE_LR12 , 0 );
+  pTask->Data.story.voice_handle = 0;
 
   pBTask = AllocTask();
   pTask->Data.story.pButtonTask = pBTask;
+  pBTask->visible = FALSE;
   InitTaskStatic2( pBTask, 800, 650, AG_CG_STORY_A_BUTTON, Static2Type_Blink, 0 );
   AddlLink( pBTask , DISP_LEVEL_TOP );
-  
 
-	ageSndMgrPlay( pTask->Data.story.bgm_handle );
-	ageSndMgrSetVolume( pTask->Data.story.bgm_handle , 0xa0 );
-	ageSndMgrSetPanMode( pTask->Data.story.bgm_handle , 0 );
-	ageSndMgrSetPan( pTask->Data.story.bgm_handle , 0x8080 );
+
+  ageSndMgrPlay( pTask->Data.story.bgm_handle );
+  ageSndMgrSetVolume( pTask->Data.story.bgm_handle , 0xa0 );
+  ageSndMgrSetPanMode( pTask->Data.story.bgm_handle , 0 );
+  ageSndMgrSetPan( pTask->Data.story.bgm_handle , 0x8080 );
 }
