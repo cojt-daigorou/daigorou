@@ -452,7 +452,7 @@ static s32 CalcSenario1( struct TaskData* pTask , u32 Flag ) {
       ageSndMgrSetPan( pTask->Data.senario.bgm_handle , 0x8080 );
     };
 
-    if( g_Time == 0 && g_Life > 1 ) {
+    if( g_Time == 0 ) {
       struct TaskData* pETask;
       int w,h;
 
@@ -461,7 +461,7 @@ static s32 CalcSenario1( struct TaskData* pTask , u32 Flag ) {
 
       pETask = AllocTask();
       InitTaskStatic( pETask , (1024-w)/2 , (768-h)/2 , AG_CG_TIMEOVER , 1 );
-      AddlLink( pETask , DISP_LEVEL_TOP );
+      AddlLink( pETask , DISP_LEVEL_SCORE );
 
       ageSndMgrRelease( pTask->Data.senario.bgm_handle );
 
@@ -472,7 +472,6 @@ static s32 CalcSenario1( struct TaskData* pTask , u32 Flag ) {
       ageSndMgrSetPanMode( pTask->Data.senario.bgm_handle , 0 );
       ageSndMgrSetPan( pTask->Data.senario.bgm_handle , 0x8080 );
 
-      --g_Life;
       KillPlayer( g_pPlayerTask );
     };
   };
