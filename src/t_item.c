@@ -19,7 +19,25 @@ static s32 CalcItem( struct TaskData* pTask , u32 Flag ) {
 static s32 DrawItem( struct TaskData* pTask , AGDrawBuffer* pDBuf ) {
 	int w, h;
 
+  pTask->Data.item.count++;
+
 	if( (pTask->x + 50) > g_OffsetX && (pTask->x - 50) < (g_OffsetX + 1024) ) {
+
+    // キーアイテムなら、集中線を表示する。
+    if ( pTask->Data.item.is_keyitem ) {
+      // 集中線
+      int a = abs( ((pTask->Data.item.count * 8)%256) - 128 ) + 127;
+      int b = (pTask->Data.item.count / 10) % 2;
+      int ih = ageRM[ pTask->Data.object.image ].Height;
+      agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 2 , 1 );
+      ageTransferAAC( pDBuf, AG_CG_STORY_SHUCHU + b, 0, &w, &h );
+      agPictureRotTex(pDBuf, AG_CG_STORY_SHUCHU + b, 
+          (pTask->x - g_OffsetX)<<2, 
+          (pTask->y - g_OffsetY - ih/2 )<<2, 
+          (pTask->Data.item.count % 360)<<2, 
+          0x100/2);
+    }
+
 		agPictureSetBlendMode( pDBuf , 0 , 0xff , 0 , 0 , 2 , 1 );
 		ageTransferAAC( pDBuf, pTask->Data.item.image, 0, &w, &h );
 
